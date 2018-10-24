@@ -1,0 +1,218 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+
+\begin{document}
+
+\section*{Isomorphism of $\mathfrak{so}(3)$ and $\mathds{R}^3$}
+Oftentimes, we claim that $\mathds{R}^3 \cong \mathfrak{so}(3)$, and we proceed to do all our math in $\mathds{R}^3$. This document seeks to solidify that claim. 
+
+\subsection*{Lie Algebras}
+A lie algebra is a vector space $\mathfrak{g}$ endowed with a lie bracket $[\cdot, \cdot]: \mathfrak{g} \times \mathfrak{g} \rightarrow \mathfrak{g}$ satisfying
+\begin{enumerate}
+  \item Bilinearity: $[\alpha x + \beta y, z] = \alpha[x,z] + \beta[y,z]$
+  \item Alternativity: $[x,x] = 0$
+  \item Jacobi Identity: $[x,[y,z]] + [z,[x,y]] + [y,[z,x]] = 0$
+\end{enumerate}
+For $x,y,z \in \mathfrak{g}$, $\alpha, \beta \in \mathds{R}$.
+
+Two examples of lie algebras are $\mathfrak{so}(3)$ and $\mathds{R}^3$.
+\subsubsection*{The Lie Algebra $\mathds{R}^3$}
+
+It is well known that $\mathds{R}^3$ forms a vector space over the real numbers. We claim that when we endow this vector space with the cross product $\times: \mathds{R}^3 \times \mathds{R}^3 \rightarrow \mathds{R}^3$, it becomes a lie algebra.
+
+\begin{prop}
+  $\mathds{R}^3$ endowed with the cross product $\times: \mathds{R}^3 \times \mathds{R}^3 \rightarrow \mathds{R}^3$ is a lie algebra 
+\end{prop}
+
+\begin{proof}
+  Let $x,y,z \in \mathds{R}^3$ and $\alpha, \beta \in \mathds{R}$. Using properties of the cross product, we can show that the properties of the lie bracket hold.
+  \begin{enumerate}
+    \item Bilinearity: $(\alpha x + \beta y) \times z = (\alpha x) \times z + (\beta y) \times z = \alpha(x \times z) + \beta(y \times z)$ 
+    \item Alternativity: $x \times x$ = 0
+    \item Jacobi Identity: $x \times (y \times z) + y \times (z \times x)  + z \times (x \times y) =\\ \langle x, z\rangle y - \langle x, y\rangle z + \langle y, x\rangle z - \langle y, z\rangle x + \langle z, y\rangle x - \langle z, x\rangle y = 0$
+  \end{enumerate}
+\end{proof}
+
+\subsubsection*{The Lie Algebra $\mathfrak{gl}(n)$}
+The set $\mathfrak{gl}(n)$ consisting of $n \times n$ matrices can be shown to be a vector space over the real numbers. We will endow this vector space with the operation $[X, Y] = XY - YX$, where $XY$ denotes matrix matrix multiplication between $X,Y \in \mathfrak{gl}(n)$. This operation is commonly called the commutator.
+
+\begin{prop}
+  $\mathfrak{gl}(n)$ endowed with the commutator $[\cdot, \cdot]: \mathfrak{gl}(n) \times \mathfrak{gl}(n) \rightarrow \mathfrak{gl}(n)$ is a lie algebra.
+\end{prop}
+
+\begin{proof}
+  Let $X,Y,Z \in \mathfrak{gl}(n)$ and $\alpha, \beta \in \mathds{R}$. Using the properites of matrix multiplication, we can show that the properties of the lie bracket hold.
+  \begin{enumerate}
+    \item Bilinearity: $[\alpha X + \beta Y, Z] = (\alpha X + \beta Y)Z - Z(\alpha X + \beta Y) =\\ \alpha XZ + \beta YZ - \alpha ZX - \beta ZY = \alpha(XZ - ZX) + \beta(YZ - ZY) = \alpha[X,Z] + \beta[Y,Z]$
+    \item Alternativity: $[X,X] = XX - XX = 0$
+    \item Jacobi Identity: $[X,[Y,Z]] + [Z,[X,Y] + [Y,[Z,X]] = [X, YZ - ZY] + [Z, XY - YX] + [Y, ZX - XZ] = \\
+      XYZ - XZY - YZX + ZYX + ZXY - ZYX - XYZ + YXZ + YZX - YXZ - ZXY + XZY = 0$
+  \end{enumerate}
+\end{proof}
+At this point we note that the set of skew symmetric matrices are a subspace of $\mathfrak{gl}(n)$ and specifically we have that when $n=3$ the set of skew-symmetric matrices forms a subspace of $\mathfrak{gl}(3)$. We call this space of $3 \times 3$ skew-symmetric matrices $\mathfrak{so}(3)$. Although, $\mathfrak{so}(3)$ is a subspace of $\mathfrak{gl}(3)$, it remains to be shown that it is a subalgebra. To do this we must show that $\mathfrak{so}(3)$ is closed under the commutator.
+
+\begin{prop}
+  $\mathfrak{so}(3)$ is a subalgebra of $\mathfrak{gl}(3)$ and therefore is a lie algebra.
+\end{prop}
+
+\begin{proof}
+  Let $X,Y \in \mathfrak{so}(3)$. Thus we have $X^T = -X$ and $Y^T = -Y$. Thus we have
+  \[
+    [X,Y] = XY - YX = (-X^T)(-Y^T) - (-Y^T)(-X^T) = (YX)^T - (XY)^T = (YX - XY)^T = \\
+    -(XY - YX)^T = -[X,Y]^T
+  \]
+  Thus $[X,Y] \in \mathfrak{so}(3)$, and $\mathfrak{so}(3)$ is a subalgebra of $\mathfrak{gl}(3)$.
+\end{proof}
+
+\subsection*{Lie Algebra Isomorphisms}
+At this point we will explore transformations between lie algebras. As in most fields of abstract algebra, we can define \textit{homomorphisms} and \textit{isomorphisms} of lie algebras.
+
+\subsubsection*{Homomorphisms of Lie Algebras}
+
+A lie algebra homomorphism is a mapping $\varphi: \mathfrak{g}_1 \rightarrow \mathfrak{g}_2$ such that
+\begin{enumerate}
+  \item $\varphi$ is a linear map, $\varphi(\alpha x + \beta y) = \alpha \varphi(x) + \beta \varphi(y)$.
+  \item $\varphi([x,y]_{\mathfrak{g}_1}) = [\varphi(x), \varphi(y)]_{\mathfrak{g}_2}$
+\end{enumerate}
+
+\subsubsection*{Isomorphisms of Lie Algebras}
+A lie algebra isomorphism is a mapping $\varphi: \mathfrak{g}_1 \rightarrow \mathfrak{g}_2$ such that
+\begin{enumerate}
+  \item $\varphi$ is a lie algebra homomorhpism
+  \item $\varphi$ is bijective
+\end{enumerate}
+
+\subsection*{Isomorphism from $\mathds{R}^3$ to $\mathfrak{so}(3)$}
+We define the following mapping from $\wedge : \mathds{R}^3 \rightarrow \mathfrak{so}(3)$, such that
+\[
+  \begin{bmatrix}
+    x \\
+    y \\
+    z \\
+  \end{bmatrix}^{\wedge} =
+  \begin{bmatrix}
+    0 & -z & y \\
+    z & 0 & -x \\
+    -y & x & 0
+  \end{bmatrix}
+\]
+We claim that is mapping is a lie algebra isomorphism
+\begin{prop}
+  $\wedge: \mathds{R}^3 \rightarrow \mathfrak{so}(3)$ as defined above is a lie algebra isomorphism.
+\end{prop}
+
+\begin{proof}
+  It is straight-forward to show that $\wedge$ is a bijective mapping, so we will focus on showing that $\wedge$ is a lie algebra homomorphism. Let $x_1,x_2 \in \mathds{R}^3$ and $\alpha, \beta \in \mathds{R}$. We have that
+  \begin{enumerate}
+    \item \[
+        \begin{aligned}
+          (\alpha x_1 + \beta x_2)^{\wedge} &= 
+      \begin{bmatrix}
+        0 & -\alpha z_1 - \beta z_2 & \alpha y_1 + \beta y_2 \\
+        \alpha z_1 + \beta z_2 & 0 & -\alpha x_1 - \beta x_2 \\
+        -\alpha y_1 - \beta y_2 & \alpha x_1 + \beta x_2 & 0
+      \end{bmatrix} \\ 
+      &=\alpha \begin{bmatrix}
+        0 & -z_1 & y_1 \\
+        z_1 & 0 & -x_1 \\
+        -y_1 & x_1 & 0
+      \end{bmatrix} +
+      \beta \begin{bmatrix}
+        0 & -z_2 & y_2 \\
+        z_2 & 0 & -x_2 \\
+        -y_2 & x_2 & 0
+      \end{bmatrix} \\
+      &= \alpha x_1^{\wedge} + \beta x_2^{\wedge}
+        \end{aligned}
+  \]
+    \item
+      \[
+        \begin{aligned}
+        (x_1 \times x_2)^{\wedge} &= 
+        \begin{bmatrix}
+        -z_1y_2 + y_1z_2 \\  
+        z_1x_2 - x_1z_2 \\
+        -y_1x_2 + x_1y_2
+      \end{bmatrix}^{\wedge} =
+      \begin{bmatrix}
+        0 & y_1x_2 - x_1y_2 & z_1x_2 - x_1z_2 \\
+        -y_1x_2 + x_1y_2 & 0 & z_1y_2 - y_1z_2 \\
+        -z_1x_2 + x_1z_2 & -z_1y_2 + y_1z_2 & 0
+      \end{bmatrix} \\
+      &= 
+      \begin{bmatrix}
+        -z_1z_2 -y_1y_2 & y_1x_2 & z_1x_2 \\
+        x_1y_2 &-z_1z_2 - x_1x_2 & z_1y_2 \\
+        x_1z_2 & y_1z_2 & -y_1y_2 - x_1x_2
+      \end{bmatrix} -
+      \begin{bmatrix}
+        -z_1z_2 - y_1y_2 & x_1y_2 & x_1z_2 \\ 
+        y_1x_2 & -z_1z_2 - x_1x_2 & y_1z_2 \\
+        z_1x_2 & z_1y_2 & -y_1y_2 - x_1x_2
+      \end{bmatrix}
+      \\
+      &= \begin{bmatrix}
+      0 & -z_1 & y_1 \\
+      z_1 & 0 & -x_1 \\
+      -y_1 & x_1 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      0 & -z_2 & y_2 \\
+      z_2 & 0 & -x_2 \\
+      -y_2 & x_2 & 0
+    \end{bmatrix} -
+    \begin{bmatrix}
+      0 & -z_2 & y_2 \\
+      z_2 & 0 & -x_2 \\
+      -y_2 & x_2 & 0
+    \end{bmatrix} 
+    \begin{bmatrix}
+      0 & -z_1 & y_1 \\
+      z_1 & 0 & -x_1 \\
+      -y_1 & x_1 & 0
+    \end{bmatrix} \\
+    &= [x_1^{\wedge}, x_2^{\wedge}]
+    \end{aligned}
+      \]
+  \end{enumerate}
+\end{proof}
+At this moment we note that there is an inverse transformation, given by 
+\[
+  \begin{bmatrix}
+    0 & -z & y \\
+    z & 0 & -x \\
+    -y & x & 0
+  \end{bmatrix}^{\vee} =
+  \begin{bmatrix}
+    x \\
+    y \\
+    z \\
+  \end{bmatrix}
+\]
+This implies that in every sense $\mathfrak{so}(3) \cong \mathds{R}^{3}$, because $\wedge$ and $\vee$ preserve all necessary properties of the lie algebra.
+  
+\end{document}
