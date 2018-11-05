@@ -1,0 +1,95 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Computer Vision}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+
+\begin{document}
+
+\section*{Standard Left-Invariant Kinematics for Two Moving Cameras}
+The homography is a matrix that relates the two images of the same planar scene. The homography can be written as
+\[
+    H = \gamma \left( R + \frac{Tn^T}{d} \right)
+\]
+Where $R$ is a rotation matrix, $T$ is the translation between camera frames, $n$ is the vector normal to the scene, $d$ is the orthogonal distance to the scene and $\gamma$ is a scale factor. The goal of this document is to derive the standard left invariant kinematics on $SL(3)$ given by
+\[
+    \dot{H} = HX
+\]
+Where $H \in SL(3)$ is the homography and $X \in \mathfrak{sl}(3)$ is the group velocity. Furthermore, we wish to derive this group velocity with respect to intertial body velocities of each camera. We begin by laying down our coordinate frames.
+
+Suppose that we have two camera frames $\{A\}$ and $\{B\}$. Let $R_B^A$ be the rotation matrix expressing the orientation of $\{B\}$ with respect to $\{A\}$ expressed in $\{A\}$, $T_{B/A}^A$ be the translation of $\{B\}$ with respect to $\{A\}$ expressed in $\{A\}$, $n^B$ the normal vector of the planar scene expressed in frame $\{B\}$, and $d_B$ be the orthogonal distance from frame $\{B\}$ to the planar scene.
+
+We can then write the homography as 
+\[
+    H_{B}^{A} = \gamma \left( R_{B}^{A} + \frac{T_{B/A}^A (n^B)^T}{d_{B}} \right)
+\]
+It is important to note that $n$ is NOT expressed in the same frame as $T$ and $R$. This fact becomes very apparent in the derivation of the homography (See An Invitation to 3-D Vision Chapter 5, Ma \& Soatto). The problem with writing the homography in this fashion, is that we don't measure derivative of $R_{B}^A$ or $T_{B/A}^A$ directly. Thus, we will introduce an intermediate frame $\{0\}$ and first derive the dynamics in that frame. Consider the homography 
+\[
+    H_A^0 = \gamma_A \left( R_A^0 + \frac{T_{A/0}^0(n^A)^T}{d_A} \right)
+\]
+We wish to write the left invariant kinematics in the form $\dot{H}_A^0 = H_A^0X$, where $X \in \mathfrak{sl}(3)$. Taking the derivative yields
+\[
+    \begin{aligned}
+        \dot{H}_{A}^0 &= \frac{\dot{\gamma}_A}{\gamma_A}H_{A}^0 + \gamma_A \left( \dot{R}_A^0 + \frac{\dot{T}_{A/0}^0 (n^A)^T + T_{A/0}^0(\dot{n}^A)^T}{d_A} - \frac{\dot{d}_AT_{A/0}^0(n^A)^T}{d_A^2}\right) \\
+                      &= \frac{\dot{\gamma}_A}{\gamma_A}H_{A}^0 + \gamma_A \left( R_A^0 \left( \omega_{A/0}^A \right)^{\wedge} + \frac{R_{A}^0V_{A/0}^A(n^A)^T + T_{A/0}^0(n^A)^T \left( \omega_{A/0}^A \right)^{\wedge}}{d_A} + \frac{(n^A)^TV_{A/0}^AT_{A/0}^A(n^A)^T}{d_A^2} \right) \\
+                      &= \frac{\dot{\gamma}_A}{\gamma_A}H_{A}^0 + \gamma_A \left( \left[ R_{A}^0 + \frac{T_{A/0}^0(n^A)^T}{d_A} \right]\left(\omega_{A/0}^A\right)^{\wedge} + \left[ R_A^0 + \frac{T_{A/0}^A(n^A)^T}{d_A}\right]\frac{V_{A/0}^A(n^A)^T}{d_A} \right) \\
+                      &= H_A^0 \left( \left( \omega_{A/0}^A \right)^{\wedge}  +  \frac{V_{A/0}^A(n^A)^T}{d_A} + \frac{\dot{\gamma}_A}{\gamma_A}I_3 \right)
+    \end{aligned}
+\]
+Now, we recall the definition of $\mathfrak{sl}(3)$
+\[
+    \mathfrak{sl}(3) = \left\{ X \in \mathds{R}^{3 \times 3}\ |\ \text{tr}(X) = 0 \right\},
+\]
+which imposes the constraint
+\[
+    \text{tr} \left( \left( \omega_{A/0}^A \right)^{\wedge}  +  \frac{V_{A/0}^A(n^A)^T}{d_A} + \frac{\dot{\gamma}_A}{\gamma_A}I_3 \right) = \frac{(n^A)^TV_{A/0}^A}{d_A} + 3\frac{\dot{\gamma}_A}{\gamma_{A}} = 0
+\]
+Thus we have that
+\[
+    \frac{\dot{\gamma}_A}{\gamma_A} = -\frac{(n^A)^TV_{A/0}^A}{3d_A}
+\]
+Therefore, our standard left-invariant kinematics for $H_A^0$ are
+\[
+    \dot{H}_A^0 = H_A^0 \left( \left( \omega_{A/0}^A \right)^{\wedge} +  \frac{V_{A/0}^A(n^A)^T}{d_A}-\frac{(n^A)^TV_{A/0}^A}{3d_A}I_3 \right) = H_A^0X_A
+\]
+Similarly for $H_B^0$, we have
+\[
+    \dot{H}_B^0 = H_B^0 \left( \left( \omega_{B/0}^B \right)^{\wedge} +  \frac{V_{B/0}^B(n^B)^T}{d_B}-\frac{(n^B)^TV_{B/0}^B}{3d_B}I_3 \right) = H_B^0X_B
+\]
+Now, we have written two systems in terms of quantities that are easily measured. To combine these systems into one system, we define $H_B^A = (H_A^0)^{-1}H_B^0$, and take the derivative as follows
+\[
+    \begin{aligned}
+        \dot{H}_B^A &= \frac{d}{dt} \left({(H_A^0)^{-1}}\right)H_B^0 + (H_A^0)^{-1}\dot{H}_B^0 \\
+                    &= -(H_A^0)^{-1}\dot{H}_A^0(H_A^0)^{-1}H_B^0 + (H_A^0)^{-1}\dot{H}_B^0 \\
+                    &= -X_A(H_A^0)^{-1}H_B^0 + (H_A^0)^{-1}H_B^0X_B \\
+                    &= H_B^AX_B - H_B^A(H_B^A)^{-1}X_AH_B^A \\
+                    &= H_B^A \left( X_B - (H_B^A)^{-1}X_AH_B^A \right) \\
+                    &= H_B^A \left( X_B - \text{Ad}_{(H_B^A)^{-1}}(X_A) \right) \\
+                    &= H_B^A \left( X_B - \text{Ad}_{H_A^B}(X_A) \right)
+
+    \end{aligned}
+\]
+Thus, we have standard left-invariant kinematics for a system of two moving cameras. 
+
+\end{document}
