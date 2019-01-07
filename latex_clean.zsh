@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 setopt shwordsplit
-exts="aux bbl blg brf idx ilg ind lof log lol lot out toc synctex.gz fls fdb_latexmk pdf"
+exts="aux bbl blg brf idx ilg ind lof log lol lot out toc synctex.gz fls fdb_latexmk"
 
 for ext in $exts; do
      rm -f **/*.$ext
