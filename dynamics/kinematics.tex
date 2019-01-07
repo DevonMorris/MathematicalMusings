@@ -1,0 +1,70 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Dynamics}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+
+\begin{document}
+
+\section*{Kinematics}
+
+\subsection*{Vectors}
+Vectors will always be denoted by $\mathbf{q}$, using a bolded letter. Vectors always have a magnitude and direction (LIES, only in a normed space). Unit vectors can specify directions, such a vector $\hat{\mathbf{e}}$. We construct the vector such that $||\hat{\mathbf{e}}|| = 1$. We can rewrite $\mathbf{q} = q\hat{\mathbf{e}}$. Equivalently, $\hat{\mathbf{e}} = \frac{\mathbf{q}}{||\mathbf{q}||}$.
+
+\subsection*{Coordinate Frames}
+Set of three orthonormal vectors in a right handed fashion. To be right-handed we have $\hat{\mathbf{e}}_3 = \hat{\mathbf{e}}_1 \times \hat{\mathbf{e}}_2$. We can now write $\mathbf{q} = q_1 \hat{\mathbf{e}}_1 + q_2 \hat{\mathbf{e}}_2 + q_3 \hat{\mathbf{e}}_3$. We can sometimes write
+\[
+    \mathbf{q} = 
+    \begin{bmatrix}
+        q_1 \\
+        q_2 \\
+        q_3
+    \end{bmatrix}
+\]
+when the basis is implied and we care more about computation on components.
+
+\subsection*{Position, Velocity, Acceleration}
+The position of a particle relative to the origin is denoted as $\mathbf{r}(t)$. We can write $\Delta \mathbf{r} = \mathbf{r}(t + \Delta t) - \mathbf{r}(t)$. We define the velocity as 
+\[
+    \mathbf{v} = \frac{d\mathbf{r}}{dt} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \mathbf{r}}{\Delta t} = \dot{\mathbf{r}}
+\]
+We can write this as $\mathbf{v} = ||\mathbf{v}||\hat{\mathbf{e}}_{\mathbf{v}}$. Repeating this process with the velocity vector we have
+
+\[
+    \mathbf{a} = \frac{d\mathbf{v}}{dt} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \mathbf{v}}{\Delta t} = \dot{\mathbf{v}} = \ddot{\mathbf{r}} = \frac{d^2 \mathbf{r}}{dt^2}
+\]
+From the discussion in class we can see that there is some component in the direction of the path and some component normal to the path. Let's say we have a position vector given by 
+\[
+    \mathbf{r} = \sum_{i=1}^3 r_i \hat{\mathbf{e}}_i
+\]
+Thus we have that, by the product rule
+\[
+    \mathbf{v} = \sum_{i=1}^3 \dot{r}_i \hat{\mathbf{e}}_i + \sum_{i=1}^3 r_i \dot{\hat{\mathbf{e}}}_i
+\]
+Doing the same thing with acceleration gives us
+\[
+    \mathbf{a} = \sum_{i=1}^3 \ddot{r}_i \hat{\mathbf{e}}_i + 2\sum_{i=1}^3 \dot{r}_i\dot{\hat{\mathbf{e}}}_i + \sum_{i=1}^3 r_i \ddot{\hat{\mathbf{e}}}_i
+\]
+
+\end{document}
