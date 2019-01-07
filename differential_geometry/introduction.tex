@@ -11,6 +11,7 @@
 \usepackage{dsfont}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{amssymb}
 
 \geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
 \pagestyle{fancy}
@@ -28,5 +29,20 @@
 \begin{document}
 
 \section*{Introduction}
+Topology vs. Geometry. In Topology you never really use riemannian structures. This course is all on Riemannian manifolds. Do Carmo's book is not ideal, but it is one of the standard references. There may be errors. Doesn't do enough in coordinates. We'd like to do stuff in coordinates YAY! Plenty of experience computing things. Some of this will require supplemntation.
+
+Goal: is to get to the definition of a topological manifold. Do Carmo is wrong in this aspect because his definition isn't precise enough.
+
+\subsection*{Historical overview of non-euclidean geometry}
+Historical overview of non-euclidean geometry: Euclid wanted to axiomatize planar geometry (triangles, lines, planes, circles). 5 postulates, 4 simple postulates, and the parallel postulate. Basically, parallel lines exist. Playfair's postulate is the simplified version that states: given a line $L$ in a plane and a point $P$ not on $L$, there is at most one line through $P$ not intersecting $L$. Basically first 4 axioms show existence of parallel lines and Playfair says only one such line exists. Really we need more like 20 axioms (Hilbert found them). What happens if we replace parallel postulate with something different? 
+
+\begin{enumerate}
+    \item There exists at least two lines passing through $P$, not intersecting $L$ (hyperbolic geometry). Poincare disk model is a model of this. Lines are half circles intersecting the circle at the origin.
+    \item All lines through $P$ intersect $L$ (elliptic geometry). Model for this is the spherical model.
+\end{enumerate}
+
+For example triangles in euclidean geometry, interior angles sum to 180 degrees. In hyperbolic geometry interior angles sum to less than 180 degrees. In elliptic geometry interior angles sum to more than 180 degrees. (You can kinda characterize these spaces like this).
+
+How did Riemann come up with non-euclidean geometry? In grad school, as a postdoc you picked 3 topics that you submitted to your advisor. Submitted one on the foundations of geometry, and that got chosen by Gauss. He basically came up with geometry overnight. Led to questions revealing things about general relativity.
 
 \end{document}

@@ -1,0 +1,44 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+
+\begin{document}
+
+\section*{Topological Manifolds}
+Recall t a topological space $X$ is called hausdorff if for every $p,q \in X$ there exist open neighborhoods $U$ and $V$ containing $p,q$ respectively s.t. $U \cap V = \varnothing$.
+
+A basis for a topological space $X$ is a collection $\mathcal{B}$ of open subsets of $X$ such that for  every open set $U \subset X$ and every point $p \in U$, there exists a set $B \in \mathcal{B}$ such that $p \in B \subset U$. (Collection of open sets to build other open sets). $\Rightarrow$ all open sets in $X$ can be written as union of elements in $\mathcal{B}$.
+
+Example: For any $n$, $\mathds{R}^n$, has a basis consisting of 
+\[
+    \mathcal{B} = \{\text{open balls with rational centers and rational radii}\}
+\]
+(Want properties second countable)
+
+A space $X$ is second countable if it admits a basis with countable cardinality. $\mathds{R}^n$ is second countable with the basis defined above.
+
+\end{document}

@@ -28,5 +28,36 @@
 \begin{document}
 
 \section*{Introduction}
+We will be covering 3 topics: Detection, Estimation, and Time-Series Analysis. These are mainline topics in mathematical statistics. This course is heavily focused in linear algebra. 
+\subsection*{Example Appliations}
+Detection theory - hypothesis testing or decision theory. From observed measurements, infer in which of a finite number of states the underlying system resides. Some applications are RADAR, SONAR, wireless communications, speech recognition and classification, low data-rate coding. 
 
+Estimation theory - parameter estimation, point estimation. From observed measurements, estimate numerical values for a parameter.
+
+Time Series Analysis - prediction, filtering, smoothing, spectral analysis. Applying models to time series, these models are low order (maybe filter coefficients), and use these model parameters to extract information about past present or future. Tracking, flight control, signal compression and decompression, weather prediction, direction of arrival. 
+
+\subsection*{Simplest Examples}
+Detection problem - binary communications. $x_t = \theta s_t + n_t$, where $t = 1, \dots, N$, $\theta$ is a scalar parameter. 
+\[
+    \begin{aligned}
+ H_0: \theta \in \Theta_0 \\
+ H_1: \theta \in \Theta_1       
+    \end{aligned}
+\]
+$s_t: t = 1, \dots, N$ is a known sequence (deterministic), samples of a waveform. $n_t$ is noise-like (random). $\Theta_0 = \{-\mu\}$, $\Theta_1 = \{\mu\}$. Transmitted signal is $\pm \mu s_t$. A useful statistic to solve this problem. Because the transmit signal is known I can use this to correlate with the recieved signal. 
+\[
+    \begin{aligned}
+        c_N &= \sum_{t=1}^N s_tx_t \\
+            &= \theta \sum_{t=1}^N s_t^2 +  \sum_{t=1}^N n_ts_t
+    \end{aligned}
+\]
+If $n_t$ we get $c_N \approx \theta E_s = \sum_{t=1}^N s_t^2$ which is the power in the waveform. Under each hypothesis we can determine the result. $c_N$ is a sufficient statistic  we can build a detector
+\[
+    \phi(c_N) = 
+    \begin{cases}
+        1 \leftrightarrow H_1 & c_N > 0 \\ 
+        0 \leftrightarrow H_0 & c_N \leq 0
+    \end{cases}
+\]
+Assume $n_t \sim F_{n_t}(n)$ (density function), $(0, \sigma^2)$. The expected value $E(c_N) = \theta E_s$ because $E(n_t) = 0$. $f_{x_t}(x | \theta) = f_{n_t}(x - \theta s_t)$. What is $f_{c_N}(c | H_{0/1})$? Remember that $E{c_N} = \theta E_s$. Let us define $\eta = \sum_{t=1}^N s_tn_t$. This is a weighted sum of random variables (or convolution of their densities). Let $z_t = s_tn_t$. So we have $f_{z_t}(z) = \frac{1}{s_t} f_{n_t}(z/s_t)$. So we have $f_{\eta}( \eta) = f_{z_1}(\eta) * f_{z_2}(\eta) * \dots * f_{z_N}(\eta) \rightarrow \mathcal{N}(0, \sigma_{\eta}^2 \sum s_t)$. So we have $f_{c_N}(c| H_0) \sim \mahtcal{N}(-\mu Es, \sigma_N^2 \sum s_t^2)$. Remember drawing of two gaussians and false positive.
 \end{document}
