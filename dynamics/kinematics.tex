@@ -67,4 +67,43 @@ Doing the same thing with acceleration gives us
     \mathbf{a} = \sum_{i=1}^3 \ddot{r}_i \hat{\mathbf{e}}_i + 2\sum_{i=1}^3 \dot{r}_i\dot{\hat{\mathbf{e}}}_i + \sum_{i=1}^3 r_i \ddot{\hat{\mathbf{e}}}_i
 \]
 
+\subsubsection*{Example}
+A coordinate frame $B$ is given by $x,y,z$ axes. Suppose we have a particle moving in this frame. The motion of particle $p$ is given by $\mathbf{r}_{p/B}(t) = 3t \hat{\mathbf{i}} + \cos t \hat{\mathbf{j}} + 5\hat{\mathbf{k}}$. Now we will find the velocity $\mathbf{v}_{p/B} = 3\hat{\mathbf{i}} + -\sin t \hat{\mathbf{j}}$ and acceleration $\mathbf{a}_{p/B} = -\cos t \hat{\mathbf{j}}$.
+
+\subsubsection*{Example}
+We have two frames $O$ and $B$ and a vector between them $\mathbf{r}_{B/O}$ and a vector to the particle $\mathbf{r}_{p/O}$. We want to find the point $p$ relative to a stationary frame. We have that $\mathbf{r}_{p/O} = \mathbf{r}_{B/O} + \mathbf{r}_{p/B}$ by using the derivatives we hae that $\mathbf{v}_{p/O} = \mathbf{v}_{B/O} + \mathbf{v}_{p/B}$ and $\mathbf{a}_{p/O} = \mathbf{a}_{B/O} + \mathbf{a}_{p/B}$. Let $\mathbf{r}_{B/O} = 4t^2 \hat{\mathbf{J}} + 5t^3\hat{\mathbf{K}}$, we have that $\mathbf{v}_{B/O} = 8t \hat{\mathbf{J}} + 15t^2 \hat{\mathbf{K}}$ and $\mathbf{a}_{B/O} = 8\hat{\mathbf{J}} + 30t\hat{\mathbf{K}}$. At this point, we assume that the two frames are aligned, so therefore we have that 
+
+\[
+\mathbf{r}_{p/O} = 3t\hat{\mathbf{I}} + (4t^2 + \cos t) \hat{\mathbf{J}} + (5t^3 + 5)\hat{\mathbf{K}}
+\]
+
+\subsubsection*{Terminology}
+
+These three phrases are synonomous
+\begin{itemize}
+    \item "Relative To"
+    \item "Respect To"
+    \item "Reference To"
+    
+\end{itemize}
+that mean the point that things are measured from.
+
+The three phrases
+\begin{itemize}
+    \item "In terms of"
+    \item "Described in"
+    \item "Expressed in"
+\end{itemize}
+are synonomous and mean the frame that we use to write the vector.
+Usually we measure things relative to an intertial frame and express them in the local frame.
+
+\subsubsection*{Comments}
+
+\begin{itemize}
+    \item Terms must be expressed in the same frame to be used together, but they don't have to be with relative to the same frame
+    \item Inertial frames are frames that are not accelerating or rotating.
+    \item To use newton's laws (including energy, momentum, Lagrange, Hamilton, Kane?, Gibb?)
+    \item All motion must be relative to some inertial frame, but can expressed in any frame
+\end{itemize}
+
 \end{document}
