@@ -12,6 +12,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
+\usepackage{physics}
 
 \geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
 \pagestyle{fancy}
@@ -24,7 +25,8 @@
 \setlength{\parindent}{0.0in}
 \setlength{\parskip}{0.0in}
 
-\newtheorem{prop}{Proposition}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
 \begin{document}
 
 \section*{Smooth Manifolds}
@@ -56,13 +58,22 @@ Def: if $F: U \rightarrow V$ is smooth and a homeomorphism with $F^{-1}$ smooth,
 \subsubsection*{Nonexample}
 $f(x) = x^3$, is smooth homeomorphism, but is not diffeomorphic because $f^{-1}(x)$ is not differentiable at $x=0$.
 
-\subsection*{Definition} Let $M$ be a manifold with $(U_1, \varphi_1)$ and $(U_2, \varphi_2)$ are charts on $M$. If $U_1 \cap U_2 \neq \varnothing$  Then $\varphi_2 \circ \varphi_1^{-1}: \varphi_1(U_1 \cap U_2) \rightarrow \varphi_2(U_1 \cap U_2)$ is called the transition map from $(U_1, \varphi_1)$ to $(U_2, \varphi_2)$. $\varphi_1$ and $\varphi_2$ are compatible, if $\varphi_2 \circ \varphi_1^{-1}$ is a diffeomrophism. Recall the example above where this can fail and we see that they are not compatible charts.
+\begin{defn}
+Let $M$ be a manifold with $(U_1, \varphi_1)$ and $(U_2, \varphi_2)$ are charts on $M$. If $U_1 \cap U_2 \neq \varnothing$  Then $\varphi_2 \circ \varphi_1^{-1}: \varphi_1(U_1 \cap U_2) \rightarrow \varphi_2(U_1 \cap U_2)$ is called the transition map from $(U_1, \varphi_1)$ to $(U_2, \varphi_2)$. $\varphi_1$ and $\varphi_2$ are compatible, if $\varphi_2 \circ \varphi_1^{-1}$ is a diffeomorophism. 
+\end{defn}
+Recall the example above where this can fail and we see that they are not compatible charts.
 
-\subsection*{Definition} A smooth atlas $\mathcal{A}$ on a manifold $M$ is a collection $\{(U_i, \varphi_i)\}$ of coordinate charts such that $M = \cup_j U_j$ and $(U_i, \varphi_i)$, is compatible to $(U_j, \varphi_j)$ whenever $U_i \cap U_j \neq \varnothing$. 
-\subsubsection*{Proposition}
-We also say that every smooth atlas on $M$ is contained in a unique maximal smooth atlas. 
+\begin{defn}
+A smooth atlas $\mathcal{A}$ on a manifold $M$ is a collection $\{(U_i, \varphi_i)\}$ of coordinate charts such that $M = \cup_j U_j$ and $(U_i, \varphi_i)$, is compatible to $(U_j, \varphi_j)$ whenever $U_i \cap U_j \neq \varnothing$. 
+\end{defn}
 
-\subsection*{Definition} Let $M$ be an $n$-dimensional topological manifold. A smooth structure on $M$ is a maximal smooth atlas $\mathcal{A}$, a pair $(M, \mathcal{A})$ is called a smooth manifold.
+\begin{prop}
+Every smooth atlas on $M$ is contained in a unique maximal smooth atlas. 
+\end{prop}
+
+\begin{defn}
+Let $M$ be an $n$-dimensional topological manifold. A smooth structure on $M$ is a maximal smooth atlas $\mathcal{A}$, a pair $(M, \mathcal{A})$ is called a smooth manifold.
+\end{defn}
  
 \subsubsection*{Quick Examples}
 \begin{itemize}
@@ -70,7 +81,7 @@ We also say that every smooth atlas on $M$ is contained in a unique maximal smoo
     \item Cartesian products of smooth manifolds are smooth manifolds.
 \end{itemize}
 
-\subsubsection*{Example on $S^2$}
+\subsubsection*{Example: $S^2$}
 Recall the charts
 \[
     (U_i^\pm, \varphi_i^\pm)
@@ -86,7 +97,57 @@ on $S^2$. Let's find the transition map from $(U_1^+, \varphi_1^+)$ to $(U_2^+, 
 \]
 Note that the transition map is smooth on the open unit disk which means the charts are compatible. These charts define a smooth structure on $S^2$.
 
-\subsubsection*{Real projective spaces $\mathds{RP}^n$}
-Let $\mathds{RP}^n$ denote the set of all lines in $\mathds{R}^{n+1}$ which pass through the origin. Which are the 1-dim vector subspaces of $\mathds{R}^{n+1}$. $\mathds{RP}^n = \mathds{R}^{n+1} \setminus \{0\}$ with the relation $x \sim \alpha x$.
+\subsubsection*{Example: Real projective spaces $\mathds{RP}^n$}
+Let $\mathds{RP}^n$ denote the set of all lines in $\mathds{R}^{n+1}$ which pass through the origin. Which are the 1-dim vector subspaces of $\mathds{R}^{n+1}$. $\mathds{RP}^n = \mathds{R}^{n+1} \setminus \{0\}$ with the relation $x \sim \alpha x$. Let $\pi: \mathds{R}^{n+1} \setminus \{0\} \rightarrow \mathds{RP}^n$, be the quotient map that sends every $x \in \mathds{R}^{n+1} \setminus \{0\}$ to the line it spans. Endow $\mathds{RP}^n$ with the quotient topology. We note that $\pi(x^1, \dots, x^n) = \pi(\alpha x^1, \dots, \alpha x^n)$. Now we wish to define some coordinate charts on $\mathds{RP}^n$, using homogeneous coordiantes. These are not coordinates in the traditional sense are simply a way of representing the equivalence classes defined above. Let $p \in \mathds{RP}^n$, and let us specify a nonzero point $x \in \mathds{R}^{n+1} \setminus \{0\}$, such that $x$ lies on $p$. We will write
+\[
+  p = [x^1 : x^2: \dots : x^{n+1}]
+\]
+We note that by our relation for any $\alpha \neq 0$ we have
+\[
+ [\alpha x^1 :\alpha  x^2: \dots :\alpha  x^{n+1}] = [x^1 : x^2: \dots : x^{n+1}]
+\]
+Now we will define actual coordinate charts on $\mathds{RP}^n$. Let
+\[
+  U_j = \left\{[x^1 : x^2: \dots : x^{n+1}], x^j \neq 0\right\}
+\]
+Note, the $U_j$ cover $\mathds{RP}^n$ and they are open (look at the preimage under $\pi$). Now we will define our coordinate charts $\varphi_j: U_j \rightarrow \mathds{R}^n$ by
+\[
+  \varphi_j ([x^1: \dots : x^n]) = \left(\frac{x^1}{x^j}, \dots, \hat{\frac{x^j}{x^j}}, \dots, \frac{x^{n+1}}{x^j}\right)
+\]
+where the $\hat{}$ denotes that the entry has been removed. For example we have that $\varphi_2 ([2:7:19]) = (2/7, 19/7)$. By inspection we note that
+\[
+  \varphi_j^{-1}(y^1, \dots, y^n) = [y^1: \dots: 1: \dots: y^n]
+\]
+where the $1$ appears in the $j$th entry. We know that $\mathds{RP}^n$ is a topological manifold, by this construction. Now we wish to show it is a smooth manifold. To do so, we will consider the the transition maps $\varphi_i \circ \varphi_j^{-1}$.
+\[
+  \varphi_i \circ \varphi_j^{-1}(y^1, \dots, y^n) = \varphi_i( [y^1: \dots: 1: \dots y^n])
+  = \left( \frac{y^1}{y^i}, \dots, \frac{y^{j-1}}{y^i}, \frac{y^{j+1}}{y^i}, \dots, \frac{1}{y^i}, \dots, \frac{y^n}{y^i} \right)
+\]
+This map is a diffeomorphism on $\varphi_j(U_i \cap U_j)$.
+
+\subsubsection*{Example: Level sets of smooth functions}%
+\label{ssub:Example: Level sets of smooth functions}
+Suppose $F: \mathds{R}^n \rightarrow \mathds{R}$. Let $M = F^{-1}(c)$ for some $c \in \mathds{R}$. Suppose that for all $p \in M$, $\pdv{F}{x^i}$ are all nonzero. The implicit function theorem says that at each point $p \in M$, there exists $(U,f)$ such that $U \cap M$ is defined locally by $x^j = f(x^1, \dots, x^{j-1}, x^{j+1}, \dots, x^n)$. Since we already showed that the graphs of functions are topological manifolds, we get that for free. Our parameterizations come from the implicit function theorem and the charts are just the projections from the graph.
+
+\subsection*{Smooth Mappings}%
+\label{sub:Smooth Mappings}
+
+\begin{defn}
+  A map $F: M \rightarrow N$ where $M$,$N$ are smooth manifolds, is called smooth if for all $p \in M$ there are charts $(U, \varphi)$ and $(V, \psi)$.  Such that $\underline{F(U) \subset V}$ and $\psi \circ F \circ \varphi^{-1}: \varphi(U) \rightarrow \varphi(V)$ is smooth.
+\end{defn}
+We call $\psi \circ F \circ \varphi^{-1}$ a coordinate representation of $F$. All other compatible charts will be smooth because of the smooth transition maps. Thus this definition is independent of the coordinate chart chosen.
+\begin{prop}
+ If a map $F: M \rightarrow N$ is smooth then it is continuous 
+\end{prop}
+This proposition may seem trivial, but it actually only follows due to the $F(U) \subset V$ contained in the above definition.
+
+\begin{defn}
+  A map $F: M \rightarrow N$ that is smooth, a homeomorphism and has a smooth inverse $F^{-1}$ is called a diffeomorphism
+\end{defn}
+
+\subsubsection*{Example}%
+Consider the map $\pi: S^2 \rightarrow \mathds{RP}^2$ which sends each point $x \in S^2$ to the line it spans. Recall $(U^\pm_i, \varphi^\pm_i)$ on $S^2$ and $(U_j, \varphi_j)$ on $\mathds{RP}^2$.
+
+
 
 \end{document}

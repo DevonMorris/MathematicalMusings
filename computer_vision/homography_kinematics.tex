@@ -27,12 +27,12 @@
 
 \begin{document}
 
-\section*{Standard Left-Invariant Kinematics for Two Moving Cameras}
+\section*{Kinematics for Two Moving Cameras}
 The homography is a matrix that relates the two images of the same planar scene. The homography can be written as
 \[
     H = \gamma \left( R + \frac{Tn^T}{d} \right)
 \]
-Where $R$ is a rotation matrix, $T$ is the translation between camera frames, $n$ is the vector normal to the scene, $d$ is the orthogonal distance to the scene and $\gamma$ is a scale factor. The goal of this document is to derive the standard left invariant kinematics on $SL(3)$ given by
+Where $R$ is a rotation matrix, $T$ is the translation between camera frames, $n$ is the vector normal to the scene, $d$ is the orthogonal distance to the scene and $\gamma$ is a scale factor. The goal of this document is to derive the kinematics on $SL(3)$ given by
 \[
     \dot{H} = HX
 \]
@@ -69,7 +69,7 @@ Thus we have that
 \[
     \frac{\dot{\gamma}_A}{\gamma_A} = -\frac{(n^A)^TV_{A/0}^A}{3d_A}
 \]
-Therefore, our standard left-invariant kinematics for $H_A^0$ are
+Therefore, our kinematics for $H_A^0$ are
 \[
     \dot{H}_A^0 = H_A^0 \left( \left( \omega_{A/0}^A \right)^{\wedge} +  \frac{V_{A/0}^A(n^A)^T}{d_A}-\frac{(n^A)^TV_{A/0}^A}{3d_A}I_3 \right) = H_A^0X_A
 \]
@@ -87,9 +87,10 @@ Now, we have written two systems in terms of quantities that are easily measured
                     &= H_B^A \left( X_B - (H_B^A)^{-1}X_AH_B^A \right) \\
                     &= H_B^A \left( X_B - \text{Ad}_{(H_B^A)^{-1}}(X_A) \right) \\
                     &= H_B^A \left( X_B - \text{Ad}_{H_A^B}(X_A) \right)
-
     \end{aligned}
 \]
-Thus, we have standard left-invariant kinematics for a system of two moving cameras. 
+Thus, we have kinematics for a system of two moving cameras. We know that $X_B - \text{Ad}_{H_A^B}(X_A) \in \mathfrak{sl}(3)$ since the trace is zero. 
+
+We note at this point that the vector field we have created is not left-invariant, this is equivalent to saying that there is no single element of the lie algebra that characterizes the vector field at all points on $SL(3)$. So we can't take the matrix exponential to get our position on the manifold at any point in time, however since both $X_B$ and $X_A$ are assumed to be time-varying we don't need to use the matrix exponential over long time periods$.
 
 \end{document}

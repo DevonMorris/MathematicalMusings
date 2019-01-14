@@ -36,8 +36,9 @@ Estimation theory - parameter estimation, point estimation. From observed measur
 
 Time Series Analysis - prediction, filtering, smoothing, spectral analysis. Applying models to time series, these models are low order (maybe filter coefficients), and use these model parameters to extract information about past present or future. Tracking, flight control, signal compression and decompression, weather prediction, direction of arrival. 
 
-\subsection*{Simplest Examples}
-Detection problem - binary communications. $x_t = \theta s_t + n_t$, where $t = 1, \dots, N$, $\theta$ is a scalar parameter. 
+\subsection*{Simplest Examples: Detection}
+
+Binary communications. $x_t = \theta s_t + n_t$, where $t = 1, \dots, N$, $\theta$ is a scalar parameter. 
 \[
     \begin{aligned}
  H_0: \theta \in \Theta_0 \\
@@ -59,5 +60,63 @@ If $n_t$ we get $c_N \approx \theta E_s = \sum_{t=1}^N s_t^2$ which is the power
         0 \leftrightarrow H_0 & c_N \leq 0
     \end{cases}
 \]
-Assume $n_t \sim F_{n_t}(n)$ (density function), $(0, \sigma^2)$. The expected value $E(c_N) = \theta E_s$ because $E(n_t) = 0$. $f_{x_t}(x | \theta) = f_{n_t}(x - \theta s_t)$. What is $f_{c_N}(c | H_{0/1})$? Remember that $E{c_N} = \theta E_s$. Let us define $\eta = \sum_{t=1}^N s_tn_t$. This is a weighted sum of random variables (or convolution of their densities). Let $z_t = s_tn_t$. So we have $f_{z_t}(z) = \frac{1}{s_t} f_{n_t}(z/s_t)$. So we have $f_{\eta}( \eta) = f_{z_1}(\eta) * f_{z_2}(\eta) * \dots * f_{z_N}(\eta) \rightarrow \mathcal{N}(0, \sigma_{\eta}^2 \sum s_t)$. So we have $f_{c_N}(c| H_0) \sim \mahtcal{N}(-\mu Es, \sigma_N^2 \sum s_t^2)$. Remember drawing of two gaussians and false positive.
+Assume $n_t \sim F_{n_t}(n)$ (density function), $(0, \sigma^2)$. The expected value $E[c_N] = \theta E_s$ because $E[n_t] = 0$. $f_{x_t}(x | \theta) = f_{n_t}(x - \theta s_t)$. What is $f_{c_N}(c | H_{0/1})$? Remember that $E{c_N} = \theta E_s$. Let us define $\eta = \sum_{t=1}^N s_tn_t$. This is a weighted sum of random variables (or convolution of their densities). Let $z_t = s_tn_t$. So we have $f_{z_t}(z) = \frac{1}{s_t} f_{n_t}(z/s_t)$. So we have $f_{\eta}( \eta) = f_{z_1}(\eta) * f_{z_2}(\eta) * \dots * f_{z_N}(\eta) \rightarrow \mathcal{N}(0, \sigma_{\eta}^2 \sum s_t)$. So we have $f_{c_N}(c| H_0) \sim \mathcal{N}(-\mu Es, \sigma_N^2 \sum s_t^2)$. Remember drawing of two gaussians and false positive.
+
+\subsection*{Simplest Examples: Estimation}%
+\label{sub:Simplest Examples: Estimation}
+Suppose we have a model $x_t = \theta + n_t, \ t = 1, \dots, N-1$, $x_t \in \mathds{R}$. This model represents everything we know about the system, channel, etc. $n_t$ represents the measurement error (noise-like). Our proble is to estimate $\theta$ given $x_t$ for $t = 1, \dots, N-1$. We propose the estimator given by 
+\[
+\hat{\theta}_{N-1} = \frac{1}{N-1} \sum^{N-1}_{t=0} x_t
+\]
+This estimator has some desireable properties like being the maximum-likelihood estimator when $n_t \sim \mathcal{N}(0, \sigma^2)$. In general, we will try to derive an estimator that is optimal in some sense (to be defined later). We also wish to run our estimator iteratively (online, recursively). It is easily shown that in the case above
+\[
+  \hat{\theta}_N = \hat{\theta}_{N-1} + \frac{1}{N}(x_N - \hat{\theta}_{N-1})
+\]
+We also wish to ascribe some performance measure to the estimator. Some easy measures we can compute are bias and variance (these will be defined more rigorously later). Consider 
+\[
+  E[\hat{\theta}_{N}] = \frac{1}{N} \sum^{N}_{t=0} x_t = \frac{1}{N} \sum^{N}_{t=0} \theta + E[n_t]
+\]
+At this point, if assume that our noise $n_t$ is zero-mean, we have that
+\[
+  E[\hat{\theta}_N] = \theta
+\]
+When this equivalency holds, we say that $\hat{\theta}_N$ is an unbiased estimator. We can also analyze the variance of an estimator as
+\[
+  \text{var}[\hat{\theta}_N] = E[(\hat{\theta}_N - E[\hat{\theta}_N])^2]
+\]
+Note in this case we have
+\[
+  \text{var}[\hat{\theta}_N] = E\left[  \left(  \frac{1}{N}\sum_{t=0}^N n_t\right)^2\right] 
+\]
+If we further assume that the $n_t$ are uncorrelated, we have
+\[
+  \text{var}[\hat{\theta}_N] = \frac{1}{N^2}E\left[\sum_{t=0}^N n_t^2\right]  = \frac{\sigma^2}{N}
+\]
+Analyzing the limit 
+\[
+  \lim_{N \to \infty} \text{var}[\hat{\theta}_N] = 0
+\]
+in such a case we call this estimator consistent. Note, there are better definitions of consistency, such as convergence in probability (recall different limits and convergence from measure theory).
+
+\subsection*{Simplest Examples: Time Series Problem}%
+\label{sub:Simplest Examples: Time Series Problem}
+Consider the signal $x_t, s_t + n_t$, where $s_t = \cos \theta t$. In this case we wish to estimate $\theta$. Note, we can take the FFT, but this gives a frequency resolution of $2\pi/N$, so we could zero pad out to some $N + M$, samples which gives us a frequency resolution of $2 \pi/(N + M)$ as follows
+\[
+  \begin{aligned}
+    x_t &=
+    \begin{cases}
+      s_t + n_t & t < N \\
+      0 & t \geq N
+    \end{cases} \\
+  X_m &= \sum_{t=0}^{N-1} x_t e^{-j2\pi mt/(N+M)}
+  \end{aligned}
+\]
+However, this doesn't work, because the mainlobe of the sinc reconstruction still has noise. Basically we are still stuck to a resolution of $2\pi/N$ which we call the rayleight limit. We must take more samples to more precisely determine the frequency
+
+\subsection*{Linear Models}%
+\label{sub:Linear Models}
+This was the example about an antenna array im MIMO wireless communication. See Scharf's book for mroe details.
+
+
+
 \end{document}
