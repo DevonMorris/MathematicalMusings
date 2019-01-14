@@ -1,0 +1,54 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 1}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\begin{document}
+\section*{Problem 1}%
+\label{sec:Problem 1}
+
+Let $M_1, \dots, M_k$ be smooth manifolds of dimensions $n_1, \dots, n_k$ respectively. Prove that $M_1 \times \cdots \times M_k$ is a smooth manifold of dimension $n_1 + \cdots + n_k$.
+
+\begin{proof}
+  Let $N = M_1 \times \cdots \times M_k$ First we will show that $N$ is a topological manifold. We first note that $N$ is a Hausdorff, second-countable topological space under the product topology. Now, consider an arbitrary point $(p_1, \dots, p_k) \in N$, where $p_j \in M_j$ for each $j$. Thus, for every $j$, there exists a coordinate chart $(U_j, \varphi_j)$ such that $p_j \in U_j$ and $\varphi_j$ is a homeomorphism on its image. Let $V = U_1 \times \cdots \times U_k$. Let us define the map $\psi$ given by
+  \[
+    \begin{aligned}
+      \psi&: V \rightarrow \mathds{R}^{n_1 + \cdots + n_k} \\
+      \psi&(p_1, \dots, p_k) = (\varphi_1(p_1), \dots, \varphi_k(p_k)).
+    \end{aligned}
+  \]
+  We note that this map is continuous since each $\varphi_j$ is continuous. Consider the inverse given by
+  \[
+    \begin{aligned}
+      \psi^{-1}&: \psi(V) \rightarrow N \\
+      \psi^{-1}&(x_1, \dots, x_k) = (\varphi^{-1}_1(x_1), \dots, \varphi^{-1}_k(x_k)).
+    \end{aligned}
+  \]
+  This inverse is also continous since each $\varphi_j^{-1}$ is continuous. Thus, $N$ is a topological manifold of dimension $n_1 + \cdots + n_k$. Now, we will show that $N$ admits a smooth structure. We first note that each $M_j$ admits a smooth atlas $\mathcal{A}_j = \{(U_i, \varphi_i)\}_{i \in N(j)}$. 
+\end{proof}
+
+\end{document}
