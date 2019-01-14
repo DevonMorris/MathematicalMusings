@@ -1,0 +1,92 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\begin{document}
+
+\section*{Smooth Manifolds}
+Manifolds are locally-Euclidean, so we'd like to do calculus on them.  
+
+\subsection*{Example of where this can fail}
+Let $\mathcal{B}^2 = \{(x,y) \in \mathds{R}^2 | x^2 + y^2 \leq 1 \}$. Define 
+\[
+    \begin{aligned}
+        \varphi_1(x,y) &= (x,y) \\
+        \varphi_2(x,y) &= 
+    \begin{cases}
+        (x,y) & x \leq 0 \\
+        (2x, y) & x > 0
+    \end{cases}
+    \end{aligned}
+\]
+Both of these define global charts on manifold $\mathcal{B}^2$. Now let $\gamma = \{(x,y) | x=y\}$. Then $\varphi_1(\gamma)$. is just a straight line but $\varphi_2(\gamma)$ has a kink. These coordinate charts are not compatible to do calculus.
+
+\subsection*{Recall}
+If $U \subset \mathds{R}^n$ and $V \subset \mathds{R}^m$ both open, then a function $F: U \rightarrow V$, with $F = (f^1, f^2, \dots, f^m)$ we say this is $C^{\infty}$ if the partial derivatives
+\[
+    \frac{\partial^kf_j}{(\partial x^1)^{\alpha_1}\dots(\partial x^n)^{\alpha_n}}
+\]
+exist and are continous for $1 \leq j \leq m$ and $\alpha_1 + \alpha_2 + \dots + \alpha_n = k$.
+
+Def: if $F: U \rightarrow V$ is smooth and a homeomorphism with $F^{-1}$ smooth, then $F$ is a diffeomorphism.
+
+\subsubsection*{Nonexample}
+$f(x) = x^3$, is smooth homeomorphism, but is not diffeomorphic because $f^{-1}(x)$ is not differentiable at $x=0$.
+
+\subsection*{Definition} Let $M$ be a manifold with $(U_1, \varphi_1)$ and $(U_2, \varphi_2)$ are charts on $M$. If $U_1 \cap U_2 \neq \varnothing$  Then $\varphi_2 \circ \varphi_1^{-1}: \varphi_1(U_1 \cap U_2) \rightarrow \varphi_2(U_1 \cap U_2)$ is called the transition map from $(U_1, \varphi_1)$ to $(U_2, \varphi_2)$. $\varphi_1$ and $\varphi_2$ are compatible, if $\varphi_2 \circ \varphi_1^{-1}$ is a diffeomrophism. Recall the example above where this can fail and we see that they are not compatible charts.
+
+\subsection*{Definition} A smooth atlas $\mathcal{A}$ on a manifold $M$ is a collection $\{(U_i, \varphi_i)\}$ of coordinate charts such that $M = \cup_j U_j$ and $(U_i, \varphi_i)$, is compatible to $(U_j, \varphi_j)$ whenever $U_i \cap U_j \neq \varnothing$. 
+\subsubsection*{Proposition}
+We also say that every smooth atlas on $M$ is contained in a unique maximal smooth atlas. 
+
+\subsection*{Definition} Let $M$ be an $n$-dimensional topological manifold. A smooth structure on $M$ is a maximal smooth atlas $\mathcal{A}$, a pair $(M, \mathcal{A})$ is called a smooth manifold.
+ 
+\subsubsection*{Quick Examples}
+\begin{itemize}
+    \item $\mathds{R}^n$ is a smooth manifold
+    \item Cartesian products of smooth manifolds are smooth manifolds.
+\end{itemize}
+
+\subsubsection*{Example on $S^2$}
+Recall the charts
+\[
+    (U_i^\pm, \varphi_i^\pm)
+\]
+on $S^2$. Let's find the transition map from $(U_1^+, \varphi_1^+)$ to $(U_2^+, \varphi_2^+)$.
+\[
+    \begin{aligned}
+        \varphi_1(x^1,x^2,x^3) &= (x^2, x^3) \\
+        \varphi_2(x^1,x^2,x^3) &= (x^1, x^3) \\
+        (\varphi_1^+)^{-1}(y^1, y^2) &= (\sqrt{1 - (y^1)^2 - (y^2)^2}, y^1, y^2) \\
+        \varphi_2^+ \circ (\varphi_1^+)^{-1}(y^1, y^2) &= (\sqrt{1 - (y^1)^2 - (y^2)^2}, y^2)
+    \end{aligned}
+\]
+Note that the transition map is smooth on the open unit disk which means the charts are compatible. These charts define a smooth structure on $S^2$.
+
+\subsubsection*{Real projective spaces $\mathds{RP}^n$}
+Let $\mathds{RP}^n$ denote the set of all lines in $\mathds{R}^{n+1}$ which pass through the origin. Which are the 1-dim vector subspaces of $\mathds{R}^{n+1}$. $\mathds{RP}^n = \mathds{R}^{n+1} \setminus \{0\}$ with the relation $x \sim \alpha x$.
+
+\end{document}

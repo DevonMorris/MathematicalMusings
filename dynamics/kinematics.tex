@@ -102,8 +102,103 @@ Usually we measure things relative to an intertial frame and express them in the
 \begin{itemize}
     \item Terms must be expressed in the same frame to be used together, but they don't have to be with relative to the same frame
     \item Inertial frames are frames that are not accelerating or rotating.
-    \item To use newton's laws (including energy, momentum, Lagrange, Hamilton, Kane?, Gibb?)
+    \item To use newton's laws (including energy, momentum, Lagrange, Hamilton, Kane?, Gibbs?)
     \item All motion must be relative to some inertial frame, but can expressed in any frame
 \end{itemize}
+
+\subsection*{Coordinate Transformations}
+Suppose we have two coordinate frames given by basis vectors $\hat{\mathbf{e}}_1, \hat{\mathbf{e}}_2, \hat{\mathbf{e}}_3$ and $\hat{\mathbf{e}}'_1, \hat{\mathbf{e}}'_2, \hat{\mathbf{e}}'_3$. If the axes are aligned we have that
+\[
+    \begin{bmatrix}
+        \hat{\mathbf{e}}'_1 \\
+        \hat{\mathbf{e}}'_2 \\
+        \hat{\mathbf{e}}'_3
+    \end{bmatrix}
+    = \mathds{1}
+    \begin{bmatrix}
+        \hat{\mathbf{e}}_1 \\
+        \hat{\mathbf{e}}_2 \\
+        \hat{\mathbf{e}}_3
+    \end{bmatrix}
+\]
+In general, we can create some transformation matrix such that
+\[
+    \begin{bmatrix}
+        \hat{\mathbf{e}}'_1 \\
+        \hat{\mathbf{e}}'_2 \\
+        \hat{\mathbf{e}}'_3
+    \end{bmatrix}
+    = R
+    \begin{bmatrix}
+        \hat{\mathbf{e}}_1 \\
+        \hat{\mathbf{e}}_2 \\
+        \hat{\mathbf{e}}_3
+    \end{bmatrix}
+\]
+Where $R \in SO(3)$, is a rotation matrix. We can figure out the $R_{ij}$ by noting that
+$R_{ij} = \hat{\mathbf{e}}'_i \cdot \hat{\mathbf{e}}_j$. We sometimes call this the direction cosine matrix or DCM since $R_{ij} = \hat{\mathbf{e}}'_i \cdot \hat{\mathbf{e}}_j = |\hat{\mathbf{e}}_i||\hat{\mathbf{e}}'_j|\cos \theta_{ij} = \cos \theta_{ij} = \ell_{ij}$. Simply the cosine of the angles between the axes, thus our matrix is ultimately
+\[
+    R = 
+    \begin{bmatrix}
+        \ell_{11} & \ell_{12} & \ell_{13} \\
+        \ell_{21} & \ell_{22} & \ell_{23} \\
+        \ell_{31} & \ell_{32} & \ell_{33}
+    \end{bmatrix}
+\]
+Similarly, we have that
+\[
+    \begin{bmatrix}
+        \hat{\mathbf{e}}_1 \\
+        \hat{\mathbf{e}}_2 \\
+        \hat{\mathbf{e}}_3
+    \end{bmatrix}
+    = R^{-1}
+    \begin{bmatrix}
+        \hat{\mathbf{e}}'_1 \\
+        \hat{\mathbf{e}}'_2 \\
+        \hat{\mathbf{e}}'_3
+    \end{bmatrix}
+\]
+If we go through the derivation of $R$ we quickly realize that $R^{-1} = R^T$. We further note that $|R| = 1$. We note that the components of a vector transform the same way as the basis vectors. Suppose that $\mathbf{x} = x_1\hat{\mathbf{e}}_1 + x_2\hat{\mathbf{e}}_2 + x_3\hat{\mathbf{e}}_3$, or equivalently
+\[
+    \mathbf{x} = [x_1, x_2, x_3]
+    \begin{bmatrix}
+        \hat{\mathbf{e}}_1 \\
+        \hat{\mathbf{e}}_2 \\
+        \hat{\mathbf{e}}_3
+    \end{bmatrix}
+    = [x_1 x_2, x_3]
+    R^T
+    \begin{bmatrix}
+        \hat{\mathbf{e}}'_1 \\
+        \hat{\mathbf{e}}'_2 \\
+        \hat{\mathbf{e}}'_3
+    \end{bmatrix}
+    = [x'_1, x'_2, x'_3]
+    \begin{bmatrix}
+        \hat{\mathbf{e}}'_1 \\
+        \hat{\mathbf{e}}'_2 \\
+        \hat{\mathbf{e}}'_3
+    \end{bmatrix}
+\]
+So we have said that
+\[
+    [x_1, x_2, x_3]R^T = 
+    [x'_1, x'_2, x'_3]
+\]
+Or equivalently as column vectors
+\[
+    \begin{bmatrix}
+        x'_1 \\
+        x'_2 \\
+        x'_3
+    \end{bmatrix}
+    = R
+    \begin{bmatrix}
+        x_1 \\
+        x_2 \\
+        x_3
+    \end{bmatrix}
+\]
 
 \end{document}
