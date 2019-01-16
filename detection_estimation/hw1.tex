@@ -1,0 +1,81 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory - Homework 1}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{sol}{Solution}
+
+\begin{document}
+
+\section*{Problem 1}%
+Take the detector we mentioned in class. Assume that the symbol $\left\{ s_t \right\}_1^N$ is known, with energy $E_s$, and assume the noises $\left\{ n_t \right\}_1^N$ are drawn from a sequence of independent, identically distributed normal random variables. $n_t \sim \mathcal{N}(0, \sigma^2)$.
+
+\subsection*{Part a}%
+\label{sub:Part a}
+Show that the correlation statistic is distributed as follows under $H_0: \theta = -\mu$ and $H_1: \theta = \mu$:
+\[
+  \begin{aligned}
+    c_N &\sim \mathcal{N}(-\mu E_s, \sigma^2 E_s) \ \text{ under } H_0 \\ 
+    c_N &\sim \mathcal{N}(\mu E_s, \sigma^2 E_s) \ \text{ under } H_1 \\ 
+  \end{aligned}
+\]
+and plot these normal densities.
+
+\subsubsection*{Solution}%
+\label{ssub:Solution}
+
+We have that
+\[
+  c_N = \theta \sum_{t=1}^N s_t^2 + \sum_{t=1}^N n_ts_t = \theta E_s + \sum_{t=1}^N n_ts_t
+\]
+Under $H_0$ we have that $\theta = -\mu$ and 
+\[
+  c_N = -\mu  E_s + \sum_{t=1}^N s_tn_t
+\]
+Using the linearity of expectation we have that
+\[
+  \begin{aligned}
+    E[c_N] &= E[-\mu E_s] + E \left[ \sum_{t=1}^N n_ts_t \right]\\
+    &= -\mu E_s + E \left[ \sum_{t=1}^N n_ts_t \right]\\
+    &= -\mu E_s + \sum_{t=1}^N E[n_t]s_t\\
+    &= -\mu E_s
+  \end{aligned}
+\]
+And using the fact that for two independent random variables $X,Y$, $E[XY] = E[X]E[Y]$
+\[
+  \begin{aligned}
+    \text{var} [c_N] &= E \left[ \left( c_N - E[c_N] \right)^2 \right] \\
+                     &= E \left[ \left( \sum_{t=1}^N s_tn_t \right)^2 \right] \\
+                     &= E \left[ \sum_{t' = 1}^N \sum_{t = 1}^n s_ts_{t'} n_t n_{t'} \right] \\
+                     &= \sum_{t' = 1}^N \sum_{t = 1}^N E[s_ts_{t'}n_tn_{t'}] \\
+                     &= \sum_{t' = 1}^N \sum_{t=1, t \neq t'}^N s_ts_{t'}E[n_tn_s] + \sum_{t=1}^N s_t^2E[n_t^2] \\
+                     &= \sum_{t' = 1}^N \sum_{t=1, t \neq t'}^N s_ts_{t'}E[n_t]E[n_s] + \sum_{t=1}^N s_t^2E[n_t^2] \\
+                     &= \sum_{t=1}^N \sigma^2s_t^2 = \sigma^2 E_s
+  \end{aligned}
+\]
+Now, we must justify that $c_N$ is normally distributed. We note that $s_tn_t$ is normally distributed. Since $\sum_{t=1}^N s_tn_t$ is the sum of independent normal random varibles, we know that it is normally distributed (this is not the case if they are not independent). Then $c_N$ is just a shift of the sum and is therefore normally distributed. So $c_N \sim \mathcal{N}(-\mu E_s, \sigma^2N)$.
+
+\end{document}
+
