@@ -133,13 +133,13 @@ Suppose $F: \mathds{R}^n \rightarrow \mathds{R}$. Let $M = F^{-1}(c)$ for some $
 \label{sub:Smooth Mappings}
 
 \begin{defn}
-  A map $F: M \rightarrow N$ where $M$,$N$ are smooth manifolds, is called smooth if for all $p \in M$ there are charts $(U, \varphi)$ and $(V, \psi)$.  Such that $\underline{F(U) \subset V}$ and $\psi \circ F \circ \varphi^{-1}: \varphi(U) \rightarrow \varphi(V)$ is smooth.
+  A map $F: M \rightarrow N$ where $M$,$N$ are smooth manifolds, is called smooth if for all $p \in M$ there are charts $(U, \varphi)$ and $(V, \psi)$.  Such that $\underline{F(U) \subset V}$ and $\psi \circ F \circ \varphi^{-1}: \varphi(U) \rightarrow \psi(V)$ is smooth.
 \end{defn}
 We call $\psi \circ F \circ \varphi^{-1}$ a coordinate representation of $F$. All other compatible charts will be smooth because of the smooth transition maps. Thus this definition is independent of the coordinate chart chosen.
 \begin{prop}
  If a map $F: M \rightarrow N$ is smooth then it is continuous 
 \end{prop}
-This proposition may seem trivial, but it actually only follows due to the $F(U) \subset V$ contained in the above definition.
+This proposition may seem trivial, but it actually only follows due to the $F(U) \subset V$ contained in the above definition, see John Lee's book for a proof.
 
 \begin{defn}
   A map $F: M \rightarrow N$ that is smooth, a homeomorphism and has a smooth inverse $F^{-1}$ is called a diffeomorphism
