@@ -48,7 +48,158 @@ Let $M_1, \dots, M_k$ be smooth manifolds of dimensions $n_1, \dots, n_k$ respec
       \psi^{-1}&(x_1, \dots, x_k) = (\varphi^{-1}_1(x_1), \dots, \varphi^{-1}_k(x_k)).
     \end{aligned}
   \]
-  This inverse is also continous since each $\varphi_j^{-1}$ is continuous. Thus, $N$ is a topological manifold of dimension $n_1 + \cdots + n_k$. Now, we will show that $N$ admits a smooth structure. We first note that each $M_j$ admits a smooth atlas $\mathcal{A}_j = \{(U_i, \varphi_i)\}_{i \in N(j)}$. 
+  This inverse is also continous since each $\varphi_j^{-1}$ is continuous. Thus, $N$ is a topological manifold of dimension $n_1 + \cdots + n_k$. Now, we will show that $N$ admits a smooth structure. We first note that each $M_j$ admits a smooth atlas $\mathcal{A}_j = \{(U_i, \varphi_i)\}_{i \in N(j)}$. Consider the collection of charts given by
+  \[
+    \mathcal{A} = \left\{ (U_1 \times \cdots \times U_k, (\varphi_1, \dots, \varphi_k))\ |\ (U_j, \varphi_j) \in  \mathcal{A}_j, \forall j\right\}.
+  \]
+  We must have that the union of sets in these charts is $N$, since given any $p = (p_1, \dots, p_k) \in N$ we can find $U_j$, such that $p_j \in U_j$, and since $U_j \subset M_j$ we automatically get inclusion the other way. Now consider two charts in this collection $(V, \psi) = (U_1 \times \cdots \times U_k, (\varphi_1, \dots, \varphi_k))$ and $(V', \psi') = (U_1' \times \cdots \times U_k', (\varphi_1', \dots, \varphi_k'))$. Consider the transition map given by
+  \[
+    \begin{aligned}
+      \psi' \circ \psi^{-1}&: \psi(V \cap V') \rightarrow \psi'(V \cap V') \\
+      \psi' \circ \psi^{-1}&(x_1, \dots, x_k) = (\varphi_1' \circ \varphi_1^{-1}(x_1), \dots, \varphi_k' \circ \varphi_k^{-1}(x_k))
+    \end{aligned}
+  \]
+  We first note that $V \cap V' = (U_1 \cap U_1') \times \cdots \times (U_k \cap U_k')$ from set theory. So each 
+\[
+  \varphi_j' \circ \varphi_j^{-1}: \varphi(U_j \cap U_j') \rightarrow \varphi'(U_j \cap U_j')
+\]
+Which is a diffeomorpishm since $M_j$ is a smooth manifold. Therefore, $\psi' \circ \psi^{-1}$ is a diffeomorphism and $\mathcal{A}$ is a smooth atlas on $N$. Since every manifold with a smooth atlas has a unique maximal smooth atlas, we have that $N$ is a smooth manifold.
 \end{proof}
+
+\section*{Problem 2}%
+\label{sec:Problem 2}
+Let $N$ be a smooth manifold of dimension $n$, $M$ a topological manifold of dimension $n$, and suppose that $F: M \rightarrow N$ is a homeomorphism. Prove that there exists a unique smooth structure on $M$ which makes $F$ a diffeomorphism.
+
+\begin{proof}
+  Let $\mathcal{A}_N$ be the smooth structure on $N$. We will construct a smooth structure $\mathcal{A}_M$ on $M$ using $F^{-1}$. Consider the collection given by
+  \[
+    \mathcal{A}_M = \left\{(F^{-1}(U), \varphi \circ F)\ |\  (U, \varphi) \in \mathcal{A}_M \right\}
+  \]
+  We note that each $(F^{-1}(U), \varphi \circ F)$ is a coordinate chart because
+  \[
+    \begin{aligned}
+      \varphi \circ F: F^{-1}(U) \rightarrow \varphi(U)
+    \end{aligned}
+  \]
+  is a homeomorphism since it is the composition of two homeomorphisms. Furthermore, since $F$ is invertible we have that given any $p \in M$ there exists a $q \in N$ such that $p = F^{-1}(q)$. Since there exists some coordinate chart $(U, \varphi)$ about $q$, there is a corresponding coordinate chart $(F^{-1}(U), \varphi \circ F)$ about $p$. Thus, the manifold $N$ is contained in the union of the charts in the collection $\mathcal{A}_N$. So our charts cover our manifold $N$. Now we will show that our transition maps are compatible. Consider two charts on $N$, $(F^{-1}(U), \varphi \circ F)$ and $(F^{-1}(V), \psi \circ F)$, such that $F^{-1}(U) \cap F^{-1}(V) \neq \varnothing$. The transition map is given by
+  \[
+    \psi \circ F \circ F^{-1} \circ \varphi^{-1}: \varphi(F(F^{-1}(U) \cap F^{-1}(V))) \rightarrow \psi(F(F^{-1}(U) \cap F^{-1}(V)))
+  \]
+  Simplifying we have
+  \[
+    \psi \circ \varphi^{-1}: \varphi(U \cap V) \rightarrow \psi(U \cap V)
+  \]
+  which is a diffeomorphism in coordinates, since $\mathcal{A}_M$ is a smooth structure. Therefore $\mathcal{A}_N$ is a smooth atlas on $N$. Now we wish to show that the map $F$ map is a diffeomorphism. By construction, we have that the coordinate representation of $F$ and $F^{-1}$ are smooth. Let $p \in M$, we have associated charts  $(F^{-1}(U), \varphi \circ F) \in \mathcal{A}_M$ and $(U, \varphi) \in \mathcal{A}_N$. Note that we have that $F(F^{-1}(U)) = U \subset U$, thus $F$ is smooth. Now let $q \in N$. There is an associated coordinate chart $(V, \psi) \in \mathcal{A}_N$, $(F^{-1}(V), \psi \circ F) \in \mathcal{A}_M$ and $F^{-1}(V) \subset F^{-1}(V)$. Therefore $F^{-1}$ is smooth. Furthermore, if $\mathcal{A}_N$ is a maximal smooth structure, we have that $\mathcal{A}_M$ must also be a maximal smooth structure, since it inherits all compatible charts from $\mathcal{A}_N$. Therefore, we have constructed a smooth structure on $M$ which makes $F$ a diffeomorphism.
+
+  Now suppose that there exists another smooth structure $\mathcal{A}_M' = \left\{ (V_j', \psi_j') \right\}$ such that $F$ is a diffeomorphism. Consider a map $\psi \circ (\psi')^{-1}$, where $(V, \psi) \in \mathcal{A}_M$, $(V',\psi') \in \mathcal{A}_M'$ and $V \cap V' \neq \varnothing$. By construction, we have that $\psi = \varphi \circ F$ for some chart $(U, \varphi) \in \mathcal{A}_N$. Our map $\psi \circ (\psi')^{-1}$ is thus given by
+  \[
+    \varphi \circ F \circ (\psi')^{-1}: \psi(V' \cap F^{-1}(U)) \rightarrow \varphi(F(V' \cap F^{-1}(U)))
+  \]
+  We wish to show that this map has in inverse on on the set defined above. Let $x \in \psi(V' \cap F^{-1}(U))$, Thus there exists a $q \in V' \cap F^{-1}(U)$ such that $\psi(q) = x$. Since $F$ is a homeomorphism we have a $p \in F(V' \cap F^{-1}(U))$ such that $q = F^{-1}(p)$, and since $\varphi$ is a diffeomorphism, there exists a $y \in \varphi(F(V'\cap F^{-1}(U)))$ such that $\varphi^{-1}(y) = p$. Therefore, this map is invertible on the sets listed above. Since this map is just a restriction of $\varphi \circ F \circ (\psi')^{-1}: \psi'(V') \rightarrow \varphi(U)$ to open sets, and similarly for its inverse, the map and its inverse inherit smoothness and continuity. Thus, this map is a diffeomorphism and $(V, \psi)$ and $(V', \psi')$ are compatible, which implies that $(V, \psi) \in \mathcal{A}'_M$, and $\mathcal{A}_M \subset \mathcal{A}'_M$, since $\mathcal{A}'_M$ is maximal. However, since $\mathcal{A}_M$ is also maximal we must have that $\mathcal{A}'_M = \mathcal{A}_M$. Therefore the smooth structure $\mathcal{A}_M$ is unique.
+
+
+\end{proof}
+
+\section*{Problem 3}%
+\label{sec:Problem 3}
+Let $S^2 = \left\{ (x^1, x^2, x^3) \in \mathds{R}^3 | (x^1)^2 + (x^2)^2 + (x^3)^2 = 1 \right\}$ and let $N = (0,0,1) \in S^2$ be the north pole and $S = (0,0,-1) \in S^2$ be the south pole. Define the stereographic projection of 
+\[
+  \begin{aligned}
+    \sigma&: S^2 \setminus \{N\} \rightarrow \mathds{R}^2 \\
+    \sigma&(x^1, x^2, x^3) = \frac{(x^1, x^2)}{1 - x^3}.
+  \end{aligned}
+\]
+and define $\tilde{\sigma}: S^2 \setminus \left\{ S \right\} \rightarrow \mathds{R}^2$ by $\tilde{\sigma}(x) = -\sigma(-x)$.
+
+\subsection*{Part a}%
+\label{sub:Part a}
+Let $x \in S^2 \setminus \left\{ N \right\}$. Let $L$ be the unique line in $\mathds{R}^3$ which passes through both $N$ and $x$. Prove that $\sigma(x)$ is the unique point of intersection of $L$ with $P = \left\{ (x^1, x^2, x^3) \in \mathds{R}^3\ |\ x^3 = 0 \right\}$
+
+\begin{proof}
+  The line $L$ can be written parametrically as $L = \{(x^1, x^2, x^3 - 1)t + (0,0,1)\ |\ t \in \mathds{R}\}$. 
+  Note that 
+  \[
+    \begin{aligned}
+      P \cap L &= \left\{ (x^1, x^2, x^3 - 1)t + (0,0,1)\ |\ (x^3 - 1)t = -1, t \in \mathds{R} \right\}\\
+               &= \left\{ (x^1, x^2, x^3 - 1)t + (0,0,1)\ | t = 1/(1 - x^3) \right\} \\
+               &= \left\{ \left(\frac{x^1}{1 - x^3}, \frac{x^2}{1-x^3}, 0\right) \right\}
+    \end{aligned}
+  \]
+  The point is unique since there is only one point in this set and is easily associated with the point $\sigma(x)$
+\end{proof}
+
+\subsection*{Part b}%
+\label{sub:Part b}
+Show that $\sigma$ is a homeomorphism and compute its inverse.
+
+\begin{proof}
+  Note that $\sigma(x)$ is continuous on its domain since we have excluded $N$. Let $y \in \mathds{R}^2$. From part a, we know that we can associate $y = (y^1, y^2)$, with the point $(y^1, y^2, 0)$ and if line connecting this point with the north pole of $S^2$ intersects $S^2$, the point of intersection will map to $y$. Thus we will consider the line $L = \{(y^1, y^2, -1)t + (0,0,1) \ |\ t \in \mathds{R}\}$. Consider $S^2 \cap L$
+  \[
+    \begin{aligned}
+      S^2 \cap L &= \left\{ (y^1, y^2, -1)t + (0,0,1) \ |\ t^2(y^1)^2 + t^2(y^2)^2 + (1 - t)^2 = 1, t \in \mathds{R}  \right\} \\
+                 &= \left\{ (y^1, y^2, -1)t + (0,0,1) \ |\ t =0, \frac{2}{(y^1)^2 + (y^2)^2 + 1} \right\} \\
+                 &= \left\{ N, \left( \frac{2y^1}{(y^1)^2 + (y^2)^2 + 1}, \frac{2y^2}{(y^1)^2 + (y^2)^2 + 1}, \frac{-1 + (y^1)^2 + (y^2)^2}{(y^1)^2 + (y^2)^2 + 1} \right) \right\}
+    \end{aligned}
+  \]
+  So therefore
+  \[
+    \begin{aligned}
+      \sigma^{-1}&: \mathds{R}^2 \rightarrow S^2 \setminus \left\{ N \right\} \\
+      \sigma^{-1}&(y^1, y^2) = \left( \frac{2y^1}{(y^1)^2 + (y^2)^2 + 1}, \frac{2y^2}{(y^1)^2 + (y^2)^2 + 1}, \frac{-1 + (y^1)^2 + (y^2)^2}{(y^1)^2 + (y^2)^2 + 1} \right)
+    \end{aligned}
+  \]
+  This map $\sigma^{-1}$ is also continuous since the denominator is always positive in each component. Therefore $\sigma$ is a homeomorphism. 
+\end{proof}
+
+\subsection*{Part c}%
+\label{sub:Part c}
+Show that the charts $(S^2 \setminus \left\{ N \right\}, \sigma)$ and $(S^2 \setminus \left\{ S \right\}, \tilde{\sigma})$ are compatible, and hence define a smooth structure on $S^2$.
+
+\begin{proof}
+  Consider the transition map $\tilde{\sigma} \circ \sigma^{-1}: \mathds{R}^2 \setminus \{0\} \rightarrow \mathds{R}^2 \setminus \{0\}$. Note we have that
+  \[
+    \begin{aligned}
+      \tilde{\sigma} \circ \sigma^{-1}(y^1, y^2) &= \tilde{\sigma}\left( \frac{2y^1}{(y^1)^2 + (y^2)^2 + 1}, \frac{2y^2}{(y^1)^2 + (y^2)^2 + 1}, \frac{-1 + (y^1)^2 + (y^2)^2}{(y^1)^2 + (y^2)^2 + 1} \right) \\
+                                                 &=-\sigma\left( -\frac{2y^1}{(y^1)^2 + (y^2)^2 + 1}, -\frac{2y^2}{(y^1)^2 + (y^2)^2 + 1}, \frac{1 - (y^1)^2 - (y^2)^2}{(y^1)^2 + (y^2)^2 + 1} \right) \\
+                                                 &= \left(\frac{y^1}{(y^1)^2 + (y^2)^2}, \frac{y^2}{(y^1)^2 + (y^2)^2}  \right)
+    \end{aligned}
+  \]
+  This map is differentiable at all points since we have excluded the origin. We also have the interesting relation that $\tilde{\sigma} \circ \sigma^{-1} \circ \tilde{\sigma} \circ \sigma^{-1}(y^1, y^2) = (y^1, y^2)$. So we have that $(\tilde{\sigma} \circ \sigma^{-1})^{-1} = \tilde{\sigma} \circ \sigma^{-1}$. Therefore we have a diffeomorphism of coordinates, which implies that we have a smooth structure.
+\end{proof}
+
+\subsection*{Part d}%
+\label{sub:Part d}
+Show that this is the same smooth structure as the one we defined in class.
+
+\begin{proof}
+  Consider the maps $\varphi_j^{\pm} \circ \sigma^{-1}: \sigma(U^{\pm}_j \setminus \{N\}) \rightarrow \varphi_j^{\pm}(U^{\pm}_j \setminus\{N\})$. We have
+  \[
+    \begin{aligned}
+      \varphi_1^{+} \circ \sigma^{-1}(y^1, y^2) &= \left( \frac{2y^2}{(y^1)^2 + (y^2)^2 +1}, \frac{1 - (y^1)^2 - (y^2)^2}{(y^1)^2 + (y^2)^2 + 1}\right) \\
+      \varphi_2^{+} \circ \sigma^{-1}(y^1, y^2) &= \left( \frac{2y^1}{(y^1)^2 + (y^2)^2 +1}, \frac{1 - (y^1)^2 - (y^2)^2}{(y^1)^2 + (y^2)^2 + 1}\right) \\
+      \varphi_3^{+} \circ \sigma^{-1}(y^1, y^2) &=  \left( \frac{2y^1}{(y^1)^2 + (y^2)^2 + 1}, \frac{2y^2}{(y^1)^2 + (y^2)^2 + 1}\right)
+    \end{aligned}
+  \]
+  These are all continously differentiable map on their domains. The map $\varphi_j^{-} \circ \sigma^{-1}(y^1, y^2)$ only differ in their domain and codomains so are likewise differentiable. The maps $\varphi_j^{\pm} \circ \tilde{\sigma}^{-1}: \tilde{\sigma}^{-1}(U_j^{\pm} \setminus \{S\}) \rightarrow \varphi_j^{\pm}(U_j^{\pm} \setminus \{S\})$ are very similar
+  \[
+    \begin{aligned}
+      \varphi_1^{+} \circ \tilde{\sigma}^{-1}(y^1, y^2) &= \left( \frac{2y^2}{(y^1)^2 + (y^2)^2 +1}, -\frac{1 - (y^1)^2 - (y^2)^2}{(y^1)^2 + (y^2)^2 + 1}\right) \\
+      \varphi_2^{+} \circ \tilde{\sigma}^{-1}(y^1, y^2) &= \left( \frac{2y^1}{(y^1)^2 + (y^2)^2 +1}, -\frac{1 - (y^1)^2 - (y^2)^2}{(y^1)^2 + (y^2)^2 + 1}\right) \\
+      \varphi_3^{+} \circ \tilde{\sigma}^{-1}(y^1, y^2) &=  \left( \frac{2y^1}{(y^1)^2 + (y^2)^2 + 1}, \frac{2y^2}{(y^1)^2 + (y^2)^2 + 1}\right)
+    \end{aligned}
+  \]
+\end{proof}
+These are obviously differentiable. The maps $\varphi_j^{-} \circ \tilde{\sigma}^{-1}(y^1, y^2)$ only differ in their domains and codomains and are likewise differentiable. Our inverse maps are
+\[
+  \begin{aligned}
+    \sigma \circ (\varphi^+_1)^{-1}(y^1, y^2) &= \left(\frac{\sqrt{1 - (y^1)^2 - (y^2)^2}}{1 - y^2} , \frac{y^1}{1 - y^2}\right)\\
+    \sigma \circ (\varphi^+_2)^{-1}(y^1, y^2) &= \left( \frac{y^1}{1 - y^2}, \frac{\sqrt{1 - (y^1)^2 - (y^2)^2}}{1 - y^2} \right)\\
+    \sigma \circ (\varphi^+_3)^{-1}(y^1, y^2) &= \left(\frac{y^1}{1 - \sqrt{1 - (y^1)^2 - (y^2)^2}}, \frac{y^2}{1 - \sqrt{1 - (y^1)^2 - (y^2)^2}}\right) \\
+    \sigma \circ (\varphi^-_1)^{-1}(y^1, y^2) &= \left(\frac{-\sqrt{1 - (y^1)^2 - (y^2)^2}}{1 - y^2} , \frac{y^1}{1 - y^2}\right)\\
+    \sigma \circ (\varphi^-_2)^{-1}(y^1, y^2) &= \left( \frac{y^1}{1 - y^2}, -\frac{\sqrt{1 - (y^1)^2 - (y^2)^2}}{1 - y^2} \right)\\
+    \sigma \circ (\varphi^+_3)^{-1}(y^1, y^2) &= \left(\frac{y^1}{1 + \sqrt{1 - (y^1)^2 - (y^2)^2}}, \frac{y^2}{1 + \sqrt{1 - (y^1)^2 - (y^2)^2}}\right) \\
+  \end{aligned}
+\]
+Which are differentiable on their domains. Since $\tilde{\sigma}(x) = -\sigma(x)$ we can easily see that those inverse maps are differentiable as well. Thus, the charts defined by the stereographic projection are compatible with the charts defined in class. Therefore, they are contained in the same maximal smooth atlas and represent the same smooth structure.
 
 \end{document}
