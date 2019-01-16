@@ -1,0 +1,113 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\begin{document}
+
+\section*{Tangent Vectors}
+Basically we think of it as a vector sticking off the manifold in a "tangent direction". We can't define this on an ambient euclidean space. This can be done as derivations on the space of smooth functions, but we will do it differently in this class. 
+
+\begin{defn}
+    A smooth curve in $M$ is a smooth map $\gamma: (-\epsilon, \epsilon) \rightarrow M$, for some $\epsilon > 0$. 
+\end{defn}
+If $\gamma_1$ and $\gamma_2$ are two curves such that $\gamma_1(0) = \gamma_2(0) = p \in M$, we write $\gamma_1 \sim_{p} \gamma_2$ if $(f \circ \gamma_1)'(0) = (f \circ \gamma_2)'(0)$ for all $f \in C^{\infty}(M)$. So if we think $f \circ \gamma_1: (-\epsilon, \epsilon) \rightarrow \mathds{R}$. So the derivative at $0$ makes sense. If we do this in coordinate representations we have $\gamma = (f_1, f_2, \dots, f_n)$, we see that the derivatives of this component functions have to be equal.
+
+\begin{defn}
+    A tangent vector to $M$ at $p \in M$ is an equivalence class of curves $[\gamma_p]$ under the relation $\sim_p$. We let $T_pM$ denote the set of all tangent vectors to $M$ at $p$.
+\end{defn}
+Soon we will show that $T_pM$ that it is a vector space, and we will construct an isomorphism to $\mathds{R}^n$ using coordinate charts. Let $(U, \varphi)$ be a chart on $M$ about $p$ and let 
+\[
+    \varphi(q) = (x^1(q), \dots, x^n(q))
+\]
+Define a map $\vartheta_{\varphi}: T_pM \rightarrow \mathds{R}^n$ as follows. For any smooth function $f \in C^{\infty}(M)$ and curve $\gamma$ let $\tilde{f} = f \circ \varphi^{-1}: \varphi(U) \rightarrow \mathds{R}$, and let $\tilde{\gamma} = \varphi \circ \gamma: (-\epsilon, \epsilon) \rightarrow \mathds{R}^n$. We call these coordinate representation of $\gamma$ and $f$
+\[
+    \begin{aligned}
+        \tilde(\gamma) &= (\gamma^1(t), \dots, \gamma^n(t)) \\
+        \tilde(f)(x^1, \dots, x^n)
+    \end{aligned}
+\]
+So we get 
+\[
+    \begin{aligned}
+        (f \circ \gamma)'(0) &= \frac{d}{dt}(\tilde{f} \circ \tilde{\gamma})(0) \\
+                             &= \sum_{j=1}^n \frac{\partial \tilde{f}}{\partial \tilde{x}}(\tilde{\gamma(0)}) \frac{d \tilde{\gamma}^j}{dt}(0) \\
+                             &= \sum_{j=1}^n \left(\frac{d \tilde{\gamma}^j}{dt}(0) \frac{\partial}{\partial \tilde{x}^j} |_{\tilde{\gamma}(0)}  \right)\tilde{f} \\
+    \end{aligned}
+\]
+Now let $v^j = \frac{d\gamma^j}{dt}(0)$. Then
+\[
+    (f \circ \gamma)'(0) = \sum_{j=1}^n \left(v^j \frac{\partial}{\partial \tilde{x}^j} |_{\tilde{\gamma}(0)}  \right)\tilde{f} \\
+\]
+Now define $\vartheta_{\varphi}([\gamma]_p) = [v^1, v^2, \dots, v^n] = v$, where $v = \left[\frac{d \tilde{\gamma}^1(0)}{dt}, \dots, \frac{d \tilde{\gamma}^n}{dt}(0)\right]$. We must observe well-definedness of $\vartheta$.
+\begin{proof}
+    Let $[\gamma_1]_p = [\gamma_2]_p$, then $(f \circ \gamma_1)'(0) = (f \circ \gamma_2)'(0)$ for $f \in C^{\infty}(M)$. Then we plug in $x^j: M \rightarrow \mathds{R}$, we get
+    \[
+        \left( \sum \frac{d \tilde{\gamma}^i}{dt}(0) \frac{\partial \tilde{x}^j}{\partial \tilde{x}^i} \right)
+    \]
+    Fill in rest
+    We get $\vartheta_{\varphi}([\gamma_1]) = \vartheta_{\varphi}([\gamma_2])$ and so it is well defined.
+\end{proof}
+We also claim that $\vartheta_{\varphi}: T_pM \rightarrow \mathds{R}^n$ is an isomorphism
+\begin{proof}
+    Injective: if $[\gamma_1] \neq [\gamma_2]$ there exists some $f \in C^{\infty}(M)$ such that 
+    \[
+        (f \circ \gamma_1)^1(0) \neq (f \circ \gamma_2)'(0)
+    \]
+    This show thats 
+    \[
+        \frac{d \tilde{\gamma_1}^j}{dt}(0) \neq \frac{d \tilde{\gamma_2}^j}{dt}
+    \]
+    for some $j$ so we have $\vartheta_{\varphi}([\gamma_1]) \neq \vartheta_{\varphi}([\gamma_2])$.
+    Surjective: let $v = [v^1, \dots, v^n] \in \mathds{R}^n$, define $\tilde{\gamma}:(-\epsilon, \epsilon) \rightarrow \mathds{R}^n$ by 
+    \[
+        \tilde{\gamma}(t) = \varphi(p) + tv
+    \]
+    and $\gamma = \varphi^{-1} \circ \tilde{\gamma}: (-\epsilon, \epsilon) \rightarrow M$. Then $\vartheta_{\varphi}([\gamma]) = v$.
+\end{proof}
+So $\vartheta_p$ induces a vector space structure on $T_pM$, which we now call the tangent space to $M$ at $p$.
+
+Now lets let $ \left\{ e_1, \dots, e_n \right\}$ be the standard basis for $\mathds{R}^n$
+\[
+    \frac{\partial}{\partial x^j}|_p = \vartheta_{\varphi}^{-1}(e_j) \in T_pM
+\]
+Thus $\left\{\frac{\partial}{\partial x^1}_p, \dots, \frac{\partial}{\partial x^n}|_p\right\}$ is a basis for $T_pM$ called the coordinate basis induced by $(U, \varphi)$.
+Write
+\[
+    [v]_p = v^1 \frac{\partial}{\partial x^1} |_p + \dots + v^n \frac{\partial}{\partial x^n}|_p
+\]
+where $v^j = \frac{d \tilde{\gamma}^j}{dt}(0)$. Another important idea is that each tangent vector defines a map
+\[
+    D_v: C^{\infty} \rightarrow \mathds{R}
+\]
+satisfying leibnitz rule and linear on $C^{\infty}(M)$ by 
+\[
+    D_v(f) = (f \circ \gamma)'(0)
+\]
+which is called a derivation.
+
+\end{document}
