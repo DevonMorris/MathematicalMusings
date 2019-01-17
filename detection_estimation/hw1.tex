@@ -12,6 +12,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{physics}
+\usepackage{float}
 
 \geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
 \pagestyle{fancy}
@@ -33,7 +34,6 @@
 Take the detector we mentioned in class. Assume that the symbol $\left\{ s_t \right\}_1^N$ is known, with energy $E_s$, and assume the noises $\left\{ n_t \right\}_1^N$ are drawn from a sequence of independent, identically distributed normal random variables. $n_t \sim \mathcal{N}(0, \sigma^2)$.
 
 \subsection*{Part a}%
-\label{sub:Part a}
 Show that the correlation statistic is distributed as follows under $H_0: \theta = -\mu$ and $H_1: \theta = \mu$:
 \[
   \begin{aligned}
@@ -44,7 +44,6 @@ Show that the correlation statistic is distributed as follows under $H_0: \theta
 and plot these normal densities.
 
 \subsubsection*{Solution}%
-\label{ssub:Solution}
 
 We have that
 \[
@@ -75,7 +74,222 @@ And using the fact that for two independent random variables $X,Y$, $E[XY] = E[X
                      &= \sum_{t=1}^N \sigma^2s_t^2 = \sigma^2 E_s
   \end{aligned}
 \]
-Now, we must justify that $c_N$ is normally distributed. We note that $s_tn_t$ is normally distributed. Since $\sum_{t=1}^N s_tn_t$ is the sum of independent normal random varibles, we know that it is normally distributed (this is not the case if they are not independent). Then $c_N$ is just a shift of the sum and is therefore normally distributed. So $c_N \sim \mathcal{N}(-\mu E_s, \sigma^2N)$.
+Now, we must justify that $c_N$ is normally distributed. We note that $s_tn_t$ is normally distributed. Since $\sum_{t=1}^N s_tn_t$ is the sum of independent normal random varibles, we know that it is normally distributed (this is not the case if they are not independent). Then $c_N$ is just a shift of the sum and is therefore normally distributed. So $c_N \sim \mathcal{N}(-\mu E_s, \sigma^2N)$. The calculation for $c_N$ under $H_1$ is very similar with a $+\mu$ instead of a $-\mu$. So we can easily conclude that $c_N \sim \mathcal{N}(\mu E_s, \sigma^2N)$ under $H_1$.
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[scale=0.8]{hw1-1a.png}
+\end{center}
+\caption{$c_N$ under each hypothesis}
+\end{figure}
+
+\subsection*{Part b}%
+Define the output signal-to-noise ratio (SNR) of the correlation statistic to be the mean squared divided by the variance. Show
+\[
+  \text{SNR} = \frac{\mu^2}{\sigma^2}E_s
+\]
+
+\subsubsection*{Solution}%
+This is a straightforward calculation, under $H_1$ we have
+\[
+  \begin{aligned}
+    SNR &= \frac{(\mu E_s)^2}{\sigma^2 E_s} = \frac{\mu^2}{\sigma^2}E_s
+  \end{aligned}
+\]
+and under $H_0$ we have
+\[
+  \begin{aligned}
+    SNR &= \frac{(-\mu E_s)^2}{\sigma^2 E_s} = \frac{\mu^2}{\sigma^2}E_s
+  \end{aligned}
+\]
+
+\subsection*{Part c}%
+If the alternative $H_1$ is selected when $c_N > 0$, show that the probability of falsely choosing $H_1$ is
+\[
+  P[H_1 | H_0] = \int_{(\mu/\sigma)\sqrt{E_s}}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-x^2/2}\ dx = 1 - \int^{(\mu/\sigma)\sqrt{E_s}}_{-\infty} \frac{1}{\sqrt{2\pi}} e^{-x^2/2}\ dx 
+\]
+
+\subsubsection*{Part d}%
+Given that $c_N \sim \mathcal{N}(-\mu E_s, \sigma^2 E_s)$, we want to calculate $P[c_N > 0]$, thus we have
+
+\[
+  \begin{aligned}
+    P[H_1 | H_0] &= P[c_N > 0] = \int_{0}^{\infty} f_{c_N}(y)\ dy = \int_{0}^{\infty} \frac{1}{\sqrt{2\pi \sigma^2 E_s}} e^{-(y + \mu E_s)^2/(2 \sigma^2 E_s)}\ dy
+  \end{aligned}
+\]
+Now we will perform the substitution $x = (y + \mu E_s)/(\sigma \sqrt{E_s})$, $dy = \sigma \sqrt{E_s} dx$, which gives us
+\[
+  \begin{aligned}
+    P[H_1| H_0] &= \int_{(\mu/\sigma)\sqrt{E_s}}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^2/2}\ dx \\
+                &= 1 - 1 + \int_{(\mu/\sigma)\sqrt{E_s}}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^2/2}\ dx \\
+                &= 1 - \int_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^2/2}\ dx + \int_{(\mu/\sigma)\sqrt{E_s}}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^2/2}\ dx \\
+                &= 1 - \int_{-\infty}^{(\mu/\sigma)\sqrt{E_s}} \frac{1}{\sqrt{2 \pi}} e^{-x^2/2}\ dx = 1 - \Phi \left(\frac{\mu}{\sigma}\sqrt{E_s}\right)
+  \end{aligned}
+\]
+Where $\Phi$ is the CDF of the standard normal distribution.
+
+\section*{Problem 2}%
+Take the estimator we mentioned in class. Assume that $\theta$ is an unknown constand an the noises $n_t$ are drawn from a sequence of i.i.d $\mathcal{N}(0, \sigma^2)$ random variables.
+
+\subsection*{Part a}%
+Show that the estimator $\hat{\theta}_N$ is distributed as follows:
+\[
+  \hat{\theta}_N \sim \mathcal{N}\left(\theta, \frac{\sigma^2}{N}\right)
+\]
+
+\subsubsection*{Solution}%
+We will examine the first two central moments of $\hat{\theta}_N$ and then justify that $\hat{\theta}_N$ is normally distributed. Consider $E[\hat{\theta}_N]$,
+\[
+  E[\hat{\theta}_N] = E \left[ \frac{1}{N} \sum_{t=1}^N x_t \right] = \frac{1}{N} \sum_{t=1}^N E \left[ x_t\right] = \frac{1}{N} \sum_{t=1}^N \theta + E[n_t] = \frac{N\theta}{N} = \theta
+\]
+Now we will examine $\text{var}[\hat{\theta}_N]$. Since the $n_t$ are i.i.d. we have that $E[n_tn_s] = E[n_t]E[n_s] = 0$, this tells us that 
+\[
+  \begin{aligned}
+    \text{var}[\hat{\theta}_N] &= E \left[ \left( \hat{\theta}_N - E[\hat{\theta}_N] \right)^2 \right]  = E \left[ \left( \left( \frac{1}{N} \sum_{t=1}^N \theta + n_t \right) - \theta \right)^2 \right]\\
+                               &= E \left[ \left( \frac{1}{N} \sum_{t=1}^N n_t \right)^2 \right] = E \left[ \frac{1}{N^2} \sum_{t'=1}^N\sum_{t = 1, t \neq t'}^{N} n_{t'}n_t + \frac{1}{N^2}\sum_{t=1}^N n_t^2 \right] \\
+                               &= \frac{1}{N^2}\sum_{t'=1}^N\sum_{t = 1, t \neq t'}^{N} E\left[ n_{t'}n_{t}\right] + \frac{1}{N^2} \sum_{t=1}^N E \left[ n_t^2 \right] = \frac{1}{N^2} \sum_{t=1}^N \sigma^2\\
+                               &= \frac{\sigma^2}{N}
+  \end{aligned}
+\]
+Now we must justify that $\hat{\theta}_N$ is normally distributed. We first note that $\hat{\theta}_N$ can be rewritten as 
+\[
+  \hat{\theta}_N = \theta + \frac{1}{N}\sum_{t=1}^N n_t
+\]
+Since the $n_t$ are independent we have that $\sum_{t=1}^N n_t$ is normally distributed (this is not true in general). Adding $\theta$ equates to a shift of the random variable, and thus it is still normally distributed. Therefore $\theta \sim \mathcal{N}\left( \theta, \frac{\sigma^2}{N} \right).$
+
+\subsection*{Part b}%
+Show that the estimator error $\epsilon_N$ is distributed 
+\[
+  \epsilon_N \sim \mathcal{N} \left( 0, \frac{\sigma^2}{N} \right)
+\]
+
+\subsubsection*{Solution}%
+We note that $\epsilon_N = \theta - \hat{\theta}_N$. This is just a shift to a normally distributed random variable. So we have that 
+\[
+F_{\epsilon_N}(x) = P[\epsilon_N \leq x] = P[\theta - \hat{\theta}_N \leq x] = P[\hat{\theta}_N \geq \theta - x] = 1 - P[\hat{\theta}_N < \theta - x] = 1 - F_{\theta_N}(\theta - x)
+\]
+Examining the density we have
+\[
+  \begin{aligned}
+    f_{\epsilon_N}(x) &= \dv[]{}{x} F_{\epsilon_N}(x) = \dv[]{}{x} \left(1 - F_{\theta_N}(\theta - x) \right) \\
+                      &= - f_{\theta_N}(\theta - x) \dv[]{}{x} (-x) = f_{\theta_N}(\theta - x) \\
+                      &= \frac{1}{\sqrt{2 \pi \sigma^2/N}} e^{-(\theta - x - \theta)^2/(2 \sigma^2/N)} \\
+                      &= \frac{1}{\sqrt{2 \pi \sigma^2/N}} e^{-(- x)^2/(2 \sigma^2/N)} \\
+                      &= \frac{1}{\sqrt{2 \pi \sigma^2/N}} e^{-(x)^2/(2 \sigma^2/N)} \\
+  \end{aligned}
+\]
+In this form, we easily see that 
+\[
+  \epsilon_N \sim \mathcal{N}\left( 0, \frac{\sigma^2}{N} \right)
+\]
+\subsection*{Part c}%
+Show that the probability that $|\epsilon_N|$ exceeds $\epsilon > 0$, is 
+\[
+  P[ |\epsilon_N| > \epsilon] = 2 \int_{-\infty}^{-(\epsilon/\sigma)/N} \frac{1}{\sqrt{2\pi}} e^{-x^2/2} dx
+\]
+
+\subsubsection*{Solution}%
+We will start by examining $P[|\epsilon_N| > \epsilon]$. We have that
+\[
+  \begin{aligned}
+    P[ |\epsilon_N| > \epsilon] &= P[ \epsilon_N > \epsilon] + P[\epsilon_N < -\epsilon] = 1 - P[\epsilon_N \leq \epsilon] + P[\epsilon_N < -\epsilon] \\
+                                &= 1 - \int_{-\infty}^{\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy + \int_{-\infty}^{-\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy \\
+                                &= \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy - \int_{-\infty}^{\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy + \int_{-\infty}^{-\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy \\
+                                &= \int_{\epsilon}^{\infty} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy + \int_{-\infty}^{-\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy \\
+                                &= \int_{-\infty}^{-\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy + \int_{-\infty}^{-\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy \\
+                                &= 2\int_{-\infty}^{-\epsilon} \frac{1}{\sqrt{2\pi \sigma^2/N}} e^{-y^2N/(2\sigma^2)}\ dy \\
+  \end{aligned}
+\]
+Making the substitution $x = y\sqrt{N}/\sigma$, we get that $dy = \sigma/\sqrt{N} dx$, we get
+\[
+  P[ |\epsilon_N| > \epsilon] = 2\int_{-\infty}^{-\epsilon \sqrt{N}/\sigma} \frac{1}{\sqrt{2\pi}}e^{-x^2/2} dx = 2 \Phi \left( -\epsilon \frac{\sqrt{N}}{\sigma} \right)
+\]
+
+\section*{Problem 3}%
+Consider the signal plus noise measurment $\mathbf{y} = \mathbf{x} + \mathbf{n}$, denote the probability density function for the noise $\mathbf{n}$ by $f_{\mathbf{N}}(\mathbf{n})$
+
+\subsection*{Part a}%
+Assume the signal $\mathbf{x}$ is an unknown vector; show that the density of the measurment $\mathbf{y}$ is
+\[
+  f_{\mathbf{Y}}(\mathbf{y}) = f_{\mathbf{N}}(\mathbf{y} - \mathbf{x})
+\]
+
+\subsubsection*{Solution}%
+First we note that
+\[
+  \begin{aligned}
+    F_{\mathbf{Y}}(\mathbf{y}) &= P \left[ Y_1 \leq  y_1, \dots, Y_n \leq y_n\right] = P \left[ x_1 + N_1 \leq y_1, \dots, x_n + N_n \leq y_n \ \right] \\
+                               &= P \left[N_1 \leq y_1 - x_1, \dots, N_n \leq y_n - x_n\right]\\
+                               &= F_{\mathbf{N}}(\mathbf{y} - \mathbf{x})
+  \end{aligned}
+\]
+Taking derivatives yields
+\[
+  f_{\mathbf{Y}}(\mathbf{y}) = \frac{\partial ^n}{\partial y_1 \cdots \partial y_n}F_{\mathbf{Y}}(\mathbf{y}) = \frac{\partial ^n}{\partial y_1 \cdots \partial y_n} F_{\mathbf{N}}(\mathbf{y} - \mathbf{x}) = f_{\mathbf{N}}(\mathbf{y} - \mathbf{x})
+\]
+
+\subsection*{Part b}%
+Write out the density for the case where the noise is distributed $\mathcal{N}(\mathbf{0}, \mathbf{R}_{nn})$
+
+\subsubsection*{Solution}%
+We have that
+\[
+  f_{\mathbf{Y}}(\mathbf{y}) = f_{\mathbf{N}}(\mathbf{y} - \mathbf{x}) = \frac{1}{(2\pi)^{n/2}|\mathbf{R}_{nn}|^{1/2}} \exp\left((\mathbf{y} - \mathbf{x})^T \mathbf{R}_{nn}^{-1}(\mathbf{y} - \mathbf{x})/2\right)
+\]
+
+\subsection*{Part c}%
+Now assume that the signal $\mathbf{x}$ is statistcally independent of $\mathbf{x}$, with a probability density function $f_{\mathbf{X}}(\mathbf{x})$, sho that the conditional density function for $\mathbf{Y}$ remains
+\[
+  f_{\mathbf{Y}|\mathbf{X}}(\mathbf{y}|\mathbf{x}) = f_{\mathbf{N}}(\mathbf{y} - \mathbf{x})
+\]
+
+\subsubsection*{Solution}%
+Let's begin by examining the cumulative distribution
+\[
+  \begin{aligned}
+    F_{\mathbf{Y}|\mathbf{X}}(\mathbf{y}|\mathbf{x}) &= P[Y_1 \leq y_1, \dots, Y_n \leq y_n | X_1 = x_1, \dots, X_n = X_n] \\
+                                                     &= P[Y_1 \leq y_1, \dots, Y_n \leq y_n , X_1 = x_1, \dots, X_n = X_n]/ P[X_1 = x_1, \dots X_n = X_n] \\
+                                                     &= P[X_1 + N_1 \leq y_1, \dots, X_1n+ N_n \leq y_n, X_1 = x_1, \dots, X_n = x_n]/P[X_1 = x_1, \dots, X_n = x_n] \\
+                                                     &= P[x_1 + N_1 \leq y_1, \dots, x_n + N_n \leq y_n, X_1 = x_1, \dots, X_n = x_n]/P[X_1 = x_1, \dots, X_n = x_n] \\
+                                                     &= P[N_1 \leq y_1 - x_1, \dots, N_n \leq y_n - x_n, X_1 = x_1, \dots, X_n = x_n]/P[X_1 = x_1, \dots, X_n = x_n]
+  \end{aligned}
+\]
+Now we can use the independence of $\mathbf{X}$ and $\mathbf{Y}$, and we get
+\[
+  \begin{aligned}
+    F_{\mathbf{Y}|\mathbf{X}}(\mathbf{y}|\mathbf{x}) &= P[N_1 \leq y_1 - x_1, \dots, N_n \leq y_n - x_n]P[X_1 = x_1, \dots, X_n = x_n]/P[X_1 = x_1, \dots, X_n = x_n]\\
+                                                     &=P[N_1 \leq y_1 - x_1, \dots, N_n \leq y_n - x_n] \\
+                                                     &= F_{\mathbf{N}}(\mathbf{y} - \mathbf{x})
+  \end{aligned}
+\]
+Taking derivatives yields
+\[
+  f_{\mathbf{Y}|\mathbf{X}}(\mathbf{y}|\mathbf{x}) = \frac{\partial^n}{\partial y_1 \cdots \partial y_n}F_{\mathbf{Y}|\mathbf{X}}(\mathbf{y}|\mathbf{x}) = \frac{\partial^n}{\partial y_1 \cdots \partial y_n} F_{\mathbf{N}}(\mathbf{y} - \mathbf{x}) = f_{\mathbf{N}}(\mathbf{y} - \mathbf{x})
+\]
+
+\subsection*{Part d}%
+Show that the unconditional density function for $\mathbf{Y}$ is
+\[
+  f_{\mathbf{Y}}(\mathbf{y}) =  \int_{\mathds{R}^n} f_{\mathbf{N}}(\mathbf{y} - \mathbf{x})f_{\mathbf{X}}(\mathbf{x})\ d\mathbf{x}
+\]
+
+\subsubsection*{Solution}%
+We can start by expressing the marginal distribution in terms of the joint and then using the law of total probability for density functions. Thus we have
+\[
+  f_{\mathbf{Y}}(\mathbf{y}) = \int_{\mathds{R}^n} f_{\mathbf{Y}, \mathbf{X}}(\mathbf{y}, \mathbf{x})\ d\mathbf{x} = \int_{\mathds{R}^n} f_{\mathbf{Y}|\mathbf{X}}(\mathbf{y}|\mathbf{x})f_{\mathbf{X}}(\mathbf{x})\ d\mathbf{x} = \int_{\mathds{R}^n} f_{\mathbf{N}}(\mathbf{y} - \mathbf{x})f_{\mathbf{X}}(\mathbf{x})\ d\mathbf{x}
+\]
+
+\subsection*{Part e}%
+Write out the density function for $\mathbf{Y}$ when $\mathbf{X}$ is distributed as $\mathcal{N}(\mathbf{0}, \mathbf{R}_{xx})$.
+
+\subsubsection*{Solution}%
+Using the result from the last part, this is just a simple substitution
+\[
+  f_{\mathbf{Y}}(\mathbf{y}) = \int_{\mathds{R}^n} f_{\mathbf{N}}(\mathbf{y} - \mathbf{x})\ \frac{1}{(2\pi)^{n/2}|\mathbf{R}_{xx}|^{1/2}} \exp\left(\mathbf{x}^T \mathbf{R}_{xx}^{-1}\mathbf{x}/2\right)d\mathbf{x}
+\]
+
+\section*{Problem 4}
+
+
 
 \end{document}
-
