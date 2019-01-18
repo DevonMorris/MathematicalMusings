@@ -27,6 +27,7 @@
 
 \newtheorem*{prop}{Proposition}
 \newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
 \begin{document}
 
 \section*{Tangent Vectors}
@@ -97,7 +98,7 @@ So $\theta_p$ induces a vector space structure on $T_pM$, which we now call the 
 
 Now lets let $ \left\{ e_1, \dots, e_n \right\}$ be the standard basis for $\mathds{R}^n$
 \[
-  \eval{\pdv[]{}{x^j}}_p = \theta_{\varphi}^{-1}(e_j) \in T_pM
+  \eval{\pdv{}{x^j}}_p = \theta_{\varphi}^{-1}(e_j) \in T_pM
 \]
 Thus $\left\{ \eval{\pdv{}{x^1}}_p, \dots, \eval{\pdv{}{x^n}}_p\right\}$ is a basis for $T_pM$ called the coordinate basis induced by $(U, \varphi)$.
 Write
@@ -112,6 +113,43 @@ satisfying leibnitz rule and linear on $C^{\infty}(M)$ by
 \[
     D_v(f) = (f \circ \gamma)'(0)
 \]
-which is called a derivation.
+which is called a derivation. Since it becoming cumbersome at this point to postfix all our tangent vectors with $\eval{}_p$, we will drop the $p$.
+
+We can define a differential $dF_p: T_pM \rightarrow T_{F(p)}pN$ for the function $F: M \rightarrow N$.  It is defined as
+\[
+  \begin{aligned}
+    dF_p&: T_pM \rightarrow T_{F(p)}N \\
+    [\gamma]_p& \rightarrow [F \circ \gamma]_{F(p)}
+  \end{aligned}
+\]
+We want to show that this is well defined and linear (show this later). We can write this in coordinates. Let $(U, \varphi)$ about $p$ and let $\varphi(q) = (x^1(q), \dots, x^m(q))$ and $(V, \psi)$ about $F(p)$, $\psi(q) = (y^1(q), \dots, y^n(q))$. So let
+\[
+  \begin{aligned}
+    v &= [\gamma]_p = v^1 \pdv{}{x^1} + \cdots + v^m \pdv{}{x^m}\\
+      &=\dv{\tilde{\gamma}^1}{t} \pdv{}{x^1} + \cdots +  \dv{\tilde{\gamma}^m}{t}\pdv{}{x^m}\\
+  \end{aligned}
+\]
+But we have that
+\[
+  \begin{aligned}
+    dF_p(v) &= [F \circ \gamma]_{F(p)} = w^1 \pdv{}{y^1} + \cdots + w^n \pdv{}{y^n} \\
+            &= \dv{\tilde{F \circ \gamma}^1}{t} \pdv{}{y^1} + \cdots + \dv{\tilde{F \circ \gamma}^n}{t} \pdv{}{y^n} \\
+  \end{aligned}
+\]
+So to find these coefficeints, we can look at the coordinate representation $\tilde{F \circ \gamma} = \psi \circ F \circ \gamma = (\psi \circ F \circ \varphi^{-1}) \circ (\varphi \circ \varphi) = \hat{F} \circ \tilde{\gamma}$. This allows us to see that
+\[
+  w^i = \dv{\tilde{(F \circ \gamma)}^i}{t} = \dv[]{\hat{F}^i \circ \tilde{\gamma}}{t} = 
+  \pdv{\hat{F}^i}{x^1} \dv{\tilde{\gamma}^1}{t} + \cdots + \pdv{\hat{F}^i}{x^m} \dv{\tilde{\gamma}^m}{t} = \sum_{j=1}^m \pdv{\hat{F}^i}{x^j}v^j
+\]
+We can see that this is a matrix product. So in coordinates, we see that the coordinates in our new space are given as matrix product with the jacobian of $\hat{F}$
+
+\begin{thm}
+  $dF_p: T_pM \rightarrow T_{F(p)}N$ is a linear map satisfying
+  \begin{enumerate}
+    \item $d(G \circ F)_p = dG_{F(p)} \circ dF_p$
+    \item $d(id_M)_p = id_{T_pM}$
+    \item If $F: M \rightarrow M$ is a diffeomorphism then $dF_p$ is an isomorphism with $(dF_p)^{-1} = dF^{-1}_{F(p)}$
+  \end{enumerate}
+\end{thm}
 
 \end{document}
