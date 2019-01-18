@@ -13,6 +13,9 @@
 \usepackage{amsthm}
 \usepackage{physics}
 \usepackage{float}
+\usepackage{tikz}
+\usepackage{bm}
+\usetikzlibrary{shapes,arrows,positioning}
 
 \geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
 \pagestyle{fancy}
@@ -27,6 +30,16 @@
 
 \newtheorem{prop}{Proposition}
 \newtheorem*{sol}{Solution}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
 
 \begin{document}
 
@@ -289,6 +302,59 @@ Using the result from the last part, this is just a simple substitution
 \]
 
 \section*{Problem 4}
+Consider the following experimental setup.
+
+\begin{figure}[H]
+\begin{center}
+  \begin{tikzpicture}[auto, node distance=2cm, >=latex']
+    \node [input, name=input, node distance=2cm] (input) {};
+    \node [block, right of=input] (H) {$\mathbf{H}$};
+    \node [block, right of=H] (G) {$\mathbf{G}$};
+    \node [sum, right of=G, node distance=2cm] (sum) {};
+    \node [output, right of=sum, node distance=2cm] (output) {};
+    \node [input, below of=sum, name=ninput, node distance=1.5cm] (noise) {};
+    \draw [->] (input) -- node{$\bm{\theta}$} (H);
+    \draw [->] (H) -- node{$\mathbf{s}$} (G);
+    \draw [->] (G) -- (sum);
+    \draw [->] (sum) -- node{$\mathbf{x}$} (output);
+    \draw [->] (noise) -- node{$\mathbf{n} \sim \mathcal{N}(\mathbf{0}, \mathbf{R})$} (sum);
+  \end{tikzpicture}
+\end{center}
+\end{figure}
+
+The problem is to observe $\mathbf{x}$ and estimate $\mathbf{s}$. Redraw this diagram in the form of Figure 1.2 to show that it fits our structure of statistical reasoning. Can you describe an experiment where this diagram applies. 
+
+\subsection*{Solution}%
+I'm not really sure this is correct, but I think it's something like this
+
+\begin{figure}[H]
+\begin{center}
+  \begin{tikzpicture}[auto, node distance=1.5cm, >=latex']
+    \node [input, name=input, node distance=1.5cm] (input) {};
+    \node [block, right of=input] (H) {$\mathbf{H}$};
+    \node [block, above right=0.75cm and 1cm of H] (G1) {$\mathbf{G}$};
+    \node [sum, right of=G1, node distance=1.5cm] (sum) {};
+    \node [block, right of=sum] (Ginv1) {$\mathbf{G}^{-1}$};
+    \node [block, right of=Ginv1, node distance=1.5cm] (S1) {$S( \cdot | \bm{s})$};
+    \node [block, below right=0.75cm and 1cm of S1] (C) {$C$};
+    \node [input, below of=sum, name=ninput, node distance=1.5cm] (noise) {};
+    \node [output, right of=C, node distance=2cm] (output) {};
+    \node [block, below right=0.75cm and 5.5cm of H] (S2) {$S( \cdot | \bm{s})$};
+    \draw [->] (input) -- node{$\bm{\theta}$} (H);
+    \draw [->] (H) |- node{$\mathbf{s}$} (G1);
+    \draw [->] (G1) -- (sum);
+    \draw [->] (sum) -- node{$\mathbf{x}$} (Ginv1);
+    \draw [->] (noise) -- node{$\mathbf{n} \sim \mathcal{N}(\mathbf{0}, \mathbf{R})$} (sum);
+    \draw [->] (Ginv1) -- node{$\hat{\bm{s}}$} (S1);
+    \draw [->] (H) |- (S2);
+    \draw [->] (S2) -| (C);
+    \draw [->] (S1) -| (C);
+    \draw [->] (C) -- node{criterion} (output);
+  \end{tikzpicture}
+\end{center}
+I'm sure this could be used in a system where you are trying to find or estimate a signal before it gets corrupted by the system $\mathbf{G}$.
+
+\end{figure}
 
 
 
