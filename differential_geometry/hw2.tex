@@ -1,0 +1,103 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 2}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\begin{document}
+\section*{Problem 1}%
+Suppose that $M$ and $N$ are smooth manifolds, and that $F: M \rightarrow M$ is a smooth map. Show that $dF_p: T_pM \rightarrow T_{F(p)}N$ is the zero map for all $p \in M$ if and only if $F$ is constant on each connected component of $M$.
+
+\begin{proof}
+  Suppose that $F$ is constant on each connected component of $M$. Let $p \in M$. Consider the tangent vector $[\gamma]_p \in T_pM$, where $\gamma$ is contained in a connected component of $M$. Since F is the constant map, we have that there exists some $q \in N$ such that $(F \circ \gamma)(t) = q$ for all $t \in (-\epsilon, \epsilon)$. Thus given any $f \in C^{\infty}(N)$, there is some $a \in \mathds{R}$ such that  $(f \circ F \circ \gamma)(t) = a$, for all $t \in (-\epsilon, \epsilon)$. So we have that $(f \circ F \circ \gamma)'(0) = 0$. Since $f$ was arbitrary, we have that $(f \circ F \circ \gamma)'(0) = 0$ for all $f \in C^{\infty}(N)$. From this we can see that $[F \circ \gamma]_{F(p)}$ must be the zero vector. Specifically in coordinates under a chart $(V, \psi)$ about $F(p)$, we have 
+\[
+  (f \circ F \circ \gamma)'(0) = \sum_{j=1}^n \left(\dv[]{(\widetilde{F\circ \gamma})^j}{t} \pdv{}{x^j}\right)\tilde{f} = 0
+\]
+for all $f \in C^{\infty}(N)$, which implies that $\dv[]{(\widetilde{F\circ \gamma})^j}{t} = 0$ for all $j$. Since $p$ was arbitrary we must have that $dF_p$ is the zero map for all $p$.
+
+Now we will suppose that $dF_p$ is the zero map for each $p \in M$. Thus given any tangent vector in $[\gamma]_p \in T_pM$, we have that $[F \circ \gamma]_{F(p)} \in T_{F(p)}N$ is the zero vector. Thus given any $f \in C^{\infty}(N)$, we have that $(f \circ F \circ \gamma)'(0) = 0$. However, we also have that  $(f \circ F \circ \gamma)'(t) = 0$, for any $t \in (-\epsilon, \epsilon)$, since $\gamma$ also defines a tangent vector at $\gamma(t) \in M$ by shifting the parametrization of the curve and adjusting its domain. Thus integrating $(f \circ F \circ \gamma)'$, we have that $(f \circ F \circ \gamma)(t) = a$ for some $a \in \mathds{R}$ and all $t \in (-\epsilon, \epsilon)$. Since this holds for any $f \in C^{\infty}(N)$, we must have that $(F \circ \gamma)(t) = q$ for some $q \in N$ and all $t \in (-\epsilon, \epsilon)$. For another $\hat{p} \in M$, if there exists a $\hat{\gamma}$ such that $\hat{\gamma}(0) = \hat{p}$ and $\hat{\gamma}(\epsilon/2) = p$, we have that $p'$ and $p$ are in the same connected (path-connected) component of $M$. By the same argument above, we have that $(F \circ \hat{\gamma})(t) = \hat{q}$, for all $t$. But since $\hat{\gamma}(\epsilon/2) = p = \gamma(0)$, we must have that, $(F \circ \hat{\gamma})(\epsilon/2) = q = \hat{q}$. Since we can make this construction for any point in the same connected component of $M$, we have that $F$ is constant on each connected component of $M$.
+\end{proof}
+
+\section*{Problem 2}%
+Let $M_1, \dots, M_k$ be smooth manifolds of dimension $n_1, \dots, n_k$, respectively. For each $1 \leq j \leq k$ let $\pi_j: M_1 \times \cdots \times M_k \rightarrow M_j$ be the projection on the $j$th factor. Prove that for any point $p = (p_1, \dots, p_k) \in M_1 \times \cdots \times M_k$, the map
+\[
+  \alpha_p: T_p(M_1 \times \cdots \times M_k) \rightarrow T_{p_1}M_1 \oplus \cdots \oplus T_{p_k}M_k
+\]
+defined by $\alpha_p(v) = (d\pi_{p_1}(v), \dots, d\pi_{p_k}(v))$ is an isomorphism.
+
+\begin{proof}
+  Let $[\gamma]_p = [(\gamma_1, \dots, \gamma_k)]_p$ and $[\hat{\gamma}]_p = [(\hat{\gamma}_1, \dots, \hat{\gamma}_n)]_p$ be tangent vectors at $p$. Furthermore, let $a, b \in \mathds{R}$. Note the vectors must add in the following manner, $a[\gamma]_p + b[\hat{\gamma}]_p$ is a vector $[\gamma^+]_p$ such that $\gamma^+(0) = p$ and for any $f \in C^{\infty}(M_1 \times \cdots \times M_k)$, $(f \circ \gamma^+)'(0) = a(f \circ \gamma)'(0) + b(f \circ \hat{\gamma})'(0)$. So consider 
+  \[
+    \alpha_p \left( a [\gamma]_p + b [\hat{\gamma}]_p \right) =  (d\pi_{1}(a[\gamma]_p + b[\hat{\gamma}]_p), \dots, d\pi_{k}(a[\gamma]_p + b[\hat{\gamma}]_p))
+  \]
+  At this point, we note that $d \pi_{i}([\gamma]_p) = [\pi_i \circ \gamma]_{\pi(p)} = [\gamma_i]_{p_i}$. Since we know that the differential is a linear map, we have
+  \[
+    \begin{aligned}
+      \alpha_p(a[\gamma]_p + b[\hat[\gamma]_p) &= (a d\pi_{1}([\gamma]_p) + b d\pi_{1}([\hat{\gamma}]_p), \dots, a d\pi_{k}([\gamma]_p) + b d\pi_{k}([\hat{\gamma}]_p) \\
+                                               &= (a [\gamma_1]_{p_1} + b [\hat{\gamma}_1]_{p_1}, \dots, a [\gamma_1]_{p_k} + b [\hat{\gamma}_k]_{p_k})
+    \end{aligned}
+  \]
+  Now using the vector space structure of $T_{p_1}M_1 \oplus \cdots \oplus T_{p_k}M_k$, we see that
+  \[
+    \begin{aligned}
+      \alpha_p(a[\gamma]_p + b[\hat[\gamma]_p) &= a([\gamma_1]_{p_1}, \dots, [\gamma_k]_{p_k}) + b([\hat{\gamma}_1]_{p_1}, \dots, [\hat{\gamma}_k]_{p_k}]) \\
+                                               &= a(d\pi_1([\gamma]_p), \dots, d\pi_k([\gamma]_p)) + b(d\pi_1([\hat{\gamma}]_p), \dots, \pi_k([\hat{\gamma}]_p)) \\
+                                               &= a\alpha_p([\gamma]_p) + b \alpha_p([\hat{\gamma}]_p)
+    \end{aligned}
+  \]
+  So we have that this map $\alpha_p$ is a linear map. Now must must show that $\alpha_p$ is a bijection. Given a vector $([\gamma_1]_{p_1}, \dots, [\gamma_k]_{p_k}) = \in T_{p_1}M_1 \oplus \cdots \oplus T_{p_k}M_k$, we can chooose the vector $[(\gamma_1, \dots, \gamma_k)]_p \in T_p(M_1 \times \cdots \times M_k)$, and we see that $\alpha_p([(\gamma_1, \dots, \gamma_k)]_p) = ([\gamma_1]_{p_1}, \dots, [\gamma_k]_{p_k})$. Thus our map is surjective. Since the dimension of our tangent space must be the same dimension as our manifold we have that 
+  $\text{dim}\left(T_p(M_1 \times \cdots \times M_k)\right) = \sum_j \text{dim}(M_j)$ Furthermore, we have that the $\text{dim} \left( T_{p_1}M_1 \oplus \cdots \oplus T_{p_k}M_k \right) = \sum_j \text{dim}(T_{p_j}M_j) = \sum_j \text{dim}(M_j)$. The rank-nullity theorem tells us that 
+\[
+  \begin{aligned}
+    \dim\left(\mathcal{N}(\alpha_p)\right) &= \text{dim}\left(T_p(M_1 \times \cdots \times M_k)\right)  - \text{dim}\left(\mathcal{R}(\alpha_p)\right) \\
+                                           &=  \text{dim}\left(T_p(M_1 \times \cdots \times M_k)\right)  - \text{dim} \left( T_{p_1}M_1 \oplus \cdots \oplus T_{p_k}M_k \right) \\
+                                           &= 0
+  \end{aligned}
+\]
+Since the kernel of this linear transformation is just the zero vector, we have that this map must be injective and therefore invertible.
+
+\end{proof}
+
+\section*{Problem 3}%
+Let $P: \mathds{R}^{n+1} \setminus \{0\} \rightarrow \mathds{R}^{k+1} \setminus \{0\}$ be a smooth map, with $P(\lambda x) = \lambda^dP(x)$ for all $\lambda \in \mathds{R}$ and all $x \in \mathds{R}^{n+1} \setminus \{0\}$. Prove that the map 
+\[
+  \begin{aligned}
+    P_{*}: &\mathds{RP}^n \rightarrow \mathds{RP}^k \\
+           &[x] \mapsto [P(x)]
+  \end{aligned}
+\]
+is well defined and smooth.
+
+\begin{proof}
+  We will begin by proving well-definedness. Let $x,y \in \mathds{R}^{n+1} \setminus \{0\}$ such that $[x] = [y]$. According to our relation, there exists a real number $\alpha \neq 0$, such that $\alpha x = y$. Thus we have that
+  \[
+    P_{*}([y]) = [P(y)] = [P(\alpha x)] = [\alpha^d P(x)] = [P(x)] = P_{*}([x])
+  \]
+Thus, our map is well-defined. 
+\end{proof}
+
+
+\end{document}
