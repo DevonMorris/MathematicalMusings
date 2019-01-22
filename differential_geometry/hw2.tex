@@ -96,8 +96,46 @@ is well defined and smooth.
   \[
     P_{*}([y]) = [P(y)] = [P(\alpha x)] = [\alpha^d P(x)] = [P(x)] = P_{*}([x])
   \]
-Thus, our map is well-defined. 
+  Thus, our map is well defined. Consider two coordinate charts $(U_j, \varphi_j)$, $(V_i, \psi_i)$ on $\mathds{RP}^n$ and $\mathds{RP}^k$ respectively, where 
+  \[
+    \begin{aligned}
+      \varphi_j([x]) &= \left( \frac{x^1}{x^j}, \dots, \widehat{\frac{x^j}{x^j}}, \dots, \frac{x^{n+1}}{x^j} \right) \\
+      \psi_i([x]) &= \left( \frac{x^1}{x^i}, \dots, \widehat{\frac{x^i}{x^i}}, \dots, \frac{x^{k+1}}{x^i} \right) \\
+    \end{aligned}
+  \]
+  Where the $\widehat{}$ means ommited. To evaluate the smoothness of $P_{*}$ let us consider the map $(\psi_i \circ P_{*} \circ \varphi_j^{-1})$
+  \[
+    \begin{aligned}
+      (\psi_i \circ P_{*} \circ \varphi_j^{-1})(x) &= (\psi \circ P_*)([x^1: \cdots : 1 : \cdots: x^n]) \\
+    \end{aligned}
+  \]
+  Let $\tilde{x} = (x^1, \dots, 1, \dots x^n)$. We can rewrite the above equation as 
+\[
+  \begin{aligned}
+    (\psi_i \circ P_{*} \circ \varphi_j^{-1})(x) &= (\psi \circ P_*)([x^1: \cdots : 1 : \cdots: x^n]) \\
+                                                 &= \psi ([P(\tilde{x})]) \\
+                                                 &= \left(\frac{P(\tilde{x})^1}{P(\tilde{x})^i}, \dots, \widehat{\frac{P(\tilde{x})^i}{P(\tilde{x})^i}}, \dots,  \frac{P(\tilde{x})^k}{P(\tilde{x})^i} \right)
+  \end{aligned}
+\]
+Since $P$ is smooth, then we must have that each of these components are smooth when $P(\tilde{x})^i \neq 0$, however that is taken care of in the chart $(V_i,\psi_i)$. Therefore the map is well defined and smooth.
 \end{proof}
 
+\section*{Problem 4}%
+Prove that the map $F: \mathds{R}^n \rightarrow \mathds{RP}^n$ defined by 
+\[
+  F(x^1, \dots, x^n) = [x^1: \dots: x^n:1]
+\]
+is a diffeomorphism onto a dense, open subset of  $\mathds{RP}^n$
+\begin{proof}
+  Let us first consider $F^{-1}: F(\mathds{R}^n) \rightarrow F^{-1}(F(\mathds{R}^n))$ given by 
+  \[
+    F^{-1}([y]) = \left( \frac{y^1}{y^{n+1}}, \dots, \frac{y^n}{y^{n+1}}\right)
+  \]
+  We first note that the set $F(\mathds{R}^n)$ is given by
+  \[
+    F(\mathds{R}^n) = \left\{ [x^1: \dots, x^{n+1}]\ |\ x^{n+1} \neq 0 \right\}
+  \]
+  We also note that for any $x \in \mathds{R}^n$, we have can choose $[x^1: \dots: x^n:1] \in F(\mathds{R}^n)$, so that $F^{-1}([x^1:\dots,x^n:1]) = x$. Therefore, we have that $\mathds{R}^n = F^{-1}(F(\mathds{R}^n)$. Now we note that the pair $(F(\mathds{R}^n), F^{-1})$ is one of the canonical coordinate charts on $\mathds{RP}^n$. Thus $F(\mathds{R}^n)$ must be an open set and $F$ must be a diffeomorphism since we can can express it in coordinates as $\varphi_i \circ F \circ id_{\mathds{R}^n} = \varphi_i \circ F$  and all transition maps are diffeomorphisms. Now we must show that $F(\mathds{R}^n)$ is dense in $\mathds{RP}^n$. Given any $[x^1: \dots: x^n: 0] \in \mathds{RP}^n \setminus F(\mathds{R}^n)$, we can construct the sequence $\left\{ [x^1: \dots: x^n: \frac{1}{n}] \right\}_{n=1}^{\infty} \subset F(\mathds{R}^n)$, which converges to $[x^1: \dots: x^n: 0]$. Thus we have $\overline{F(\mathds{R}^n)} = \mathds{RP}^n$
+\end{proof}
 
 \end{document}
