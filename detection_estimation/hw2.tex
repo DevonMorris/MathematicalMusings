@@ -1,0 +1,99 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{bm}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory - Homework 1}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{sol}{Solution}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
+
+\begin{document}
+\section*{Problem 1}%
+Let $\mathbf{y} = f(\mathbf{x})$ denote a linear mapping from $\mathds{R}^p$ to $\mathds{R}^n$ i.e.
+\[
+  \begin{aligned}
+    \mathbf{y} &= f(\mathbf{x}) \\
+    f(a \mathbf{x}) &= a f(\mathbf{x}) \\
+    f(\mathbf{x}_1 + \mathbf{x}_2) &= f(\mathbf{x}_1) + f(\mathbf{x}_2)
+  \end{aligned}
+\]
+Show that this mapping may always be written
+\[
+  \mathbf{y} = A\mathbf{x}
+\]
+Determine $A = [\mathbf{a}_1, \cdots, \mathbf{a}_p]$
+
+\subsection*{Solution}%
+Using the canonical basis $\{\mathbf{e}_1, \dots, \mathbf{e}_p\}$ for  $\mathds{R}^p$, we can express any vector $\mathbf{x}$ in terms of its components, i.e.
+\[
+  \mathbf{x} = x_1\mathbf{e}_1 + \cdots + x_p\mathbf{e}_p = \sum_{j=1}^p x_j\mathbf{e}_j
+\]
+Using the linearity of $f$, we have
+\[
+  \mathbf{y} = f(\mathbf{x}) = f \left( \sum_{j=1}^p x_j\mathbf{e}_j\right) = \sum_{j=1}^p x_jf(\mathbf{e}_j)
+\]
+We can rewrite this as a matrix vector product
+\[
+  \mathbf{y} = [f(\mathbf{e}_1), \cdots, f(\mathbf{e}_p)]
+  \begin{bmatrix}
+    x_1 \\
+    \vdots  \\
+    x_p
+  \end{bmatrix}
+  =[f(\mathbf{e}_1), \cdots, f(\mathbf{e}_p)]\mathbf{x}
+\]
+If we let $A = [f(\mathbf{e}_1), \cdots, f(\mathbf{e}_p)]$, then we have that $\mathbf{y} = A\mathbf{x}$. (Technically, we can do this in any bases for $\mathds{R}^p$ and $\mathds{R}^n$ , but the representation of $\mathbf{y}, \mathbf{x},$ and $A$, will change.)
+
+\section*{Problem 2}%
+Prove that the matrix $Q = I - 2(\mathbf{v}\mathbf{v}^{\top}/\mathbf{v}^{\top}\mathbf{v})$ is orthogonal and that it projects through any vector that is perpendicular to $\mathbf{v}$.
+
+\subsection*{Solution}%
+Consider $Q^\top Q$
+\[
+  \begin{aligned}
+    Q^\top Q &= (I - 2(\mathbf{v}\mathbf{v}^{\top}/\mathbf{v}^{\top}\mathbf{v}))^{\top}(I - 2(\mathbf{v}\mathbf{v}^{\top}/\mathbf{v}^{\top}\mathbf{v})) \\
+             &= I - 4(\mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v}) + 4(\mathbf{v}\mathbf{v}^\top \mathbf{v}\mathbf{v}^\top/(\mathbf{v}^\top\mathbf{v})^2) \\
+             &= I
+  \end{aligned}
+\]
+Therefore, we have that this matrix is orthogonal.
+
+
+
+
+
+\end{document}
