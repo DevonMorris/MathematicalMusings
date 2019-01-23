@@ -20,7 +20,7 @@
 \geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
 \pagestyle{fancy}
 \lhead{Devon Morris}
-\chead{Detection \& Estimation Theory - Homework 1}
+\chead{Detection \& Estimation Theory - Homework 2}
 \rhead{\today}
 \cfoot{\thepage}
 
@@ -90,10 +90,334 @@ Consider $Q^\top Q$
              &= I
   \end{aligned}
 \]
-Therefore, we have that this matrix is orthogonal.
+Therefore, we have that this matrix is orthogonal. Now we note that any vector $\mathbf{x}$ can be broken up into its colinear and orthogonal parts as
+\[
+  \mathbf{x} = P\mathbf{x} + (I - P)\mathbf{x} = \mathbf{x}
+\]
+where $P = \mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v}$. The phrase ``projects through any vector that is perpendicular to $\mathbf{v}$" can be equivalently stated as $QP = -P$ and $Q(I-P) = I-P$. We will show those as follows
+\[
+  \begin{aligned}
+    QP &=(I - 2(\mathbf{v}\mathbf{v}^{\top}/\mathbf{v}^{\top}\mathbf{v}))(\mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v}) \\
+       &= \mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v} - 2\mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v} \\
+       &= -\mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v} \\
+       &= -P
+  \end{aligned}
+\]
+and 
+\[
+  \begin{aligned}
+    Q(I - P) &= Q - QP = Q + P \\
+    &= I - 2(\mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v}) + \mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v} \\
+    &= I - \mathbf{v}\mathbf{v}^\top/\mathbf{v}^\top\mathbf{v} \\
+    &= I - P
+  \end{aligned}
+\]
+
+\section*{Problem 3}%
+Find the vector $\hat{\mathbf{x}} \in \mathds{R}^N$ that minimizes 
+\[
+  (\hat{\mathbf{x}} - \mathbf{x})^\top(\hat{\mathbf{x}} - \mathbf{x})
+\]
+under the constraint that $\hat{\mathbf{x}} = H\bm{\theta}$ with $H$ an $n \times p$ matrix with rank $p \leq N$.
+\subsection*{Solution}%
+We note that Scharf says in 2.112 that the matrix $P_H$ solves this problem. Where $P_H = H(H^\top H)^{-1}H^\top$. Thus we have that
+\[
+  \hat{\mathbf{x}} = H(H^\top H)^{-1}H^\top \mathbf{x}
+\]
+
+\section*{Problem 4}%
+Define the ``cyclic shift matrix" $R$ and the ``DFT matrix" $V$:
+\[
+R = 
+\begin{bmatrix}
+  0 & 1 \\
+  I & 0
+\end{bmatrix}
+\]
+and 
+\[ V = \frac{1}{\sqrt{N}}
+  \begin{bmatrix}
+    1 & 1 & \cdots & 1 \\
+    1 & e^{-j(2\pi/N)} & & e^{-j(2\pi/N)(N-1)} \\
+    \vdots & \vdots & & \vdots \\
+    1 & e^{-j(2\pi/N)(N-1)} & \cdots & e^{-j(2\pi/N)(N-1)^2} \\
+  \end{bmatrix}
+\]
+
+\subsection*{Part a}%
+Show that $V^HV = VV^H = I$.
+
+\subsection*{Solution}%
+The easiest way to show this is by components. We will examine $V^HV_{ij}$ and $VV^H_{ij}$.
+\[
+  \begin{aligned}
+    V^HV_{ik} &= \sum_{l=1}^NV_{li}^{*}V_{lk} \\
+              &= \frac{1}{N} \sum_{l=1}^N e^{j(2\pi/N)(l-1)(i-1)} e^{-j(2\pi/N)(l-1)(k-1)}\\
+              &= \frac{1}{N} \sum_{l=1}^N e^{-j(2\pi/N)(l-1)(i-k)} 
+  \end{aligned}
+\]
+If $i = k$ we have 
+\[
+    V^HV_{ii} = \frac{1}{N}\sum_{l=1}^N 1 = 1 \\
+\]
+if $i \neq k$, then we are summing points that are evenly distributed around the unit circle and we get 
+\[
+  V^HV_{ik} = 0
+\]
+Similarly for $VV^H_{ik}$, we get
+\[
+  \begin{aligned}
+    VV^H_{ik} &= \sum_{l=1}^NV_{il}V_{kl}^* \\
+              &= \sum_{l=1}^Ne^{-j(2\pi/N)(i-1)(l-1)}e^{j(2\pi/N)(k-1)(l-1)} \\
+              &= \sum_{l=1}^Ne^{-j(2\pi/N)(l-1)(k-i)}
+  \end{aligned}
+\]
+And we have an identical situation as before. Therefore we have $V^HV = I$ and $VV^H = I$.
+
+\subsection*{Part b}%
+Show that $VR = WV$,  and $R = V^HWV$, where $W$ is the diagonal matrix $W = \text{diag}(1, W_N^{-1}, \cdots, W_N^{-(N-1)}$, with $W_N = e^{j(2\pi/N)}$
+
+\subsection*{Solution}%
+We note that  $VR$ is just a shifting of the columns
+\[
+  VR = \frac{1}{\sqrt{N}}
+  \begin{bmatrix}
+    1 & 1 &  \cdots & 1 & 1 \\
+    e^{-j(2\pi/N)}& e^{-j(2\pi/N)2} & & e^{-j(2\pi/N)(N-1)} & 1 \\
+    \vdots & \vdots & &\vdots & \vdots \\
+    e^{-j(2\pi/N)(N-1)} & e^{-j(2\pi/N)(N-1)2} & \cdots & e^{-j(2\pi/N)(N-1)^2} & 1
+  \end{bmatrix}
+\]
+And that $WV$ is just a weighting of the rows
+\[
+  \begin{aligned}
+    WV &= \frac{1}{\sqrt{N}}
+    \begin{bmatrix}
+      1 & 1 & \cdots & 1 \\
+      W_N^{-1} & W_N^{-1}e^{-j(2\pi/N)} & & W_N^{-1}e^{-j(2\pi/N)(N-1)} \\
+      \vdots & \vdots & & \vdots \\
+      W_N^{-(N-1)} & W_N^{-(N-1)}e^{-j(2\pi/N)(N-1)} & \cdots & W_N^{-(N-1)}e^{-j(2\pi/N)(N-1)^2} \\
+    \end{bmatrix} \\
+    &=
+    \frac{1}{\sqrt{N}}
+    \begin{bmatrix}
+      1 & 1 & \cdots & 1 \\
+      e^{-j(2\pi/N)} & e^{-j(2\pi/N)}e^{-j(2\pi/N)} & & e^{-j(2\pi/N)}e^{-j(2\pi/N)(N-1)} \\
+      \vdots & \vdots & & \vdots \\
+      e^{-j(2\pi/N)(N-1)} & e^{-j(2\pi/N)(N-1)}e^{-j(2\pi/N)(N-1)} & \cdots & e^{-j(2\pi/N)(N-1)}e^{-j(2\pi/N)(N-1)^2} \\
+    \end{bmatrix} \\
+    &= \frac{1}{\sqrt{N}}\begin{bmatrix}
+      1 & 1 & \cdots & 1 \\
+      e^{-j(2\pi/N)} & e^{-j(2\pi/N)2} & & e^{-j(2\pi/N)(N)} \\
+      \vdots & \vdots & & \vdots \\
+      e^{-j(2\pi/N)(N-1)} & e^{-j(2\pi/N)(N-1)2} & \cdots & e^{-j(2\pi/N)(N-1))(N)} \\
+    \end{bmatrix} \\
+    &=
+    \frac{1}{\sqrt{N}}
+    \begin{bmatrix}
+      1 & 1 &  \cdots & 1 & 1 \\
+      e^{-j(2\pi/N)}& e^{-j(2\pi/N)2} & & e^{-j(2\pi/N)(N-1)} & 1 \\
+      \vdots & \vdots & &\vdots & \vdots \\
+      e^{-j(2\pi/N)(N-1)} & e^{-j(2\pi/N)(N-1)2} & \cdots & e^{-j(2\pi/N)(N-1)^2} & 1
+    \end{bmatrix}
+  \end{aligned}
+\]
+So $VR = WV$. Now using the identity that $V^HV = I$, we have that $R = V^HVR = V^HWV$.
+
+\subsection*{Part c}%
+Show that every "circulant matrix" $C$ may be written as
+\[
+  C = 
+  \begin{bmatrix}
+    c_0 & c_N-1 & \cdots & c_1 \\
+    c_1 & c_0 & \cdots & c_2 \\
+    \vdots & \vdots & & \vdots \\
+    c_{N-1} & c_{N-2} & \cdots & c_0
+  \end{bmatrix}
+  = c_0I + c_1R + \cdots + c_{N-1}R^{N-1}
+\]
+
+\subsection*{Solution}%
+We first note that $R^k$ is given by
+\[
+  R^k = 
+  \begin{bmatrix}
+    0_{k \times (N-k)}  & I_{k} \\
+    I_{N-k} & 0_{(N-k) \times k}
+
+  \end{bmatrix}
+\]
+In this form, it is easily seen that 
+\[
+  C = c_0I + c_1R + \cdots + c_{N-1}R^{N-1}
+\]
+
+\subsection*{Part d}%
+Show that every circulant matrix $C$ is diagonalized by the DFT matrix
+\[
+  C = V^HDV
+\]
+\[
+  D = c_0I + c_1W + \cdots + c_{N-1}W^{N-1}
+\]
+
+\subsection*{Solution}%
+Consider the matrix given by $VCV^H$. Using the result from part c, we have
+\[
+  \begin{aligned}
+    VCV^H &= V(c_0I + c_1 R + \cdots + c_{N-1}R^{N-1})V^H\\
+          &= c_0VV^H + c_1 VRV^H + \cdots + c_{N-1}VR^{N-1}V^H
+  \end{aligned}
+\]
+Using the result from part b, we have
+\[
+  VCV^H = c_0VV^H + c_1 WVV^H + \cdots + c_{N-1}WVR^{N-2}V^H
+\]
+Repeating this substitution $N-2$ more times, we have
+\[
+  VCV^H = c_0VV^H + c_1 WVV^H + \cdots + c_{N-1}W^{N-1}VV^H
+\]
+Recalling that $VV^H = I$ we have that
+\[
+  VCV^H = c_0I + c_1W + \cdots + c_{N-1}W^{N-1}
+\]
+We note that this matrix is diagonal since $W_N$ is diagonal. Thus our DFT matrix diagonalizes the circulant matrix.
+
+\section*{Problem 5}%
+Begin with a real,  positive semi-definite symmetric matrix $R$. There exists an orthogonal matrix $U$ such that
+\[
+  U^\top R U = \Lambda^2 = \text{diag}(\lambda_1^2, \cdots, \lambda_N^2)
+\]
+
+\subsection*{Part a}%
+Show that $\lambda_n^2 \geq 0$ for all $n$.
+
+\subsection*{Solution}%
+Since $R$ is positive semidefinite, so is $U^\top RU$, since we can just think of $y = Ux$ as a linear transformation and $y^\top R y \geq 0$. Looking at our standard basis vectors $\mathbf{e}_n$ we have
+\[
+  0 \leq \mathbf{e}_n^\top U^\top R U \mathbf{e}_n = \mathbf{e}_n^\top \Lambda^2 \mathbf{e}_n = \lambda_n^2
+\]
+Therefore for every $n$ we have $\lambda^2_n \geq 0$.
+
+\subsection*{Part b}%
+Find a symmetric, positive semi-definite matrix $H$ with the property that $HH = R$.
+
+\subsection*{Solution}%
+Consider the matrix $H = U\Lambda U^\top$, where $\Lambda = \text{diag}(\sqrt{\lambda_1^2}, \cdots, \sqrt{\lambda_n^2})$. Thus we have that
+\[
+  HH = U\Lambda U^\top U \Lambda U^\top = U\Lambda \Lambda U^\top = U \Lambda^2 U^\top = R
+\]
+Thus we have found the matrix $H$.
+
+\section*{Problem 6}%
+Let $A$ be an $N \times p$ matrix of rank $r$ with real coefficients. The matrix $A^{\#}$ is called a pseudoinverse of $A$ if
+\[
+  \begin{aligned}
+    AA^{\#} &= (AA^{\#})^\top \\
+    AA^{\#}A &= A \\
+    A^{\#}A &= (A^{\#}A)^\top \\
+    A^{\#}AA^{\#} &= A^{\#}
+  \end{aligned}
+\]
+
+\subsection*{Part a}%
+Prove the existence of the matrices $B\ (N \times r)$ and $C\ (r \times p)$ for which 
+\[
+  \begin{aligned}
+    A = BC \\
+    \text{det}(CC^\top) \neq 0 \\
+    \text{det}(B^\top B) \neq 0
+  \end{aligned}
+\]
+
+\subsection*{Solution}%
+We note that $A$ has a compact SVD representation $A = U_1 \Sigma_1 V_1^\top$. Consider the matrices $B,C$ given by
+$B = U_1 \text{diag}(\sqrt{\sigma_1}, \cdots, \sqrt{\sigma_r})$ and $C = \text{diag}(\sqrt{\sigma_1}, \cdots, \sqrt{\sigma_r})V_1^\top$, where $\sigma_i$ are the singular values of $A$. This is valid since the singular values must be nonnegative. By construction we have that $A = BC$. Furthermore, analyzing the determinants we have
+\[
+  \begin{aligned}
+    \text{det}(B^\top B) &= \text{det}(\text{diag}(\sqrt{\sigma_1}, \cdots, \sqrt{\sigma_r})U_1^\top U_1 \text{diag}(\sqrt{\sigma_1}, \cdots, \sqrt{\sigma_r}))\\
+                         &= \text{det}(\Sigma_1) \neq 0
+  \end{aligned}
+\]
+and
+\[
+  \begin{aligned}
+    \text{det}(CC^T) &= \text{det}(\text{diag}(\sqrt{\sigma_1}, \cdots, \sqrt{\sigma_r})V_1^\top V_1 \text{diag}(\sqrt{\sigma_1}, \cdots, \sqrt{\sigma_r})) \\
+                   &= \text{det}(\Sigma_1) \neq 0
+  \end{aligned}
+\]
 
 
+\subsection*{Part b}%
+Find the pseudoinverses for $B$ and $C$.
 
+\subsection*{Solution}%
+The psuedoinverses are given by
+\[
+  \begin{aligned}
+    B^\# &= (B^\top B)^{-1}B^\top  \\
+         &= (\Sigma_1)^{-1}\text{diag}(\sqrt{\sigma_1}, \dots, \sqrt{\sigma_r})U_1^\top \\
+         &= \text{diag}(1/\sqrt{\sigma_1}, \dots, 1/\sqrt{\sigma_r})U_1^\top
+  \end{aligned}
+\]
+and
+\[
+  \begin{aligned}
+    C^\# &= (C^\top C)^{-1}C^\top \\
+         &= (V_1 \Sigma_1 V_1^\top)^{-1}V_1 \text{diag}(\sqrt{\sigma_1}, \dots, \sqrt{\sigma_r})\\
+         &= V_1 \Sigma_1^{-1}\text{diag}(\sqrt{\sigma_1}, \dots, \sqrt{\sigma_r})V_1^\top \\
+         &= V_1 \text{diag}(1/\sqrt{\sigma_1}, \dots, 1/\sqrt{\sigma_r})
+  \end{aligned}
+\]
+
+\subsection*{Part c}%
+Show that $A^\# = C^\#B^\#$ is a pseudoinverse for $A$.
+
+\subsection*{Solution}%
+Note that 
+\[
+  A^{\#} = C^\#B^\# = V_1 \diag(1/\sqrt{\sigma_1}, \dots, 1/\sqrt{\sigma_r})^2 U_1^\top = V_1 \Sigma_1^{-1} U_1^\top
+\]
+Now lets check the properties of the pseudoinverse, to facilitate computation, we will first compute $AA^\#$ and $A^\#A$.
+\[
+  AA^\# = U_1\Sigma_1V_1^\top V_1 \Sigma_1^{-1} U_1^\top = U_1U_1^\top
+\]
+\[
+  A^\#A = V_1 \Sigma_1^{-1}U_1^\top U_1 \Sigma_1 V_1^\top = V_1V_1^\top
+\]
+By inspection, we see that $AA^\# = (AA^\#)^\top$, and $A^\#A = (A^\#A)^\top$. Furthermore we have
+\[
+  AA^\#A = U_1U_1^\top U_1 \Sigma_1 V_1^\top = U_1\Sigma V_1^\top = A
+\]
+and
+\[
+  A^\#AA^\# = V_1V_1^\top V_1\Sigma^{-1}_1 U_1^\top = V_1 \Sigma_1^{-1} U_1^\top = A^\#
+\]
+Thus we satisfy all the requirements of the pseudoinverse. Therefore as defined $C^\#B^\#$ is a pseudoinverse for $A$.
+
+\subsection*{Part d}%
+Prove that the pseudoinverse for $A$ is unique
+
+\subsection*{Solution}%
+Suppose that there is a matrix $A^\dagger$ satisfying the properties of the pseudoinverse. Consider the matrix given by $(AA^{\dagger} - AA^\#)^2$.
+\[
+  \begin{aligned}
+    (AA^{\dagger} - AA^\#)^2 &= (AA^{\dagger} - AA^\#)A(A^{\dagger} - A^\#) = (AA^\dagger A - AA^\#A)(A^\dagger - A^\#) \\
+                             &= (A - A)(A^\dagger - A^\#) = 0
+  \end{aligned}
+\]
+Since this matrix is the sum and product of symmetric matrices, it must be symmetric. Therefore, we have that $AA^\dagger = AA^\#$. Similarly, if we consider the matrix $(A^{\dagger}A - A^\#A)^2$, we see that
+\[
+  \begin{aligned}
+    (A^{\dagger}A - A^\#A)^2 &= (A^\dagger - A^\#)(AA^\dagger A - AA^\# A)  \\
+                             &= (A^\dagger - A^\#)(A - A) = 0 
+  \end{aligned}
+\]
+Since this matrix is also symmetric, we have that $A^\dagger A = A^\#A$. Therefore, we have that
+\[
+  A^\dagger = A^\dagger A A^\dagger = A^\dagger AA^\# = A^\#A A^\# = A^\#
+\]
+Therefore we have shown that the pseudoinverse is unique.
 
 
 \end{document}
