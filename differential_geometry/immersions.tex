@@ -1,0 +1,169 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\begin{document}
+\section*{The Inverse Mapping Theorem}%
+This is the manifold version of the inverse function theorem. Recall, that if $F: M \rightarrow M$ is a diffeomorphism, then $dF_p: T_pM \rightarrow T_{F(p)}N$ is an isormorphism for all $p \in M$. The converse of this statement does not hold.
+
+\begin{thm}[Inverse Mapping Theorem]
+  Let $F: M^n \rightarrow N^n$ be smooth, and suppose that $dF_p: T_pM \rightarrow T_{F(p)N}$ is  n isormorphism for some $p \in M$, then there exists a neighborhood $U$ of $p$ such that 
+  \[
+    \eval{F}_U: U \rightarrow F(U)
+  \]
+  is a diffeomorphism.
+\end{thm}
+This is proved the same way as the inverse function theorem, but using coordinate charts. This theorem does not hold sometimes with covering spaces. We note that even if $dF_p$ for all $p \in M$ is an isomorphism, $F$ is not necessarily a global diffeomorphsim. A counter-example is 
+\[
+  \begin{aligned}
+    F: &S^1 \rightarrow S^1 \\
+      &e^{i\theta} \mapsto e^{2i\theta}
+  \end{aligned}
+\]
+This is not even 1-to-1, so it cannot be a diffeomorphism.
+
+\section*{Einstein Summation Notation (Convention)}%
+We want to create a notation to more easily sum objects e.g.
+\[
+  \sum_{j=1}^{n}v^jw_j = v^jw_j = v^1w_1 + v^2w_2 + \cdots + v^nw_n
+\]
+We also might see something like
+\[
+  g^{ij}_k v_iw_j = g^{11}_kv_1w_1 + g^{12}_kv_1w_2 + g^{21}_kv_2w_1 + g^{22}_kv_2w_2   
+\]
+We can write our vectors as
+\[
+  \sum_{i=1}^n v^i \eval{\pdv{}{x^i}}_p = v^i \pdv{}{x^i}
+\]
+
+\section*{Immersions \& Submersions}%
+What if $dF_p$ is not an isormorphism. 
+
+\begin{defn}
+  Let $F:M^m \rightarrow N^n$ be smooth. 
+  \begin{enumerate}
+    \item $F$ is an immersion at $p$ if $dF_p$ is injective, i.e. $\text{rank}(dF_p) = m$.
+    \item $F$ is a submersion at $p$ if $dF_p$ is surjective, i.e. $\text{rank}(dF_p) = n$.
+  \end{enumerate}
+  In general, $F$ is a sumbersion/immersion if it is a submersion/immersion at each $p\in M$.
+\end{defn}
+If $F$ is an immersion, then $\text{dim}(M) \leq \text{dim}(N)$. Similarly if $F$ is a submersion then $\text{dim}(M) \geq \text{dim}(N)$. An example is
+\[
+  \begin{aligned}
+    F: &\mathds{R} \rightarrow \mathds{R} \\
+       &t \mapsto \cos(t)
+  \end{aligned}
+\]
+We can analyze $dF_t = [-\sin(t)]$. This is an immersion and submersion when $\sin(t) \neq 0$. Thus this is a local diffeomorphism. Sidenote: Covering spaces are everywhere diffeomorphisms. If instead we have the map
+\[
+  H: t \mapsto (\cos(t), t)
+\]
+Looking at the differential, we have
+\[
+  dH_t = 
+  \begin{bmatrix}
+  -\sin(t) \\
+  1
+  \end{bmatrix}
+\]
+$H$ in this case is not a submersion, but it is an immersion everywhere. Another example is
+\[
+  \begin{aligned}
+    G&: \mathds{R} \rightarrow \mathds{R}^2 \\
+     &t \mapsto (t - \sin(t), 1 - \cos(t))
+  \end{aligned}
+\]
+Although this looks like it isn't smooth because its image has cusps, it is smooth. Looking at the differential, we have
+\[
+  dG_t = 
+  \begin{bmatrix}
+    1 - \cos(t) \\
+    \sin(t)
+  \end{bmatrix}
+  = 
+  \begin{bmatrix}
+    0 \\
+    0
+  \end{bmatrix}
+\]
+at the points $2k\pi$, $k \in \mathds{Z}$. This is never a submersion, but it is an immersion except at $2k\pi$. Cusps show that it is not an immersion at this point. We have a really nice local form when we have an immersion. This is generalized in the rank theorem
+
+\begin{thm}[Rank Theorem]
+  Let $F: M^m \rightarrow N^n$ be smooth with constant rank $r$. For each $p \in M$ there is a chart $(U, \varphi)$ about $p$ about $(V, \psi)$ about $F(p)$ such that $F(U) \subset V$  and
+  \[
+    \psi \circ F \circ \varphi^{-1}(x^1, \dots, x^m) = (x^1, x^2, \dots, x^r, 0, 0, \dots, 0)
+  \]
+  for all $(x^1, \dots, x^m) \in \varphi(U).$
+\end{thm}
+
+\begin{thm}[Global Rank Theorem]
+  Let $F: M \rightarrow N$, be smooth with $dF_p$ constant rank. 
+  \begin{itemize}
+    \item If $F$ is surjective, then $F$ must be a submersion 
+  \item If $F$ is a injective, then $F$ must be an immersion
+  \item If $F$ is bijective, then $F$ must be a diffeomorphism
+  \end{itemize}
+\end{thm}
+The key word in this is \underline{constant rank}.
+
+\begin{proof}[Proof (sketch)]
+  \begin{enumerate}
+    \item If $F$ is not a submersion, then locally $\tilde{F}(x^1, \dots, x^m) = (x^1, \dots, x^r, 0, \dots, 0)$, then it's not surjective.
+    \item If $F$ is not an immersion, then locally $\tilde{F}(x^1, \dots, x^m) = (x^1, \dots, x^r, 0, \dots, 0)$, then it's not even injective. $r < m$ so may be no 0s.
+  \end{enumerate}
+\end{proof}
+
+\section*{Embeddings}%
+
+\begin{defn}
+  Let $F: M \rightarrow N$ be a smooth immersion such that $F: M \rightarrow F(M)$ is a homeomorphism, where $F(M) \subset N$ is equipped with subspace topology. Then $F$ is called a (smooth) embedding.
+\end{defn}
+
+How can a map fail to be an embedding. Example, 
+\[
+  G(t) = (t - \sin(t), 1 - \cos(t))
+\]
+This map fails to be an immersion at the cusps, but it is a homeomorphism onto its image.
+\[
+  \begin{aligned}
+    F: &(\pi/4, 3\pi/4) \rightarrow \mathds{R}^2 \\
+     &t \mapsto (\sin(2t), \sin(t))
+  \end{aligned}
+\]
+This is an immersion, but not a homeomorphism onto its image, because it is not injective.
+\[
+  \begin{aligned}
+    H: &\mathds{R} \rightarrow \mathds{R}^2 \\
+     &t \mapsto (\sin(4 \arctan(t)), \sin(2 \arctan(t))) 
+  \end{aligned}
+\]
+This is a injective, immerson, but is not a homeomorphism onto its image. $H^{-1}$ is not continuous. Remember lines in torus with irrational slope.
+
+
+\end{document}
