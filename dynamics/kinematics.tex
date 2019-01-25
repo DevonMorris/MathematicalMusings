@@ -200,5 +200,32 @@ Or equivalently as column vectors
         x_3
     \end{bmatrix}
 \]
+Look at the book and fill in details on missed class.
+
+\subsection*{Angular Velocity}%
+\label{sub:Angular Velocity}
+
+\subsubsection*{Infinitesimal Rotations}%
+\label{ssub:Infinitesimal Rotations}
+Disclaimer: I hate this derivation that was given in class, it's not very mathy at all. 
+
+Angles and orienations are not commutative and therefore are not vectors (because they live on a manifold). Let $R_1 = R_x( \Delta \theta_1)$, $R_2 = R_y(\Delta \theta_2)$ and $R_3 = R_z(\Delta \theta_3)$. We will compose these rotations $R = R_3R_2R_1$ we get and using the small angle approximation, we can take the first order terms and ignore all higher order terms and get get
+\[
+  R = 
+  \begin{bmatrix}
+    1 & \Delta \theta_3 & -\Delta \theta_2 \\
+    -\Delta \theta_3 & 1 & \Delta \theta_1 \\
+    \Delta \theta_2 & -\Delta \theta_1 & 1
+  \end{bmatrix}
+\]
+So infinitesimal rotations are commutative, so they can be written as a vector... (we went way off the rails at this point). So let's define 
+\[
+\mathbf{\omega} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \mathbf{\theta}}{\Delta t} 
+\]
+So we get
+\[
+  \mathbf{\omega} = \omega_1 \mathbf{e}_1 + \omega_2 \mathbf{e}_2 + \omega_3 \mathbf{e}_3
+\]
+See example (probably given in the book).
 
 \end{document}

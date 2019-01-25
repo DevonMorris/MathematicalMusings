@@ -136,7 +136,7 @@ But we have that
             &= \dv{\tilde{F \circ \gamma}^1}{t} \pdv{}{y^1} + \cdots + \dv{\tilde{F \circ \gamma}^n}{t} \pdv{}{y^n} \\
   \end{aligned}
 \]
-So to find these coefficeints, we can look at the coordinate representation $\tilde{F \circ \gamma} = \psi \circ F \circ \gamma = (\psi \circ F \circ \varphi^{-1}) \circ (\varphi \circ \varphi) = \hat{F} \circ \tilde{\gamma}$. This allows us to see that
+So to find these coefficients, we can look at the coordinate representation $\tilde{F \circ \gamma} = \psi \circ F \circ \gamma = (\psi \circ F \circ \varphi^{-1}) \circ (\varphi \circ \varphi) = \hat{F} \circ \tilde{\gamma}$. This allows us to see that
 \[
   w^i = \dv{\tilde{(F \circ \gamma)}^i}{t} = \dv[]{\hat{F}^i \circ \tilde{\gamma}}{t} = 
   \pdv{\hat{F}^i}{x^1} \dv{\tilde{\gamma}^1}{t} + \cdots + \pdv{\hat{F}^i}{x^m} \dv{\tilde{\gamma}^m}{t} = \sum_{j=1}^m \pdv{\hat{F}^i}{x^j}v^j
@@ -151,5 +151,63 @@ We can see that this is a matrix product. So in coordinates, we see that the coo
     \item If $F: M \rightarrow M$ is a diffeomorphism then $dF_p$ is an isomorphism with $(dF_p)^{-1} = dF^{-1}_{F(p)}$
   \end{enumerate}
 \end{thm}
+
+\begin{defn}
+  The tangent bundle $TM$ is the disjoint union of all the tangent spaces $TM = \coprod_{p \in M} T_pM$
+\end{defn}
+
+An element of $TM$ is written as $(p,v) = v_p$ where $p \in M$ and $v \in T_pM$. There is a natural projection map 
+\[
+  \begin{aligned}
+  \pi: TM \rightarrow M \\
+  (p,v) \mapsto p
+  \end{aligned}
+\]
+
+\begin{prop}
+  For a smooth $n$-manifold $M$, $TM$ has a natural topology and a smooth structure making it a $2n$ dimensional smooth manifold with $\pi: TM \rightarrow M$ a smooth map.
+\end{prop}
+
+\begin{proof}
+  Let $(U, \varphi) = (U, x^j)$ be a chart on $M$.  Define $\tilde{\varphi}: \pi^{-1}(U) \rightarrow \mathds{R}^{2n}$ by
+  \[
+    \begin{aligned}
+      \tilde{\varphi}((p,v)) &= (\varphi(p), v_{\varphi}^1, \dots, v_{\varphi}^n)\\
+                             &= (x^1(p), \dots, x^n(p), v_{\varphi}^1, \dots, v_{\varphi}^n)\\
+    \end{aligned}
+  \]
+  where
+  \[
+    v = \sum_{j=1}^n v_{\varphi}^j \pdv{}{x^j}
+  \]
+  Now we wish to know the transistion functions. Then we have two charts $(\pi^{-1}(U), \tilde{\varphi})$ and $(\pi^{-1}(V), \tilde{\psi})$ on $TM$, let $(x,v) \in \tilde{\varphi}(\pi^{-1}(U) \cap \pi^{-1}(V))$. Then 
+  \[
+    \begin{aligned}
+      \tilde{\psi} \circ \tilde{\varphi}^{-1}(x,v) = (\psi \circ \varphi^{-1}, d(\psi \circ \varphi^{-1})v)
+    \end{aligned}
+  \]
+  We know that these transition functions are smooth. Therefore they can be extended to some maximally smooth atlas. In coordinates, we have that $\varphi \circ \pi \circ \tilde{\varphi}^{-1}(x,v) = x$ therefore it must be smooth.
+\end{proof}
+
+\begin{defn}
+  A manifold $M$ is parallelizable if $TM \cong M \times \mathds{R}^n$
+\end{defn}
+
+Note that $TS^1 \cong S^1 \times \mathds{R}$. However we have that $TS^2 \ncong S^2 \times \mathds{R}^2$. Locally tangent bundles look like $M \times \mathds{R}^n$, but globally they might be very different. If we can write $TM \cong M \times \mathds{R}^n$ then the manifold is parallelizable. A visualizable example, is the mobius band is not a parallelizable bundle. We can also say that $TS^1$ is a trivial bundle
+
+\begin{prop}
+  if $M$ can be covered by a single coordinate chart, then $M$ is parallelizable. In other words $TM$ is trivial.
+\end{prop}
+
+\begin{defn}
+  If $F: M \rightarrow M$ is smooth, then the map 
+  \[
+    \begin{aligned}
+      dF: TM &\rightarrow TN \\
+      (p,v) &\mapsto (F(p), dF_p(v))
+    \end{aligned}
+  \]
+  is called the global differential of $F$.
+\end{defn}
 
 \end{document}
