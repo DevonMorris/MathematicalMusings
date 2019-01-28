@@ -1,0 +1,45 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\begin{document}
+
+\section*{Sufficiency}
+\begin{enumerate}
+  \item $\mathbf{x}$ are measurements (samples) from a distribution $F_{\bm{\theta}}(\mathbf{x})$
+  \item $\bm{\theta}$ is a vector of parameters definining $F_{\bm{\theta}}(\mathbf{x})$
+  \item Is there a function $\mathbf{t} = T(\mathbf{x})$ which  retains all useful information in $\mathbf{x}$ with respect to $\bm{\theta}$.
+  \item We want $T(\mathbf{x})$ to be a "sufficient" statistic.
+\end{enumerate}
+What we want is a length $\mathbf{t} \ll$ length $\mathbf{x}$. If we can find such a $T$ we have found a sufficient statistic. 
+
+\begin{defn}[Sufficient Statistic]
+  Let $\mathbf{X}$ be a length $N$ random vector. Let $\bm{\theta}$ be a $p$-dimesional, parameter vector such that $P_{\bm{\theta}}(\mathbf{x})$ is the probability mass function for $\mathbf{X}$, the statistic $T_{\mathbf{x}}$ is sufficient for $\bm{\theta}$ if $P_{\bm{\theta}}(\mathbf{x} | T(\mathbf{x}) = \mathbf{t})$ is independent of $\bm{\theta}$. I.e.  $P_{\bm{\theta}}(\mathbf{x} | T(\mathbf{x}) = \mathbf{t}) = P(\mathbf{x} | \mathbf{t})$
+\end{defn}
+\end{document}
+The continuous definition is the same, but exchange $P_{\bm{\theta}}$ for $f_{\bm{\theta}}$.

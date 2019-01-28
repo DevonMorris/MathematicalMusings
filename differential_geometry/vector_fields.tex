@@ -1,0 +1,61 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{rem}{Remark}
+
+\begin{document}
+
+\section*{Vector Fields}%
+
+\begin{defn}
+  A vector field on $M$ is a map $X: M \rightarrow TM$, such that $\pi \circ X = \text{id}_M$. I.e. $X(p) \in T_pM$ for all $p \in M$.
+\end{defn}
+
+For a chart $(U, \varphi) = (U, (x^1, \dots, x^n))$, then we have a basis 
+\[
+  \left\{ \eval{\pdv{}{x^1}}_p, \dots, \eval{\pdv{}{x^n}}_p \right\}
+\]
+for $T_pM$. If $X$ is a vector field, then we can write
+\[
+  X(p) = X^j(p) \eval{\pdv{}{x^j}}_p
+\]
+
+\begin{defn}
+  A vector field $X$ on $M$ is smooth if any of the following equivalent definitions hold
+  \begin{itemize}
+    \item $X: M \rightarrow TM$ is a smooth map.
+    \item In each coordinate chart $(U, (x^j))$, the component function $X^j: U \rightarrow \mathds{R}$ are smooth.
+    \item $X (f): M \rightarrow \mathds{R}$ is smooth for all $f \in C^{\infty}(M)$.
+  \end{itemize}
+We denote the set of all smooth vector fields on $M$ by $\Gamma^{\infty}(TM)$.
+\end{defn}
+
+
+\end{document}

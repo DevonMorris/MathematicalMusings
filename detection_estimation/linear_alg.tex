@@ -1,0 +1,177 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+
+\begin{document}
+
+\section*{Linear Algebra \& Multivariate Normal Theory}
+Sections that we will not review
+
+\begin{itemize}
+    \item 2.1 Vector Spaces
+        \begin{itemize}
+            \item Euclidean Spaces
+            \item Hilbert Spaces
+            \item Matrices
+        \end{itemize}
+    \item 2.2 Linear Independence
+    \item 2.4 Linear Subspaces
+        \begin{itemize}
+            \item Basis
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Dimension, Rank, \& Nullity}%
+Disclaimer: I'm not a fan of the notation or mathematics we did in this section. Some of the conclusions are missing logical connectives. But, we did it this way in class so I'll be consistent in my note taking.
+
+Suppose I have a set of vectors
+\[
+    \left\{ \mathbf{x}_1, \dots, \mathbf{x}_p \right\}, \quad \mathbf{x}_i \in \mathds{R}^n
+\]
+We can define a vectorspace
+\[
+    \mathcal{S} = \left\{ \mathbf{x} : \mathbf{x} = \sum_{i=1}^{\infty} a_i \mathbf{x}_i \right\}
+\]
+is a subspace of $\mathds{R}^n$, i.e. $\mathcal{S} \subset \mathds{R}^n$. In general, $p$ could be greater than, equal or less than $n$. We can define a data matrix 
+\[
+    X = \left[ \mathbf{x}_1, \dots, \mathbf{x}_p \right]
+\]
+We will define span as $\mathcal{R}(X)$ also denote as $\mathcal{R}(X) = \left< X\right>$. \[
+    \mathcal{R}(X) = \left\{ \mathbf{x} : \mathbf{x} = X\mathbf{a}, \mathbf{a} \in \mathds{R}^p \right\}
+\]
+$X\mathbf{a}$ is called the range transform of $\mathbf{a}$. It's the cardinality of the basis of $\mathcal{S}$. $\text{dim}(\mathcal{S}) \leq \text{min}(p,n)$. We also say that $\text{dim}(\mathcal{S}) = \text{rank}(X) = \rho(X)$ and equivalently $\mathcal{R}(X) = \rho(X)$. We can also define the nullspace of $X$, 
+\[
+    \mathcal{N}(X) = \left\{ \mathbf{a} : X\mathbf{a} = 0 \right\}
+\]
+We note that $\mathcal{N}(X) \subset \mathds{R}^p$. We can put some bounds on $\text{dim}\mathcal{N}(X) = p - r$, where $0 \leq r \leq p$. Then we have that $\mathcal{N}(X) = \text{span} \left\{ \mathbf{a}_1, \dots, \mathbf{a}_{p-r} \right\}$.  For some minimum $r$, such that $X\mathbf{a} = 0$. So we can write $\mathcal{N}(X) = \left\{ \mathbf{a} : \sum_{i=1}^{p-r} \alpha_i \mathbf{a}_i \right\}$ and where $\mathbf{a}_i$ are mutually independent. Basically we can form any vector in $\mathbf{a} \in \mathds{R}^p$ by summing things in the null space and not in the null space of $X$. If we put this idea in $\mathcal{R}(X)$. Basically we have
+\[
+    \begin{aligned}
+        \mathcal{R}(X) &= \left\{ \mathbf{x}: \mathbf{x} = X \mathbf{a} \right\} \\
+                       &= \left\{ \mathbf{x}: \mathbf{x} = X\left( \sum_{i=1}^{p-r} \alpha_i \mathbf{a}_i + \sum_{i=p-r+1}^{p} \alpha_i \mathbf{a}_i\right) \right\} \\
+                       &= \left\{ \mathbf{x}: \mathbf{x} = X\left(\sum_{i=p-r+1}^p \alpha_i \mathbf{a}_i\right) \right\}
+    \end{aligned}
+\]
+This gives us the following relations
+\begin{itemize}
+    \item $\text{dim}\mathcal{R}(X) = r$
+    \item $\text{dim}\mathcal{N}(X) = p-r$
+    \item $\text{dim}\mathcal{R}(X) + \text{dim}\mathcal{N}(X) = p$
+\end{itemize}
+If $X$ is full rank then $\rho(X) = p$ also we have that $p=r$ by the above relations.
+
+The autocorrelation matrix is given by 
+\[
+    R_{\mathbf{x}} := E \left[ \mathbf{x} \mathbf{x}^H \right]
+\]
+Which is hermitian, as easily seen. A matrix is hermitian if $R = R^H$. The eigenvalues of $R$ are real. The proof is straightforward. Eigenvectors of hermitian $R$ are mutually orthogonal. Note that hermitian matrices are diagonalizable. So we can write the proof
+
+\begin{proof}
+   Since $R$ is diagonalizable we have $RU = U\Lambda$. So we can rewrite this as 
+   \[
+       U^HRU = U^HU\Lambda
+   \]
+   \[
+       (RU)^HU = U^HU\Lambda
+   \]
+   \[
+       \Lambda U^HU = U^HU\Lambda
+   \]
+   Thus $U^HU$ is diagonal. Thus we have mutual orthogonality.
+\end{proof}
+I think there is a circular dependency in this proof somewhere.
+
+Now we can talk about the SVD. Let $H \in \mathds{R}^{n \times p}$. We can decompose $H$ as 
+\[
+    H = U \Sigma V^H
+\]
+Note, $U$ and $V$ are unitary. Where $U$ and $V$, $V$ is normalized eigenmatrix for $H^HH$, and $U$, is normalized eigenmatrix for $HH^H$. We can partition this representation as 
+\[
+    H = [U_1\ U_2]
+    \begin{bmatrix}
+        \Sigma_1 & 0 \\
+        0 & \Sigma_2
+    \end{bmatrix}
+    \begin{bmatrix}
+        V_1^H \\
+        V_2^H
+    \end{bmatrix}
+\]
+$U_1$ spans the $\mathcal{R}(H)$, $\mathcal{N}(H) = \mathcal{N}(V_1^H)$. Which means $V_2$ spans $\mathcal{N}(H)$.
+
+\subsection*{Multivariate Gaussian Distribution}%
+Let $\mathbf{X} = [X_1, \dots, X_N]^\top$ be a vector of jointly normal random vector. Let
+\[
+  \mathbf{m} = E[\mathbf{X}] = [E[X_1], \dots E[X_N]^\top]
+\]
+and let 
+\[
+  R = E[(\mathbf{X} - \mathbf{m})(\mathbf{X} - \mathbf{m})] = \{r_{ij}\}
+\]
+\[
+  f_{\mathbf{X}}(\mathbf{x}) = \frac{1}{(2\pi)^{N/2}\text{det}(R)^{1/2}} \text{exp} \left( -\frac{1}{2} (\mathbf{x} - \mathbf{m})^\top R^{-1} (\mathbf{x} - \mathbf{m})\right)
+\]
+Where this is the density function of the multivariate random normal. Now, we note that
+\[
+  \int_{\mathds{R}^n} f_{\mathbf{X}}(\mathbf{x})\ d\mathbf{x} = 1
+\]
+So that 
+\[
+  \int_{\mathds{R}^n} \text{exp} \left( -\frac{1}{2} (\mathbf{x} - \mathbf{m})^\top R^{-1} (\mathbf{x} - \mathbf{m})  \right)\ d\mathbf{x} = (2\pi)^{N/2} \text{det}(R)^{1/2}
+\]
+We can think of the exponent as distance away fromt he mean and we call this the mahalanobis distance 
+\[
+  (\mathbf{x} - \mathbf{m})^\top R^{-1}(\mathbf{x} - \mathbf{m})
+\]
+We note that if the $X_i$ are i.i.d, then $R = \sigma^2 I$, and we just get the true euclidean distance. If they are independent but not identically distributed, we get some stretching of the ellipse. 
+
+\subsubsection*{Characteristic Functions}%
+The characteristic function is defined as
+\[
+  \begin{aligned}
+    \phi(\bm{\omega}) &= E \left[ e^{-j \bm{\omega}^\top \mathbf{x}} \right] \\
+                      &= \int_{\mathds{R^n}} e^{-j\mathbf{\omega}^\top \mathbf{x}}f_{\mathbf{X}}(\mathbf{x}) \ d\mathbf{x}
+  \end{aligned}
+\]
+
+Eq. 2.150 in textbook, we get
+\[
+  \begin{aligned}
+    \phi(\bm{\omega}) &= \text{exp} \left( -\frac{1}{2} \mathbf{m}^\top R^{-1} \mathbf{m} \right) \text{exp} \left( -\frac{1}{2} (\bm{\omega} + j R^{-1}\mathbf{m})^\top R (\bm{\omega} + j R^{-1} \mathbf{m}) \right) \\
+                      &= \text{exp}\left( -\frac{1}{2}\left( \bm{\omega}^\top R \bm{\omega} - j 2\bm{\omega}^\top \mathbf{m}  \right) \right)
+  \end{aligned}
+\]
+We say that that $\mathbf{X} \sim \mathcal{N}(\mathbf{m}, R)$. Under a linear transformation $\mathbf{Y} = A^\top \mathbf{X}$, where $A^\top \in \mathds{m \times N}, m \leq N$. Then
+\[
+  \phi_{\mathbf{Y}}( \bm{\omega}) = E \left[ \text{exp} \left( =j \bm{\omega}^\top A^\top \mathbf{X} \right) \right] = \text{exp} \left[ -\frac{1}{2} \left( \bm{\omega}^\top A^\top R A \bm{\omega} - j2\bm{\omega}^\top A^\top \mathbf{x} \right) \right]
+\]
+So we have that 
+\[ 
+  \mathbf{Y} \sim \mathcal{N}(A^\top \mathbf{m}, A^\top R_{\mathbf{X}}A)
+\]
+Note that for any random variable, the mean and variance transform similarly.
+
+\end{document}

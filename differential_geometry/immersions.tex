@@ -28,6 +28,8 @@
 \newtheorem*{prop}{Proposition}
 \newtheorem*{defn}{Definition}
 \newtheorem*{thm}{Theorem}
+\newtheorem*{rem}{Remark}
+
 \begin{document}
 \section*{The Inverse Mapping Theorem}%
 This is the manifold version of the inverse function theorem. Recall, that if $F: M \rightarrow M$ is a diffeomorphism, then $dF_p: T_pM \rightarrow T_{F(p)}N$ is an isormorphism for all $p \in M$. The converse of this statement does not hold.
@@ -163,7 +165,46 @@ This is an immersion, but not a homeomorphism onto its image, because it is not 
      &t \mapsto (\sin(4 \arctan(t)), \sin(2 \arctan(t))) 
   \end{aligned}
 \]
-This is a injective, immerson, but is not a homeomorphism onto its image. $H^{-1}$ is not continuous. Remember lines in torus with irrational slope.
+This is a injective, immerson, but is not a homeomorphism onto its image. $H^{-1}$ is not continuous. Remember lines in torus with irrational slope. We'd like to say if it is an inective immersion then we have an embedding. We get a theorem
+\begin{thm}
+  If $F: M \rightarrow N$, is an injective immersion and $M$ is compact, then $F$ is an embedding.
+\end{thm}
 
+\begin{proof}
+  If $F$ is injective, then $F^{-1}: F(M) \rightarrow M$ is well-defined. We want to show that $F^{-1}$ is continuous. If $A \subset M$ is closed. Since $M$ is compact, then $A$ is compact. Since $F$ is continous, then $F(A)$ is compact. Since $N$ is hausdorff, that implies that $F(A) \subset N$ is closed. Therefore the preimage of $A$ under $F^{-1}$ is closed, which implies that $F^{-1}$ is continuous.
+\end{proof}
+
+\section*{Submanifolds}%
+Many manifolds arise naturally as subsets of other manifolds. For example $S^n \subset \mathds{R}^{n+1}$.
+
+\begin{defn}
+  Let $M$ be a smooth manifold. of dimension $n$, let $S \subset M$. A $k$-slice chart for $S$ is the coordinate chart on $(U, \varphi)$ on $M$ such that $\varphi(U \cap S) = \left\{(x^1, \dots, x^k, 0, \dots, 0)\right\}$.
+\end{defn}
+ \begin{defn}
+   An (embedded) submanifold of dimension $k$ is a subset $S \subset M$ such that for every $p \in M$, there exists a $k$-slice chart $(U, \varphi)$ for $S$ with $p \in U$. Where the co-dimension of $S$ is $n-k$.
+ \end{defn}
+ We define it this way because the codimension behaves a bit better. A submanifold is a manifold that lives in a larger manifold, but avoids pathological examples like we presented earlier. So $S^n$ is a submanifold of $\mathds{R}^n$ with codimension $1$. Open subsets of $M$ are codimension $0$ manifolds.
+
+ \begin{prop}
+   A subset $S \in M$ is a submanifold of dimesion $k$ if and only if there exists a smooth manifold $S_0$ of dimension $k$ and an embedding $\theta: S_0 \rightarrow M$ with $\theta(S_0) = S$.
+ \end{prop}
+ This should be proved using the rank theorem. Going the other way we want to take $S$ witha smooth structure to create an embedding. 
+
+ \begin{rem}
+   If $S \subset M$ is a $k$-dimensional submanifold, then for $p \in S$, then $T_pM$ is a $k$-dimensional subspace of $T_pM$. We can define $T_pS = \{ [\gamma] \in T_pM\ |\ \gamma:(-\epsilon, \epsilon) \rightarrow S\}$. We can also think of it as $T_pS = d\theta_q(T_qS_0)$, where $\theta: S_0 \rightarrow M$ is the map above, $\theta(S_0) = S_1$, $\theta(q) = p$.
+ \end{rem}
+
+ Locally if we have a slice chart $(U, \varphi) = (u, (x^1, \dots, x^k, y^{k+1}, \dots, y^n))$, then we have that
+ \[
+ T_pS = \text{span} \left\{ \pdv{}{x^1}, \dots, \pdv{}{x^k} \right\}
+ \]
+ which is a subspace of $T_pM$. Or we can think of it as
+ \[
+   T_pS = \left\{ v \in T_pM : v(f) = 0, \forall f \in C^{\infty}(M) \text{ with } \eval{f}_S = 0 \right\}
+ \]
+
+ \begin{thm}[Whitney Embedding Theorem]
+   If $M$ is an $n$-dimensional smooth manifold, then there exists an embedding $\tau:M \rightarrow \mathds{R}^{2n}$. Within the class of all functions of the form $\alpha: M \rightarrow \mathds{R}^{2n+1}$, smooth embeddings are generic (after a small perturbation, any such $\alpha$ can be turned into a smooth embedding).
+ \end{thm}
 
 \end{document}
