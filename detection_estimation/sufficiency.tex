@@ -41,5 +41,73 @@ What we want is a length $\mathbf{t} \ll$ length $\mathbf{x}$. If we can find su
 \begin{defn}[Sufficient Statistic]
   Let $\mathbf{X}$ be a length $N$ random vector. Let $\bm{\theta}$ be a $p$-dimesional, parameter vector such that $P_{\bm{\theta}}(\mathbf{x})$ is the probability mass function for $\mathbf{X}$, the statistic $T_{\mathbf{x}}$ is sufficient for $\bm{\theta}$ if $P_{\bm{\theta}}(\mathbf{x} | T(\mathbf{x}) = \mathbf{t})$ is independent of $\bm{\theta}$. I.e.  $P_{\bm{\theta}}(\mathbf{x} | T(\mathbf{x}) = \mathbf{t}) = P(\mathbf{x} | \mathbf{t})$
 \end{defn}
-\end{document}
 The continuous definition is the same, but exchange $P_{\bm{\theta}}$ for $f_{\bm{\theta}}$.
+Consider $P_{\bm{\theta}}(\mathbf{x}, \mathbf{t})$. We have that
+\[
+P_{\bm{\theta}}(\mathbf{x}, \mathbf{t}) = P_{\bm{\theta}}(X = \mathbf{x}, T(X) = \mathbf{t}) = 
+\begin{cases}
+  P_{\bm{\theta}}(\mathbf{x}) & \mathbf{t} = T(\mathbf{x}) \\
+  0 & \mathbf{t} \neq T(\mathbf{x})
+\end{cases}
+\]
+Let apply the definition of conditional probability and we get
+\[
+  P_{\bm{\theta}}(\mathbf{x}|\mathbf{t})P_{\bm{\theta}}(\mathbf{t}) = P_{\bm{\theta}}(\mathbf{x}, \mathbf{t})
+\]
+Or equivalently, we can write
+\[
+  P_{\bm{\theta}}(\mathbf{x}) =  
+\begin{cases}
+  P_{\bm{\theta}}(\mathbf{x}|\mathbf{t})P_{\bm{\theta}}(\mathbf{t})  & \mathbf{t} = T(\mathbf{x}) \\
+  0 & \mathbf{t} \neq T(\mathbf{x})
+\end{cases}
+\]
+So if $T(\mathbf{x})$ is sufficient we have 
+\[
+  P_{\bm{\theta}}(\mathbf{x}) =  
+\begin{cases}
+  P(\mathbf{x}|\mathbf{t})P_{\bm{\theta}}(\mathbf{t})  & \mathbf{t} = T(\mathbf{x}) \\
+  0 & \mathbf{t} \neq T(\mathbf{x})
+\end{cases}
+\]
+
+\subsection*{Example}%
+Let $X = [X_1, \dots, X_N]$, where each $X_i$ is poisson.
+\[
+  P_{\theta}(x) = e^{-\theta} \frac{\theta^x}{x!}
+\]
+$\theta$ is the expected arrivals in a unit time period. So we have $E[X] = \theta$. We need a $P_{\theta}(\mathbf{x})$.
+\[
+  P_{\theta}(\mathbf{x}) = \prod_{n=1}^N P_{\theta}(x_n) = e^{-N\theta}  \frac{\theta^{\sum_{n=1}^N x_n}}{\prod_{n=1}^N x_n!}
+\]
+Let $k = T(\mathbf{x}) = \sum_{n=1}^N x_n$. 
+\[
+  \begin{aligned}
+    P_{\theta}(\mathbf{x}) &= \frac{1}{\prod_{n=1}^N x_n!} e^{-N \theta} \theta^k \\
+  \end{aligned}
+\]
+So we have succesfully factored this into a term that only depends on the data, and a term that only depends on the parameter $\theta$.
+
+If we analyze, 
+\[
+  \frac{P_{\theta}(\mathbf{x})}{P_{\theta}(k)} = \frac{k! N^{-k}}{\prod_{n=1}^N x_i!}
+\]
+
+we see that it does not depend on $\theta$. Therefore, we have a sufficient statistic. For continuous random variables, we just replace $P$ with $f$.
+
+\subsection*{Example}%
+Let $X = [X_0: \dots: X_{m-1}]$. Where each $X_n$ is independent of $X_m$ and $X_i \sim \mathcal{N}(m, R)$
+we get
+\[
+  f_{\bm{\theta}}(\mathbf{X}) = 
+  (2\pi)^{-MN/2} \text{det}(R)^{-M/2} \text{exp} \left( -\frac{M}{2} \text{tr} \left( R^{-1} \mathcal{S}(\mathbf{m}) \right)\right)
+\]
+where 
+\[
+  \mathcal{S}(\mathbf{m}) = \frac{1}{M} \sum_{m=0}^{M-1} (\mathbf{x}_m  - \mathbf{m})(\mathbf{x}_m - \mathbf{m})^\top
+\]
+\label{sub:Example}
+
+
+
+\end{document}

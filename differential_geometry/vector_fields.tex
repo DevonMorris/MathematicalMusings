@@ -54,8 +54,121 @@ for $T_pM$. If $X$ is a vector field, then we can write
     \item In each coordinate chart $(U, (x^j))$, the component function $X^j: U \rightarrow \mathds{R}$ are smooth.
     \item $X (f): M \rightarrow \mathds{R}$ is smooth for all $f \in C^{\infty}(M)$.
   \end{itemize}
-We denote the set of all smooth vector fields on $M$ by $\Gamma^{\infty}(TM)$.
+We denote the set oif all smooth vector fields on $M$ by $\Gamma^{\infty}(TM)$.
 \end{defn}
 
+We will switch to $V$ for the vector field from now on. At each point $p \in M$, $V$ assigns a tangent vector $V(p) = V_p \in T_pM$. So we can write this as 
+\[
+  V = V^j \pdv{}{x^j}
+\]
+where each $V^j$ ins a smooth function on $U$. Given a function $f$ and a vector field $V \in \Gamma^{\infty}(TM)$, we can plug $f$ into $V_p$ for each point $p \in M$. This gives a real value $V_p(f)$ at each point $p \in M$ i.e. it defines a function 
+\[
+  \begin{aligned}
+    V_*(f):& M \rightarrow \mathds{R} \\
+    :& p \mapsto V_p(f)
+  \end{aligned}
+\]
+Each vector field $V \in \Gamma^{\infty}(TM)$ gives a map
+\[
+  \begin{aligned}
+    V:& C^{\infty}(M) \rightarrow C^{\infty}(M) \\
+    :& f \mapsto V(f)
+  \end{aligned}
+\]
+satisfying
+\begin{enumerate}
+  \item Linearity: $V(\alpha f + \beta g) = \alpha V(f) + \beta V(g)$ 
+  \item Leibniz Rule: $V(fg) = gV(f) + fV(g)$
+\end{enumerate}
+
+\subsection*{Example}%
+Let $S^2$ be the unit sphere in $\mathds{R}^3$. Find an explicit basis for each $T_pS^2$ in terms of coordinates in $\mathds{R}^3$ i.e. we want vectors in $\mathds{R}^3$. If we let 
+\[
+  \phi(x,y,z) = x^2 + y^2 + z^2
+\]
+Then $S^2 = \phi^{-1}(1)$. $T_pS^2 = \text{ker}(d\phi)_p$. So for $p = (x,y,z)$.
+\[
+  d\phi_p = [2x, 2y, 2z]
+\]
+So the kernel of this operator is 
+\[
+  T_pS^2 = 
+  \begin{cases}
+  \text{span} \left\{ 
+  \begin{bmatrix}
+    -y \\
+    x \\
+    0
+  \end{bmatrix},
+\begin{bmatrix}
+  -z\\
+  0 \\
+  x
+\end{bmatrix}\right\}
+& x \neq 0 \\
+  \text{span} \left\{ 
+  \begin{bmatrix}
+    1 \\
+    0 \\
+    0
+  \end{bmatrix},
+\begin{bmatrix}
+  0\\
+  -z \\
+  y
+\end{bmatrix}\right\} & x = 0
+
+  \end{cases}
+\] 
+Basically we just use the level sets of functions.
+\begin{rem}
+Suppose that $F: M \rightarrow N$ for all $p \in M$. $dF_p: T_pM \rightarrow T_{F(p)}N$
+We can't always push forward vector fields because it may not be a vector field on its image. For examples if $F$ isn't injective you get two vectors at one point.
+\end{rem}
+\section*{Lie Bracket}%
+Recall that for any vector field $V \in \Gamma^{\infty}(TM)$ and any $f \in C^{\infty}(M)$, $V(f)$ is a smooth function that is linear in $f$ and satisfies leibniz rule. If $W,V \in \Gamma^{\infty}(TM)$, then $V(f) \in C^{\infty}(M)$ and $W(V(f)) \in C^{\infty}(M)$. Does there exist a smooth vector field $Z \in \Gamma^{\infty}(TM)$ such that $Z(f) = W(V(f))$ for all $f \in C^{\infty}(M)$. The answer is no since $W(V(f))$ involves higher order derivatives.
+
+\begin{prop}
+  If $V,W \in \Gamma^{\infty}(TM)$ then there exists a unique vector field $Z \in \Gamma^{\infty}(TM)$, such that 
+  \[
+    Z(f) = V(W(f)) - W(V(f))
+  \]
+  for all $f \in C^{\infty}(M)$. We denote this unique vector field by $[V,W]$ called the lie bracket of $V$ and $W$.
+\end{prop}
+
+\begin{proof}
+  Locally on a chart $(U, (x^j))$ we have $V = V^i \pdv{}{x^i}$ and $W = W^j\pdv{}{x^j}$. So we get
+  \[
+    V(W(f)) = V\left(W^j\pdv{}{x^j}\right) = V^i\left(\pdv{W^j}{x^i} \pdv{f}{x^j} + W^j \frac{\partial^2 f}{\partial x^i \partial x^j} \right)
+  \]
+  and
+  \[
+    W(V(f)) = V\left(W^j\pdv{}{x^j}\right) = W^i\left(\pdv{W^j}{x^i} \pdv{f}{x^j} + V^j \frac{\partial^2 f}{\partial x^i \partial x^j} \right)
+  \]
+  So we can see that
+  \[
+    V(W(f)) - W(V(f)) =  V^i \pdv{w^j}{x^i} \pdv{f}{x^j} - W^j\pdv{v^i}{x^j}\pdv{f}{x^i}
+  \]
+  Notationally we usually write
+  \[
+    \begin{aligned}
+      (VW - WV)f &= \left(V^i \pdv{W^j}{x^i} \pdv{}{x^j} - W^j \pdv{V^i}{x^j}\pdv{}{x^i} \right)f \\
+    \end{aligned}
+  \]
+  So we can write
+  \[
+    [V,W] = \left( V^i \pdv{W^j}{x^i} - W^i \pdv{V^j}{x^i} \right) \pdv{}{x^j}
+  \]
+\end{proof}
+The lie bracket has some properties
+\begin{prop}
+  If $V,W,Z \in \Gamma^{\infty}(TM)$ and $a,b \in \mathds{R}$, and $f,g \in C^{\infty}(M)$. Then
+  \begin{enumerate}
+    \item $[V,W] = -[W,V]$ 
+    \item $[aV + bW, Z] = a[V,Z] + b[W,Z]$
+    \item $[[V,W], Z] + [[W,Z],V] + [[Z,V],W] = 0$
+    \item $[fV, gW] = fg[V,W] + fV(g)W - gW(f)V$.
+  \end{enumerate}
+\end{prop}
 
 \end{document}
