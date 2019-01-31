@@ -33,6 +33,8 @@
 
 \section*{Design of Complementary Filters}
 
+Much of this is borrowed from ``Gradient-Like Observers for Invariant Dynamics on a Lie Group.''
+
 Given a lie group $G$ and its lie algebra $\mathfrak{g} = T_eG$, we can create a nonlinear observer (geometric complementary filter) in a few simple steps
 
 \begin{enumerate}
@@ -212,7 +214,7 @@ which is negative definite. So all we have to do is find this function $f$.
 \subsubsection*{Rotation Matrices}%
 We will define our cost function as 
 \[
-  f(Y, \hat{R}) = \frac{k}{2}\norm{\hat{R} - Y}^2_F
+  f(Y, \hat{R}) = \frac{k}{2}\norm{\hat{R} - Y}^2_F = \frac{k}{2}\norm{\hat{R}Y^{-1} - I}_F^2
 \]
 We note this function has a minimum when $\hat{R}= Y$ and  is right invariant since the frobenius norm is invariant under orthogonal transformations. We note that in this case the gradient must be taken with respect to the manifold i.e. only in feasible tangent directions. The easiest way to do this is to transport the full gradient to the origin, project it onto the lie algebra and then transport it back to the proper tangent space. Thus let 
 \[
@@ -239,7 +241,7 @@ We note that this system is not left-invariant. So we need to integrate numerica
 \subsubsection*{Homography Matrices}%
 We will define our cost function as 
 \[
-  f(Y,\hat{H}) = \frac{k}{2} \norm{\hat{H}Y^{-1} - I}_F^2 = \text{tr}(\hat{H}Y^{-1}Y^{-\top}\hat{H}^\top - \hat{H}Y^{-1} - Y^{-\top}\hat{H}^\top + I)
+  f(Y,\hat{H}) = \frac{k}{2} \norm{\hat{H}Y^{-1} - I}_F^2 = \text{tr}(Y^{-\top}\hat{H}^\top\hat{H}Y^{-1} - \hat{H}Y^{-1} - Y^{-\top}\hat{H}^\top + I)
 \]
 This function is right-invariant because we have defined it as a function of our right-invariant error. We can perform the same transport trick to get the gradient on the manifold. Defining the projection as 
 \[
@@ -247,7 +249,11 @@ This function is right-invariant because we have defined it as a function of our
 \]
 we get the gradient as
 \[
-  \pdv{}{\hat{H}} f(Y,\hat{H}) = \hat{H} \mathds{P}_{\mathfrak{sl}(3)}k\left( \hat{H}^{-1}(\hat{H}Y^{-1}Y^{-\top} - Y^{-1} - Y^{-\top) \right)
+  \pdv{}{\hat{H}} f(Y,\hat{H}) = k\hat{H} \mathds{P}_{\mathfrak{sl}(3)}\left(\left( \hat{H}^{-1}(\hat{H}Y^{-1}Y^{-\top} - Y^{-\top} \right) \right)
+\]
+Which gives us the observer
+\[
+  \dot{\hat{H}} = \hat{H}A - k\hat{H} \mathds{P}_{\mathfrak{sl}(3)}\left(\hat{H}^{-1}\left(\hat{H}Y^{-1}Y^{-\top} - Y^{-\top} \right) \right)
 \]
 
 \end{document}
