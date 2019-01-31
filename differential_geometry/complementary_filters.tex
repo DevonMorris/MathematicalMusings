@@ -1,0 +1,212 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{rem}{Remark}
+\begin{document}
+
+\section*{Design of Complementary Filters}
+
+Given a lie group $G$ and its lie algebra $\mathfrak{g} = T_eG$, we can create a nonlinear observer (geometric complementary filter) in a few simple steps
+
+\begin{enumerate}
+  \item Find left-invariant kinematics for the system
+  \item Find a right-invariant error function 
+  \item Find a cost function (Lyapunov Function) and take its gradient
+  \item Create the nonlinear observer with this gradient
+\end{enumerate}
+
+\subsection*{Left-Invariant Kinematics}%
+Let $X \in G$ and let $u \in \mathfrak{g}$. This vector $u$ can be used to define a vector field $V \in \Gamma^{\infty}(TG)$ such that
+\[
+  V_X = dL_X(u) = Xu
+\]
+We will typically call this quantity $V_X = \dot{X}$, since we will be concerned with integral curves of this vector field. By the way we have defined this, it should be clear that $\dot{X} \in T_XG$. Why do we call these left invariant kinematics? Because if we ``rotate" (push-forward) our vector field using $dL_Y(V_X)$, we get
+\[
+  dL_Y(V_X) = dL_Y(Xu) = YXu = dL_{YX}(u) = V_{XY}
+\]
+Which implies that $dL_Y(V) = V$. In other words, there is a ``symmetry" of tangent vectors on the space. (Draw picture of circle with tangent vectors in a left-invariant and non left-invariant fashion). 
+
+It is important to note that left-invariant kinematics induce right translations via the exponential map: 
+\[
+  X(t) = X(0) \text{exp}_G \left(ut\right)
+\]
+
+\begin{rem}
+  The exponential map can only be used when you have left (right) invariant kinematics. This can be easily seen by looking at euler integration of this system. For a 1-step euler integration, we have
+  \[
+    \begin{aligned}
+      X(\Delta t) &\approx X(0) + \Delta tX(0)u \\
+            &\approx X(0) \left( I + u \Delta t\right)
+    \end{aligned}
+  \]
+  It is easily shown that if we do $N$ step euler integration equates to
+  \[
+    X(\Delta t) \approx X(0) \left(I + u \frac{\Delta t}{N} \right)^N
+  \]
+  which taking the limit as $N$ approaches infinity gives
+  \[
+    X(\Delta t) = X(0) \text{exp}_G(u \Delta t)
+  \]
+  This factorization into terms of $(I + u \Delta t/N)$ is only possible because our dynamics are given by $\dot{X} = Xu$. In general, if $\dot{X} = f(X,u) \neq Xu$, then the exponential is not the solution of the differential equation, and we should just use some ODE solver and project back onto the manifold.
+\end{rem}
+
+
+
+
+\subsubsection*{Rotation Matrices}%
+The group of rotation matrices are given by 
+\[
+  SO(3) = \left\{ R \in \mathds{R}^{3 \times 3}\ |\ R^{\top}R = I, \text{det}(R) = 1\right\}
+\]
+which has a lie algebra of 
+\[
+  \mathfrak{so}(3) = \left\{ \Omega \in \mathds{R}^{3 \times 3}\ |\ \Omega^\top = -\Omega \right\}
+\]
+The left-invariant kinematics of this system are given by
+\[
+  \dot{R} = R \Omega
+\]
+Since $\mathfrak{so}(3)$ is a real vector space of dimension 3, we have that $\mathfrak{so}(3) \cong \mathds{R}^3$, with isomorphism given by
+\[
+  \begin{aligned}
+    (\cdot)^\wedge&: \mathds{R}^3 \rightarrow \mathfrak{so}(3) \\
+                  &: \omega \mapsto \omega^{\wedge}
+  \end{aligned}
+\]
+So we can write our left-invariant kinematics as
+\[
+  \dot{R} = R \omega^{\wedge}
+\]
+
+\subsubsection*{Homography Matrices}%
+The group of homographies is given by
+\[
+  SL(3) = \left\{ H \in \mathds{R}^{3 \times 3} \ |\  \text{det}(H) = 1 \right\}
+\]
+which has a lie algebra of
+\[
+  \mathfrak{sl}(3) = \left( A \in \mathds{R}^{3 \times 3} \ |\ \text{tr}(A) = 0\right)
+\]
+The left-invariant kinematics of this system are given by
+\[
+  \dot{H} = HA
+\]
+Since $\mathfrak{sl}(3)$ is a real vector space of dimension 8, we have that $\mathfrak{sl}(3) \cong \mathds{R}^8$. The isomorphism is not as simple as rotation matrices, but we can calculate $A$, given velocities , the normal vector to the plane of interest and orthogonal distance from the plane
+\[
+  A =  \omega^{\wedge} + \frac{Vn^{\top}}{d} - \frac{n^\top V}{3d} I
+\]
+So we get the left-invariant kinematics
+\[
+  \dot{H} = H\left(\omega^{\wedge} + \frac{Vn^{\top}}{d} - \frac{n^\top V}{3d}I \right)
+\]
+
+\subsection*{Right-Invariant Error Function}%
+We desire create a system $\dot{\hat{X}} = F_{\hat{X}}(\hat{X}, Y, w)$, so that when evaluate $\dot{\hat{X}} = F_{\hat{X}}(\hat{X}, X, u)$, we have an error that goes to ``zero''. We will return how to design this observer $\dot{\hat{X}} = F_{\hat{X}}(\hat{X}, Y,w)$, but first we need to define error. There seem to be at least 4 reasonable choices for defining the error.
+\[
+  \begin{aligned}
+    E(X,\hat{X}) = X\hat{X}^{-1} \quad E(X, \hat{X}) = \hat{X}^{-1}X \\
+    E(X, \hat{X}) = \hat{X}X^{-1} \quad E(X, \hat{X}) = X^{-1}\hat{X}
+  \end{aligned}
+\]
+Although all these measures of error will eventually lead to a complementary filter, the ones that produce the simplest formulations are those that are right-invariant i.e.
+\[
+  E(XY, \hat{X}Y) = E(X, \hat{X})
+\]
+We know that $\dot{X} = Xu$ will propogate with right translations, $X(t) = X(0) \text{exp}\left( u t \right)$. If we translate our initial estimate $\hat{X}(0) \mapsto \hat{X}(0)\exp(ut)$, we expect that a reasonable error would not change. Think of the error on $\mathds{R}^n$, $E(x,\hat{x}) = x - \hat{x} = (x + d) - (\hat{x} - d)$. To this end, we will choose
+\[
+  \tilde{X} = E(X, \hat{X}) = \hat{X}X^{-1} = \hat{X}YY^{-1}X^{-1} = \hat{X}Y(XY)^{-1} = E(XY, \hat{X}Y)
+\]
+
+\begin{rem}
+  If instead we chose a non right-invariant error, e.g. $E(X,\hat{X}) = X^{-1}\hat{X}$, we get that
+  \[
+    E(XY, \hat{X}) = Y^{-1}X^{-1}\hat{X}Y = \text{Ad}_{Y^{-1}}E(X,\hat{X})
+  \]
+  Which is why the adjoint shows up in some formulations of the complementary filter.
+\end{rem}
+
+\subsubsection*{Rotation Matrices}%
+The error for rotation matrices is given by
+\[
+  \tilde{R} = \hat{R}R^\top
+\]
+
+\subsubsection*{Homography Matrices}%
+The error for rotation matrices is given by
+\[
+  \tilde{H} = \hat{H}H^{-1}
+\]
+
+\subsection*{Cost Function and Nonlinear Observers}%
+Let $ \hat{X}(t, \hat{X}_0, Y, w)$, be the solution to our observer differential equation
+\[
+  \dot{\hat{X}} = F_{\hat{X}}(\hat{X}, Y, w)
+\]
+and let $X(t, X_0, u)$ be the solution of $\dot{X} = Xu$. Ideally, we want an observer such that
+\[
+  \hat{X}(t, X_0, X(t, X_0, u), u) = X(t, X_0, u)
+\]
+or in other words, it mimics the original system when it has a good estimate. When this is the case, we say $\hat{X}$ has an internal model of $X$. Under these conditions, it can be shown that our estimator can be written as
+\[
+  \dot{\hat{X}} = \hat{X}u + \alpha(\hat{X}, Y, w)
+\]
+where $\alpha(X,X,u) = 0$. (See Gradient-Like Observers for Invariant Dynamics on a Lie Group) for more information. In this case, $\hat{X}u$ is called the internal model and $\alpha$ is called the innovation term. So how do we choose $\alpha$. First we choose some cost function $f(Y, \hat{X})$ that has minima when $Y = \hat{X}$, and we let
+\[
+  \alpha(\hat{X}, Y) = \pdv{}{\hat{X}} f(Y, \hat{X})
+\]
+(the gradient) of our cost function with respect to our estimate. If this function is right invariant, we have that
+\[
+  \dot{\tilde{X}} = \dv{}{t}E(\hat{X}, X) = -\eval{\pdv{}{\hat{X}}f}_{Y=I, \hat{X} = \tilde{X}}
+\]
+and in this case we get a lyapunov function for free
+\[
+  V(\tilde{X}) = f(\tilde{X}, e)
+\]
+since we have
+\[
+  \dot{V}(\tilde{X}) = \eval{\text{tr}\left( \left(\pdv{}{\hat{X}}f \right)^\top \pdv{}{\hat{X}}f\right)}_{Y=I, \hat{X} = \tilde{X}} = - \eval{\norm{\pdv{}{\hat{X}}f}_F^2}_{Y=I, \hat{X} = \tilde{X}}
+\]
+which is negative definite. So all we have to do is find this function $f$.
+
+\subsubsection*{Rotation Matrices}%
+We will define our cost function as 
+\[
+  f(Y, \hat{R}) = \frac{k}{2}\norm{\hat{R} - Y}^2_F
+\]
+We note this function has a minimum when $\hat{R}= Y$ and  is right invariant since the frobenius norm is invariant under orthogonal transformations. We note that in this case the gradient must be taken with respect to the manifold i.e. only in feasible tangent directions. The easiest way to do this is to transport the full gradient to the origin, project it onto the lie algebra and then transport it back to the proper tangent space. Thus let 
+\[
+  \mathds{P}_{SO(3)}(\Omega) = \frac{1}{2}(\Omega - \Omega^\top)
+\]
+by a simple calculation we have that the gradient is
+\[
+  \pdv{}{\hat{R}} f(Y, \hat{R}) = \hat{R} \mathds{P}_{SO(3)} \left( \hat{R}^\top k\left(\hat{R} - Y \right) \right) = k\hat{R}\mathds{P}_{SO(3)}(I - \hat{R}^\top Y) = -k\hat{R}\mathds{P}_{SO(3)}(\hat{R}^\top Y)
+\]
+
+\end{document}
