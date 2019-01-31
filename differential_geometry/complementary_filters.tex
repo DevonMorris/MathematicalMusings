@@ -118,7 +118,7 @@ The left-invariant kinematics of this system are given by
 \[
   \dot{H} = HA
 \]
-Since $\mathfrak{sl}(3)$ is a real vector space of dimension 8, we have that $\mathfrak{sl}(3) \cong \mathds{R}^8$. The isomorphism is not as simple as rotation matrices, but we can calculate $A$, given velocities , the normal vector to the plane of interest and orthogonal distance from the plane
+Since $\mathfrak{sl}(3)$ is a real vector space of dimension 8, we have that $\mathfrak{sl}(3) \cong \mathds{R}^8$. The isomorphism is not as simple as rotation matrices, but we can calculate $A$, given velocities, the normal vector to the plane of interest and orthogonal distance from the plane of interest
 \[
   A =  \omega^{\wedge} + \frac{Vn^{\top}}{d} - \frac{n^\top V}{3d} I
 \]
@@ -173,11 +173,25 @@ and let $X(t, X_0, u)$ be the solution of $\dot{X} = Xu$. Ideally, we want an ob
 \[
   \hat{X}(t, X_0, X(t, X_0, u), u) = X(t, X_0, u)
 \]
-or in other words, it mimics the original system when it has a good estimate. When this is the case, we say $\hat{X}$ has an internal model of $X$. Under these conditions, it can be shown that our estimator can be written as
+or in other words, it mimics the original system when it has a perfect estimate. When this is the case, we say $\hat{X}$ has an internal model of $X$. Under these conditions, it can be shown that our estimator can be written as
 \[
   \dot{\hat{X}} = \hat{X}u + \alpha(\hat{X}, Y, w)
 \]
-where $\alpha(X,X,u) = 0$. (See Gradient-Like Observers for Invariant Dynamics on a Lie Group) for more information. In this case, $\hat{X}u$ is called the internal model and $\alpha$ is called the innovation term. So how do we choose $\alpha$. First we choose some cost function $f(Y, \hat{X})$ that has minima when $Y = \hat{X}$, and we let
+where $\alpha(X,X,u) = 0$. (See Gradient-Like Observers for Invariant Dynamics on a Lie Group) for more information. In this case, $\hat{X}u$ is called the internal model and $\alpha$ is called the innovation term. 
+
+\begin{rem}
+  The contribution to the error term by the internal model is nothing, since the error function is invariant under right transformations. This is easily seen by analyzing the dynamics of $\tilde{X}$, under the assumption that $\dot{\hat{X}} = \hat{X}u$ 
+  \[
+    \dot{\tilde{X}} = \dv{}{t}\hat{X}X^{-1} = \hat{X}uX^{-1} - \hat{X}X^{-1}XuX^{-1} = 0
+  \]
+  If however, we had chosen some left-invariant error and we wanted it to be constant under an internal model, we would have an internal model that uses the adjoint. Assume that $\hat{X} = \hat{X} \text{Ad}_{\hat{X}^{-1}X}(u)$, we have
+  \[
+    \dv{}{t} X^{-1}\hat{X} = -X^{-1}XuX^{-1}\hat{X} + X^{-1}\hat{X}\hat{X}^{-1}XuX^{-1}\hat{X} = 0
+  \]
+  So in order to have an internal model that mimics the model of our system $\dot{X}$, we choose the right-invariant error.
+\end{rem}
+
+So how do we choose $\alpha$. First we choose some cost function $f(Y, \hat{X})$ that has minima when $Y = \hat{X}$, and we let
 \[
   \alpha(\hat{X}, Y) = \pdv{}{\hat{X}} f(Y, \hat{X})
 \]
@@ -202,11 +216,38 @@ We will define our cost function as
 \]
 We note this function has a minimum when $\hat{R}= Y$ and  is right invariant since the frobenius norm is invariant under orthogonal transformations. We note that in this case the gradient must be taken with respect to the manifold i.e. only in feasible tangent directions. The easiest way to do this is to transport the full gradient to the origin, project it onto the lie algebra and then transport it back to the proper tangent space. Thus let 
 \[
-  \mathds{P}_{SO(3)}(\Omega) = \frac{1}{2}(\Omega - \Omega^\top)
+  \mathds{P}_{\mathfrak{so}(3)}(\Omega) = \frac{1}{2}(\Omega - \Omega^\top)
 \]
 by a simple calculation we have that the gradient is
 \[
   \pdv{}{\hat{R}} f(Y, \hat{R}) = \hat{R} \mathds{P}_{SO(3)} \left( \hat{R}^\top k\left(\hat{R} - Y \right) \right) = k\hat{R}\mathds{P}_{SO(3)}(I - \hat{R}^\top Y) = -k\hat{R}\mathds{P}_{SO(3)}(\hat{R}^\top Y)
+\]
+This gives us the filter
+\[
+  \dot{\hat{R}} = \hat{R} \omega^\wedge + k \hat{R}\mathds{P}_{SO(3)}(\hat{R}^\top Y)
+\]
+Where if we could measure $R = Y$ perfectly, we would get 
+\[
+  \dot{\hat{R}} = \hat{R} \omega^\wedge + k \hat{R}\mathds{P}_{SO(3)}(\hat{R}^\top R)
+\]
+We note that this system is not left-invariant. So we need to integrate numerically instead of analytically using the matrix exponential. This filter is the original $SO(3)$ attitude filter designed by Robert Mahony, but derived using the gradient method.
+
+\begin{rem}
+  Much of the difficulty of implementing these attitude filters is finding a way to measure $R$. There are clever techniques used to reconstruct $R$ from magnetometer and acceleromter data. In fixed-wing UAVs, you can remove the coriolis term by estimating a vector airspeed.
+\end{rem}
+
+\subsubsection*{Homography Matrices}%
+We will define our cost function as 
+\[
+  f(Y,\hat{H}) = \frac{k}{2} \norm{\hat{H}Y^{-1} - I}_F^2 = \text{tr}(\hat{H}Y^{-1}Y^{-\top}\hat{H}^\top - \hat{H}Y^{-1} - Y^{-\top}\hat{H}^\top + I)
+\]
+This function is right-invariant because we have defined it as a function of our right-invariant error. We can perform the same transport trick to get the gradient on the manifold. Defining the projection as 
+\[
+  \mathds{P}_{\mathfrak{sl}(3)}(H) = H - \frac{\text{tr}(H)}{3}I
+\]
+we get the gradient as
+\[
+  \pdv{}{\hat{H}} f(Y,\hat{H}) = \hat{H} \mathds{P}_{\mathfrak{sl}(3)}k\left( \hat{H}^{-1}(\hat{H}Y^{-1}Y^{-\top} - Y^{-1} - Y^{-\top) \right)
 \]
 
 \end{document}
