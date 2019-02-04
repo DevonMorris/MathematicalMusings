@@ -1,0 +1,81 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\begin{document}
+\section*{Minimum Variance Unbiased Estimator}%
+The variance of
+\[
+  \text{var} \left[ \hat{\bm{\theta}} \right] = E \left[ \left( \hat{\bm{\theta}} - \bm{\theta} \right)^2 \right]
+\]
+We say that $\hat{\bm{\theta}}$ is unbiased if 
+\[
+  E \left[ \hat{\bm{\theta}} \right] = \bm{\theta}
+\]
+This estimator does not always exist. If it does exist, however, we want it.
+
+\subsection*{Rao Blackwell Theorem}%
+If $T(\mathbf{x})$ is sufficient and complete for $\bm{\theta}$ and ..., an unbiased estimator estimator for $\bm{\theta}$ can be found as $\hat{\bm{\theta}} = W(T(\bm{x}))$, then $\hat{\bm{\theta}}$ will be the only unbiased estimator and $\hat{\bm{\theta}}$. 
+
+The crux of this theorem is to see if such a $W$ exists that makes the estimator unbiased.
+
+\subsection*{Example}%
+Say that $\mathcal{S}$ is a binary source. Random symbols $\mathbf{x} = [x_0, x_1, \dots, x_{N-1}]^\top$.
+\[
+  P_{\theta}(x_n) = \theta^{x_n}(1 - \theta)^{1-x_n}
+\]
+$\theta = P(x_n) = 1$. 
+\[
+  P_{\theta}(\mathbf{x}) = \prod_{n=0}^{N-1} \theta^{x_n}(1 - \theta)^{1- x_n} = \theta^k(1-\theta)^{N-k}
+\]
+where $k = \sum_{n=0}^{N-1}x_n$.
+\[
+  P_{\theta}(k) =  {N \choose k} \theta^k(1-\theta)^{N-k}
+\]
+We can now calculate the joint probability of $\mathbf{x}$ and $k$
+\[
+  P_{\theta}(\mathbf{x}, k) =
+  \begin{cases}
+    P_{\theta}(\mathbf{x}) & k=\sum_{i=0}^{N-1}x_n \\
+    0 & \text{otherwise}
+    
+  \end{cases}
+\]
+Now consider 
+\[
+P_{\theta}(\mathbf{x} | k) = P_{\theta}(\mathbf{x}, k)/P_{\theta}(k)
+= \frac{1}{{N \choose k}}
+\]
+Which does not depend of $\theta$, thus we have that
+\[
+  P_{\theta}(\mathbf{x}) = P_{\theta}(\mathbf{x}|k)P_{\theta}(k) = 
+  \theta^k(1-\theta)^{N-k}
+\]
+Therefore $k$ is sufficient for $\theta$.
+
+\end{document}

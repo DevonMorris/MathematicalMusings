@@ -54,7 +54,7 @@ for $T_pM$. If $X$ is a vector field, then we can write
     \item In each coordinate chart $(U, (x^j))$, the component function $X^j: U \rightarrow \mathds{R}$ are smooth.
     \item $X (f): M \rightarrow \mathds{R}$ is smooth for all $f \in C^{\infty}(M)$.
   \end{itemize}
-We denote the set oif all smooth vector fields on $M$ by $\Gamma^{\infty}(TM)$.
+We denote the set of all smooth vector fields on $M$ by $\Gamma^{\infty}(TM)$.
 \end{defn}
 
 We will switch to $V$ for the vector field from now on. At each point $p \in M$, $V$ assigns a tangent vector $V(p) = V_p \in T_pM$. So we can write this as 
@@ -169,6 +169,23 @@ The lie bracket has some properties
     \item $[[V,W], Z] + [[W,Z],V] + [[Z,V],W] = 0$
     \item $[fV, gW] = fg[V,W] + fV(g)W - gW(f)V$.
   \end{enumerate}
+\end{prop}
+
+We can think of the lie bracket $[X,Y]$ as defining a "derivative of $Y$" in the "direction of $X$". 
+
+\begin{defn}
+  Let $X \in \Gamma^{\infty}(TM)$ and $p \in M$. Then there exists a neighborhood $U$ of $p$ and $\delta > 0$, and a smooth map $\varphi: (-\delta, \delta) \times U \rightarrow M$ such that the curve $\gamma_q : t \mapsto \varphi(t,q)$, where $t \in (-\delta, \delta)$ and $q \in U$, is the unique curve which satisfies 
+  \[
+    \dv{\gamma_q}{t}: [\gamma_q] = X(\varphi(t,q)) = X_{\varphi(t,q)} \quad \text{and} \quad \varphi(0,q) = q
+  \]
+  We call $\varphi(-\delta, \delta) \times U$, the local flow of the vector field and $\varphi(t,q)$ is called the integral curve of $X$ through $q \in U$. Sometimes we will write this $\varphi_t(p): U \rightarrow M$.
+\end{defn}
+
+\begin{prop}
+  Let $X,Y \in \Gamma^{\infty}(TM)$. Let $p \in M$ with $\varphi_t: U \rightarrow M$, the local flow of $X$ in a neighborhood $U$ of $p$ then
+  \[
+    [X,Y]_p = \lim_{t \rightarrow 0} \frac{1}{t} \left[ Y - d \varphi_tY \right]_{\varphi_t(p)}
+  \]
 \end{prop}
 
 \end{document}

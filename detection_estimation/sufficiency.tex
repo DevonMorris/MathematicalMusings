@@ -106,8 +106,51 @@ where
 \[
   \mathcal{S}(\mathbf{m}) = \frac{1}{M} \sum_{m=0}^{M-1} (\mathbf{x}_m  - \mathbf{m})(\mathbf{x}_m - \mathbf{m})^\top
 \]
-\label{sub:Example}
+We want to find a sufficient set of statistics. We will define a sample mean and sample covariance
+\[
+  \hat{\bm{m}} = \frac{1}{M}\sum_{n=0}^{M-1} \bm{x}_n
+\]
+and 
+\[
+  \hat{\mathcal{S}}(\hat{\bm{m}}) = \frac{1}{M}  \sum_{n=1}^{M-1} (\bm{x}_n - \hat{\bm{m}})(\bm{x}_n - \hat{\bm{m}})^\top
+\]
+Adding and subtracing the sample mean gives 
+\[
+  \begin{aligned}
+    f_{\bm{\theta}}(\mathbf{X}) &= 
+  (2\pi)^{-MN/2} \text{det}(R)^{-M/2} \text{exp} \left( -\frac{1}{2} \sum (\bm{x}_n - \hat{\bm{m}} + \hat{\bm{m}} - \bm{m})^\top R^{-1}(\bm{x}_n - \hat{\bm{m}} + \hat{\bm{m}} - \bm{m})\right) \\
+                                &=  a\text{det}(R)^{-M/2} \text{exp} \left( -\frac{M}{2} \text{tr} \left( R^{-1}(\hat{\bm{m}} - \bm{m})(\hat{\bm{m}} - \bm{m}\right) \right) \text{exp} \left( -\frac{M}{2} \text{tr} \left( R^{-1}\hat{\mathcal{S}}(\hat{\bm{m}}) \right) \right)
+  \end{aligned}
+\]
+if we let 
+\[
+  b_{\bm{\theta}}(\hat{\bm{m}}, \hat{\mathcal{S}}(\hat{\bm{m}})) = \text{det}(R)^{-M/2} \text{exp} \left( -\frac{M}{2} \text{tr} \left( R^{-1}(\hat{\bm{m}} - \bm{m})(\hat{\bm{m}} - \bm{m}\right) \right) \text{exp} \left( -\frac{M}{2} \text{tr} \left( R^{-1}\hat{\mathcal{S}}(\hat{\bm{m}}) \right) \right)
+\]
+so
+\[
+  f_{\bm{\theta}} = a(\bm{x})  b_{\bm{\theta}}(\hat{\bm{m}}, \hat{\mathcal{S}}(\hat{\bm{m}})) 
+\]
+So we have that
+\[
+  T(\bm{x}) = \left\{ \hat{\bm{x}}, \hat{\mathcal{S}}(\hat{\bm{m}}) \right\}
+\]
 
+\section*{Minimal and Complete Sufficient Statistics}%
+A sufficient statistic $T(\mathbf{x}) = \bm{t}$ is minimal if it can be represented as a function of all other sufficient (for $\bm{\theta}$) statistics on $\bm{x}$. A sufficient statistic $T(\mathbf{x})$ is complete or (unique) if the condition
+\[
+  E_{\bm{\theta}} \left[ W(T(\mathbf{x})) \right] = 0
+\]
+for all $\bm{\theta}$ implies $W(T(\bm{x})) = 0$ with probability 1. We note that completeness implies minimality.
 
+\section*{Unbiasedness}%
+Just one function $W$ of a complete statistic produces an unbiased estimate of $\bm{\theta}$.
+
+\section*{Strategy}
+\begin{enumerate}
+  \item Sufficient Statistic (Fisher-Neyman) factorization theorem to identify a sufficient statistic.
+  \item Check for completeness, which gives us minimality.
+  \item This statistic is lowest order
+  \item If complete, find $W$ such that $\hat{\bm{\theta}} = W(T(\mathbf{x}))$
+\end{enumerate}
 
 \end{document}

@@ -1,0 +1,171 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+
+\section*{Riemannian Metric}%
+
+\begin{defn}[Inner product]
+  Let $V$ be a vector space. An inner product on $V$ is a map $\langle \cdot, \cdot \rangle: V \times V \rightarrow \mathds{R}$ such that $\forall v,w,z \in V$, $\alpha, \beta \in \mathds{R}$
+  \begin{enumerate}
+    \item  $\langle v, w \rangle = \langle w,v \rangle$
+    \item $\langle \alpha v, w \rangle = \alpha \langle v,w \rangle$
+    \item $\langle v + w, z \rangle = \langle v,z \rangle + \langle w, z\rangle$
+    \item $\langle v, v \rangle \geq 0, \forall v \in V$ and $\langle v,v \rangle$ if and only if $v = 0$
+  \end{enumerate}
+\end{defn}
+
+Inner products can be used to define norm on $V$ (metric) by 
+\[
+  \norm{v} = \sqrt{\langle v, v \rangle}
+\]
+as well as angles between vectors
+\[
+  \cos{\theta} = \frac{\langle v, w \rangle}{\norm{v} \norm{w}}
+\]
+Inner products allow us to define geometry
+
+\begin{defn}[Riemannian Metric]
+  Let $M$ be a smooth manifold. A Riemannian metric is an assignment of an inner product $\langle \cdot, \cdot \rangle_p$ on each tangent space $T_pM$ such that for any coordinate chart $(U,(x^j))$ on $M$, the function 
+  \[
+    g_{ij}(p) = \inn*{\eval{\pdv{}{x^i}}_p}{\eval{\pdv{}{x^j}}_p}
+\]
+depends smoothly on $p$ or $g_{ij} \in C^{\infty}(U)$.
+\end{defn}
+Equivalently we could require that $\langle X_p, Y_p \rangle_p$ to be smooth on $X,Y \in \Gamma^{\infty}(TM)$.
+We call these $g_{ij}(p)$ a local coordinate description of the riemannian metric $g$.
+
+\begin{defn}[Riemannian Manifold]
+  A Riemannian manifold is a pair $(M,g)$ where $M$ is a smooth manifold and $g$ a Riemannian metric.
+\end{defn}
+
+\subsection*{Example}%
+$\mathds{R}^n$ with the standard basis $\left\{ \pdv{}{x^1}, \dots, \pdv{}{x^n} \right\} \subset T_p\mathds{R}^n$ then we get
+\[
+  g_{ij}(p) = \inn*{\pdv{}{x^i}}{\pdv{}{x^j}} = \delta_{ij}
+\]
+If $(N,g)$ is a riemannian manifold and $F: M \rightarrow N$ is an immersion, $g$ induces a metric on $M$ by
+\[
+  \langle v, w \rangle = \langle dF_p(v), dF_p(w) \rangle_{F(p)}
+\]
+for all $v,w \in T_pM$. If $(V, \psi) = (V, (y^j))$ is a coordinate chart on $N$ with $g_{ij}$ is a coordinate description of the metric. $(U, \varphi) = (U, (x^j))$ and $F(U) \subset V$. Say $\tilde{g}_{ij}$ induced metric on $M$. How are $g_{ij}$ and $\tilde{g}_{ij}$ related? $g_{ij} = \langle \pdv{}{y^i}, \pdv{}{y^j}\rangle^N$,
+\[
+  \tilde{g}_{kl} = \inn*{\pdv{}{x^k}}{\pdv{}{x^l}}^M 
+\]
+
+\subsection*{Example}%
+$S^2 \subset \mathds{R}^3$ let $\mathds{R}^3$ be equipped with the standard Riemannian metric let $\iota: S^2 \xhookrightarrow{} \mathds{R}^3$ be the inclusion map. We note that 
+\[
+  g_{ij} \in C^{\infty}(U)
+\]
+If $g$ is the standard metric on $\mathds{R}^3$, then $\tilde{g}$ is the induced metric on $S^2$. Find $\tilde{g}_{ij}$, with respect to the charts $(U_i^\pm, \varphi_i^\pm)$. Recall that $\tilde{g}(X,Y) = g(d \iota(X), d\iota(Y))$. Let $(U,\varphi) = (U_1^+, \varphi_1^+) = (U, (y^1, y^2))$. We know that 
+\[
+  d \tilde{\iota} = 
+  \begin{bmatrix}
+    -\frac{y^1}{\sqrt{1 - (y^1)^2 - (y^2)^2}} & -\frac{y^2}{\sqrt{1 - (y^1)^2 - (y^2)^2}}  \\
+    1 & 0 \\
+    0 & 1
+  \end{bmatrix}
+\]
+So we have that
+\[
+  d\iota \left( \pdv{}{y^1}\right) \rightarrow d \tilde{\iota} \left( [1, 0]^\top \right) =
+  \begin{bmatrix}
+    -\frac{y^1}{\sqrt{1 - (y^1)^2 - (y^2)^2}}  \\
+    1 \\
+    0
+  \end{bmatrix}
+\]
+and 
+\[
+  d\iota \left( \pdv{}{y^2}\right) \rightarrow d \tilde{\iota} \left( [0, 1]^\top \right) =
+  \begin{bmatrix}
+    -\frac{y^2}{\sqrt{1 - (y^1)^2 - (y^2)^2}}  \\
+    0 \\
+    1
+  \end{bmatrix}
+\]
+knowing that 
+\[
+  \begin{aligned}
+    \tilde{g}_{ij} &= \tilde{g} \left( \pdv{}{y^i}, \pdv{}{y^j} \right) = g\left(d \iota \left( \pdv{}{y^i}\right), d \iota \left( \pdv{}{y^j} \right) \right) \\
+  \end{aligned}
+\]
+gives us
+\[
+  \begin{aligned}
+    \tilde{g}_{11} &= \frac{(y^1)^2}{1 - (y^1)^2 - (y^2)^2} + 1 \\
+    \tilde{g}_{12} &= \frac{y^1y^2}{1 - (y^1)^2 - (y^2)^2}\\
+    \tilde{g}_{22} &= \frac{(y^2)^2}{1 - (y^1)^2 - (y^2)^2} + 1 \\
+  \end{aligned}
+\]
+We also note that $\tilde{g}_{21} = \tilde{g}_{12}$. Now we can do the linear algebra we are used to doing, using a weighted inner product.
+
+\begin{defn}
+  Let $M,N$ be smooth manifolds with riemannian metrics $g^M$ and $g^N$ respectively. A diffeomorphism $F:M \rightarrow N$ is called an isometry if for all $p \in $M and $V,W \in T_pM$
+  \[
+    g^M(V,W) = g^N(dF_p(V), dF_p(W))
+  \]
+\end{defn}
+
+\begin{defn}
+  $F:M \rightarrow N$ is a local isometry if for all $p \in M$, there exists a $U$ open, such that $p \in U$, such that $\eval{F}_U: U \rightarrow F(U)$ is a local diffeomorphism and an isometry.
+\end{defn}
+
+\begin{defn}
+  Let $\dv{}{t}$ be the coordinate vector field on $\mathds{R}$. Let $\gamma:(-\epsilon, \epsilon) \rightarrow M$ be smooth then 
+  \[
+    \dv{\gamma}{t} = d\gamma_t\left(\pdv{}{dt}\right) \in T_{\gamma(t)}M
+  \]
+  is called the velocity vector of $\gamma$ at t
+\end{defn}
+
+\begin{defn}
+  The length of a smooth curve $\gamma: (a,b) \rightarrow M$ is defined to be
+  \[
+    \ell_a^b = \int_{a}^b \sqrt{g\left(\dv{\gamma}{t}, \dv{\gamma}{t}\right)}\ dt
+  \]
+\end{defn}
+Note that when this is the standard metric on $\mathds{R}^3$ we get the familiar formula.
+
+\begin{defn}
+  Let $R \subset M$ be a region (open, connected subset) with $\bar{R}$ compact, and $R \subset U$ where $(U, \varphi) = (U, (x^j))$ is a coordinate chart. We define the volume of $R$ to be 
+  \[
+    \text{Vol}(R) = \int_{\varphi(R)} \sqrt{\text{det}(g_{ij})}\ dx^1 \dots dx^n
+  \]
+  where by $g_{ij}$ we mean the coordinate representation
+\end{defn}
+We claim that $Vol(R)$ does not depend on choice of $(U, \varphi)$.
+\end{document}
