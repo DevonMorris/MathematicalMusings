@@ -1,0 +1,74 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 4}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\begin{document}
+
+\section*{Problem 1}%
+Let $X,Y,Z \in \Gamma^{\infty}(TM)$ be smooth vector fields, and $f,g \in C^{\infty}(M)$ be smooth functions. Prove the following:
+\begin{enumerate}[(a)]
+  \item Jacobi's identity: $[[X,Y],Z] + [[Y,Z],X] + [[Z,X],Y] = 0$
+  \item $[fX,gY] = fg[X,Y] + fX(g)Y - gY(f)X$
+\end{enumerate}
+
+\begin{proof}
+  We will use the definition $[X,Y](f) = X(Y(f)) - Y(X(f))$ instead of coordinate definitions.
+  \begin{enumerate}[(a)]
+    \item Consider $[[X,Y],Z] + [[Y,Z],X] + [[Z,X],Y]$, using the definition of the lie bracket and linearity of vector fields on functions,
+      \[
+        \begin{aligned}
+          ([[X,Y]&,Z] + [[Y,Z],X] + [[Z,X],Y])(f)\\ 
+          =& [X,Y](Z(f)) - Z([X,Y](f)) + [Y,Z](X(f)) - X([Y,Z](f)) + [Z,X](Y(f)) - Y([Z,X](f)) \\
+          =& X(Y(Z(f)) - Y(X(Z(f))) - Z(X(Y(f)) - Y(X(f))) + Y(Z(X(f))) - Z(Y(X(f))) \\
+           &- X(Y(Z(f)) - Z(Y(f))) + Z(X(Y(f))) - X(Z(Y(f))) - Y(Z(X(f)) - X(Z(f))) \\
+          =& X(Y(Z(f)) - Y(X(Z(f))) - Z(X(Y(f))) + Z(Y(X(f))) + Y(Z(X(f))) - Z(Y(X(f))) \\
+           & -X(Y(Z(f))) + X(Z(Y(f))) + Z(X(Y(f))) - X(Z(Y(f))) -Y(Z(X(f))) - Y(X(Z(f))) \\
+          =& 0 
+        \end{aligned}
+      \]
+      Since this holds for arbitrary functions $f \in C^{\infty}(M)$, we have
+      \[
+        [[X,Y],Z] + [[Y,Z],X] + [[Z,X],Y] = 0
+      \]
+    \item Let $h \in C^{\infty}(M)$. Thinking of these tangent vectors as derivations we recall that $X(fg) = gX(f) + fX(g)$, since it must satisfy Leibniz identity. We can think of $X(f) \in C^{\infty}(M)$, using these properties we have
+      \[
+        \begin{aligned}
+          \left[ f X , g Y \right](h) &= fX(gY(h)) - gY(fX(h)) \\
+                                      &= fX(g)Y(h) + fgX(Y(h)) - gX(h)Y(f) - gfY(X(h)) \\
+                                      &= fg[X,Y](h) + fX(g)Y(h) - gY(f)X(h)
+        \end{aligned}
+      \]
+      Since $h$ is an arbitrary smooth function we have
+      \[[fX,gY] = fg[X,Y] + fX(g)Y - gY(f)X
+      \]
+  \end{enumerate}
+\end{proof}
+
+
+\end{document}
