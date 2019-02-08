@@ -1,0 +1,208 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory - Homework 2}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{sol}{Solution}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
+
+\begin{document}
+
+\section*{Problem 1}%
+Let $\bm{X} = (X_1, X_2, \dots, X_N)$ denote a random sample of $U(0, \theta)$ random variables:
+\[
+  f_{\theta}(x_n) = \frac{1}{\theta} I_{[0,\theta]}(x_n)
+\]
+
+\begin{enumerate}[a.]
+  \item Show that $t = \text{max}(x_n)$ is sufficient for $\theta$.
+  \item find $f_{\theta}(t)$.
+  \item Find $f_{\theta}(\bm{x}|t)$ and show that it is independent of $\theta$.
+  \item Write $f_{\theta}(\bm{x})$ as $f(\bm{x}|t)f_{\theta}(t)$.
+  \item Is $t$ complete? Unbiased?
+  \item Find the minimum variance unbiased estimator for $\theta$.
+\end{enumerate}
+
+\subsection*{Solution}%
+
+\begin{enumerate}[a.]
+  \item Sufficiency is shown in steps b-d.
+  \item Analyzing the distribution gives us
+    \[F_{\theta}(t) = P[T(\bm{X}) \leq t] = P[\text{max}(X_n) \leq t] = P[X_1 \leq t, X_2 \leq t, \dots, X_N \leq t] = \prod_{n = 1}^N P[X_n \leq t] = \frac{t^N}{\theta^N}\]
+  Therefore we have that
+  \[
+    f_{\theta}(t) = \frac{Nt^{N-1}}{\theta^N} I_{[0,\theta]}(t)
+  \]
+\item We note that $f_{\theta}(\bm{x}|t) = f_{\theta}(\bm{x}, t)/f_{\theta}(t)$, furthermore we have that
+  \[
+    f_{\theta}(\bm{x},t) = 
+    \begin{cases}
+      \theta^{-N} & t = T(\bm{x})\\
+      0 & \text{otherwise}
+    \end{cases}
+  \]
+  So we have that
+  \[
+    f_{\theta}(\bm{x}|t) = \frac{1}{N t^{N-1}}
+  \]
+  which has no dependence on $\theta$, so we have $f_{\theta}(\bm{x}|t) = f(\bm{x}|t)$
+  \item So we have that
+    \[
+      \begin{aligned}
+        f_{\theta}(\bm{x}) &= \theta^{-N} \prod_{n=1}^N I_{[0,\theta]}(x_n) \\
+                           &= \theta^{-N}Nt^{N-1}I_{[0, \theta]}(t) \frac{1}{Nt^{N-1}} \\
+                           &= f(\bm{x}|t) f_{\theta}(t)
+      \end{aligned}
+    \]
+  \item Let $W$ be such that 
+    \[
+      E_{\theta}\left[ W(t) \right] = \int_{0}^{\theta} W(t)\frac{Nt^{N-1}}{\theta^N}\ dt = 0
+    \]
+    Note that since we have $Nt^{N-1}\theta^{-N} > 0$ on $t \in (0, \theta)$. So we are summing a bunch of positive things. Therefore $W(t) = 0$. Therefore $T$ is complete. To check bias we look at 
+    \[
+      \begin{aligned}
+        E_{\theta}[T(\bm{X})] &= E_{\theta}[\text{max}(X_n)] = \int_{0}^{\theta} \theta^{-N} Nt^{N-1}t\ dt \\
+                              &= \theta^{-N} \frac{N}{N+1} \eval{t^{N+1}}_0^\theta  \\
+                              &= \theta \frac{N}{N+1}
+      \end{aligned}
+    \]
+    So this estimator is biased.
+  \item To make an unbiased estimator we take $W(t) = \frac{N+1}{N}t$. We note that $W(t)$ is an unbiased estimator. Since $T$ was a a complete and sufficient statistic, we have that by the rao blackwell theorem $W(t)$ must be MVUB.
+\end{enumerate}
+
+\section*{Problem 2}%
+Return to the normal example of Example 3.4. Show that 
+\begin{enumerate}[a.]
+  \item for $\bm{R}$ known, $\hat{\bm{m}}$ is sufficient for $\bm{m}$
+  \item for $\bm{m}$ known, $\bm{S}(\bm{m})$ is sufficient for $\bm{R}$
+\end{enumerate}
+
+\subsection*{Solution}%
+\begin{enumerate}[a.]
+  \item Consider $T(\bm{X}) = \frac{1}{M} \sum_{n=0}^{M-1} \bm{x}_n = \hat{\bm{m}}$. In the case where $\bm{\theta} = \bm{m}$ and $\bm{R}$ is known, we can let
+    \[
+    a(\bm{X}) =  (2\pi)^{-MN/2} \text{det}(\bm{R})^{-M/2} \text{exp} \left(-\frac{1}{2} \sum_{n=0}^{M-1}(\bm{x}_n - \hat{\bm{m}})^\top \bm{R}^{-1}(\bm{x}_n - \hat{\bm{m}}  \right)
+    \]
+    and 
+    \[
+      b_{\bm{\theta}}(\bm{t}) =  \text{exp} \left( -\frac{1}{2} \sum_{n=0}^{M-1} (\hat{\bm{m}} - \bm{m})^\top \bm{R}^{-1} (\hat{\bm{m}} - \bm{m}) \right)
+    \]
+    from example 3.4 we see that
+    \[
+      f_{\bm{\theta}}(\bm{X}) = a(\bm{X})b_{\bm{\theta}}(\bm{t})
+    \]
+    Therefore, $\hat{\bm{m}}$ is sufficient for $\bm{m}$, by Fisher-Neyman theorem.
+  \item Consider $T(\bm{X}) = \bm{S}(\bm{m})$. In the case where $\bm{\theta} = \bm{R}$ and $\bm{m}$ is known we see that
+    \[
+      \begin{aligned}
+        f_{\bm{\theta}}(\bm{X}) &=  (2\pi)^{-MN/2} \text{det} \left( \bm{R} \right)^{-M/2} \text{exp} \left( -\frac{1}{2} \sum_{n=0}^{M-1} (\bm{x}_n - \bm{m})^\top \bm{R}^{-1}(\bm{x}_n - \bm{m}) \right) \\
+                                &=(2\pi)^{-MN/2} \text{det} \left( \bm{R} \right)^{-M/2} \text{exp} \left( \frac{M}{2} \text{tr} \left[ \bm{R}^{-1}\bm{S}(\bm{m}) \right] \right)
+      \end{aligned}
+    \]
+    Which by Fisher-Neyman shows that $\bm{S}(\bm{m})$ is sufficient for $\bm{R}$.
+\end{enumerate}
+
+\section*{Problem 3}%
+Let $\bm{x} = (x_1, x_2)$ be independent Bernouilli random variables with $P(x_n) = \theta^{x_1}(1-\theta)^{1 - x_n}$. Define the order statistic $T(\bm{x}) = \bm{u} = (u_1, u_2) = (\text{max}(x_1, x_2), \text{min}(x_1, x_2))$. Find $P_{\theta}(\bm{x}|\bm{u})$ and show that it is independent of $\theta$.
+
+\subsection*{Solution}%
+Consider $P_{\theta}(\bm{u})$
+\[
+  P_{\theta}(u_1, u_2) = P[\max(x_1,x_2) = u_1, \min(x_1,x_2) = u_2]
+\]
+This is fairly easy to analyze in cases
+\[
+  P_{\theta}(\bm{u}) = 
+  \begin{cases}
+    \theta^2 & u_1=u_2=1 \\
+    (1 - \theta)^2 & u_1=u_2=0 \\
+    2\theta(1 - \theta) & u_1 \neq u_2
+  \end{cases}
+\]
+and we have $P_{\theta}(\bm{x}, \bm{u})$
+\[
+  P_{\theta}(\bm{x}, \bm{u}) = 
+  \begin{cases}
+    P_{\theta}(\bm{x}) & \bm{u} = T(\bm{x}) \\
+    0 & \text{otherwise}
+  \end{cases}
+\]
+And we note that
+\[
+  P_{\theta}(\bm{x}) = 
+  \begin{cases}
+    \theta^2 & x_1 = x_2 = 1 \\
+    \theta(1 - \theta) & x_1 \neq x_2 \\
+    (1 - \theta)^2 & x_1 = x_2 = 0
+  \end{cases}
+\]
+Therefore we have
+\[
+  P_{\theta}(\bm{x}|\bm{u}) = 
+  \begin{cases}
+    1 & x_1 = x_2 = u_1 = u_2 = 1 \\
+    \frac{1}{2} & x_1 \neq x_2, u_1 \neq u_2 \\
+    1 & x_1 = x_2 = u_1 = u_2 = 0 \\
+    0 & \bm{u} \neq T(\bm{x})
+  \end{cases}
+\]
+Which has no dependence on $\theta$.
+
+\section*{Problem 4}%
+Prove that $\bm{T}(\bm{X}) = \sum_{n=0}^{M-1} \bm{T}(\bm{X}_n)$  is sufficent for the paramter vector $\bm{\theta}$ when $\bm{X} = (\bm{X}_0, \bm{X}_1, \dots, \bm{X}_{M-1}$ is a random sample, and 
+\[
+  f_{\bm{\theta}}(\bm{x}_n) = c(\bm{\theta})a(\bm{x}_n) \text{exp} \left( \sum_{i=1}^k \pi_i(\bm{\theta})t_i(\bm{x_n}) \right)
+\]
+
+\subsection*{Solution}%
+Let's first analyze $f_{\bm{\theta}}(\bm{X})$
+\[
+  \begin{aligned}
+    f_{\bm{\theta}}(\bm{X}) &=  \prod_{n=0}^{M-1} c(\bm{\theta})a(\bm{x}_n)\text{exp} \left( \sum_{i=1}^k \pi_i(\bm{\theta})t_i(\bm{x_n}) \right) \\
+                            &= c(\bm{\theta})^M \text{exp} \left( \sum_{n=0}^{M-1} \sum_{i=1}^k \pi_i(\bm{\theta}) t_i(\bm{x}_n) \right) \prod_{n=0}^{M-1} a(\bm{x}_n) \\
+                            &= \beta_{\bm{\theta}}(\bm{T}(\bm{X})) \alpha(\bm{X})
+  \end{aligned}
+\]
+So by Fisher-Neyman we have sufficiency. This means that in the exponential family, we can take sums of sufficient statistics and get another sufficient statistic.
+
+\section*{Problem 5}%
+\label{sec:Problem 5}
+
+
+\end{document}
