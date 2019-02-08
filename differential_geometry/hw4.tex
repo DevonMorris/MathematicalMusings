@@ -1,0 +1,259 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 4}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+
+\section*{Problem 1}%
+Let $X,Y,Z \in \Gamma^{\infty}(TM)$ be smooth vector fields, and $f,g \in C^{\infty}(M)$ be smooth functions. Prove the following:
+\begin{enumerate}[(a)]
+  \item Jacobi's identity: $[[X,Y],Z] + [[Y,Z],X] + [[Z,X],Y] = 0$
+  \item $[fX,gY] = fg[X,Y] + fX(g)Y - gY(f)X$
+\end{enumerate}
+
+\begin{proof}
+  We will use the definition $[X,Y](f) = X(Y(f)) - Y(X(f))$ instead of coordinate definitions.
+  \begin{enumerate}[(a)]
+    \item Consider $[[X,Y],Z] + [[Y,Z],X] + [[Z,X],Y]$, using the definition of the lie bracket and linearity of vector fields on functions,
+      \[
+        \begin{aligned}
+          ([[X,Y]&,Z] + [[Y,Z],X] + [[Z,X],Y])(f)\\ 
+          =& [X,Y](Z(f)) - Z([X,Y](f)) + [Y,Z](X(f)) - X([Y,Z](f)) + [Z,X](Y(f)) - Y([Z,X](f)) \\
+          =& X(Y(Z(f)) - Y(X(Z(f))) - Z(X(Y(f)) - Y(X(f))) + Y(Z(X(f))) - Z(Y(X(f))) \\
+           &- X(Y(Z(f)) - Z(Y(f))) + Z(X(Y(f))) - X(Z(Y(f))) - Y(Z(X(f)) - X(Z(f))) \\
+          =& X(Y(Z(f)) - Y(X(Z(f))) - Z(X(Y(f))) + Z(Y(X(f))) + Y(Z(X(f))) - Z(Y(X(f))) \\
+           & -X(Y(Z(f))) + X(Z(Y(f))) + Z(X(Y(f))) - X(Z(Y(f))) -Y(Z(X(f))) - Y(X(Z(f))) \\
+          =& 0 
+        \end{aligned}
+      \]
+      Since this holds for arbitrary functions $f \in C^{\infty}(M)$, we have
+      \[
+        [[X,Y],Z] + [[Y,Z],X] + [[Z,X],Y] = 0
+      \]
+    \item Let $h \in C^{\infty}(M)$. Thinking of these tangent vectors as derivations we recall that $X(fg) = gX(f) + fX(g)$, since it must satisfy Leibniz identity. We can think of $X(f) \in C^{\infty}(M)$, using these properties we have
+      \[
+        \begin{aligned}
+          \left[ f X , g Y \right](h) &= fX(gY(h)) - gY(fX(h)) \\
+                                      &= fX(g)Y(h) + fgX(Y(h)) - gX(h)Y(f) - gfY(X(h)) \\
+                                      &= fg[X,Y](h) + fX(g)Y(h) - gY(f)X(h)
+        \end{aligned}
+      \]
+      Since $h$ is an arbitrary smooth function we have
+      \[
+        [fX,gY] = fg[X,Y] + fX(g)Y - gY(f)X
+      \]
+  \end{enumerate}
+\end{proof}
+
+\section*{Problem 2}%
+Compute $[V,W]$ on $\mathds{R}^3$ for the following pairs of vector fields:
+\begin{enumerate}[(a)]
+  \item $V = y \pdv{}{z} - 2xy^2\pdv{}{y}$ and $W = \pdv{}{y}$
+  \item $V = x \pdv{}{y} - y\pdv{}{x}$ and $W = y \pdv{}{z} - z\pdv{}{y}$
+\end{enumerate}
+
+\begin{proof}[Solution]
+  If we choose the standard basis $\{ \pdv{}{x}, \pdv{}{y}, \pdv{}{z} \}$, we can compute the lie bracket as a simple as a simple matrix multiplication with the jacobian
+  \[
+    [V,W] = J_W V - J_V W
+  \]
+  where we think of $[V,W]$, $V$ and $W$ as column vectors in terms of their components in the standard basis. 
+  \begin{enumerate}[(a)]
+    \item We have that 
+      \[
+        V = \begin{bmatrix}
+          0 \\
+          -2xy^2 \\
+          y
+        \end{bmatrix} \quad \text{and} \quad
+          W = \begin{bmatrix}
+           0 \\
+           1 \\
+           0
+          \end{bmatrix}
+      \]
+      Which gives us the jacobians
+      \[
+        J_V = \begin{bmatrix}
+          0 & 0 & 0 \\
+          -2y^2 & -4xy & 0 \\
+          0 & 1 & 0
+        \end{bmatrix}
+        \quad \text{and} \quad
+        J_W = \begin{bmatrix}
+          0 & 0 & 0 \\
+          0 & 0 & 0 \\
+          0 & 0 & 0
+        \end{bmatrix}
+      \]
+      So therefore
+      \[
+        [V,W] = J_WV - J_VW = 
+        \begin{bmatrix}
+          0 \\
+          4xy \\
+          -1
+        \end{bmatrix}
+      \]
+      or equivalently
+      \[
+        [V,W] =  4xy \pdv{y} - \pdv{z}
+      \]
+    \item We have that
+      \[
+        V = \begin{bmatrix}
+          -y \\
+          x \\
+          0
+        \end{bmatrix}
+        \quad \text{and} \quad 
+        W = \begin{bmatrix}
+          0 \\
+          -z \\
+          y
+        \end{bmatrix}
+      \]
+      Which gives us the jacobians
+      \[
+        J_V = \begin{bmatrix}
+          0 & -1 & 0 \\
+          1 & 0 & 0 \\
+          0 & 0 & 0
+        \end{bmatrix}
+        \quad \text{and} \quad 
+        J_W = \begin{bmatrix}
+          0 & 0 & 0 \\
+          0 & 0 & -1 \\
+          0 & 1 & 0
+        \end{bmatrix}
+      \]
+      So therefore 
+      \[
+        [V,W] = J_WV - J_VW = \begin{bmatrix}
+          0 \\
+          0 \\
+          x
+        \end{bmatrix}
+        - \begin{bmatrix}
+          z \\
+          0 \\
+          0
+        \end{bmatrix}
+        = 
+        \begin{bmatrix}
+          -z \\
+          0 \\
+          x
+        \end{bmatrix}
+      \]
+      or equivalently
+      \[
+        [V,W] =  -z \pdv{x} + x \pdv{z}
+      \]
+  \end{enumerate}
+\end{proof}
+
+\section*{Problem 3}%
+If $(M_1, g_1)$ and $(M_2, g_2)$ are Riemannian manifolds, show that the mapping $g$ defined by 
+\[
+  g_{(p_1,p_2)}((X_1,X_2),(Y_1,Y_2)) = (g_1)_{p_1}(X_1, Y_1) + (g_2)_{p_2}(X_2, Y_2)
+\]
+defines a Riemannian metric on $M_1 \times M_2$. Recall that $T_{(p_1, p_2)}(M_1 \times M_2) \cong T_{p_1}M_1 \oplus T_{p_2}M_2$.
+
+\begin{proof}
+  We first note that $g$ must be smooth on any coordinate chart because $g_1$ and $g_2$ are both smooth. So it suffices to check the properties of an inner product, Let $X_1,Y_1,Z_1 \in T_{p_1}M_1$, $X_2, Y_2, Z_2 \in T_{p_2}M_2$ and $\alpha \in \mathds{R}$.
+  \begin{enumerate}
+    \item We can use the symmetry of $g_1$ and $g_2$. Thus we have
+      \[
+        \begin{aligned}
+          g_{(p_1,p_2)}((X_1,X_2),(Y_1,Y_2)) &= (g_1)_{p_1}(X_1,Y_1) +  (g_2)_{p_2}(X_2, Y_2) \\
+                                             &= (g_1)_{p_1}(Y_1,X_1) +  (g_2)_{p_2}(Y_2, Z_2) \\
+                                             &= g_{(p_1,p_2)}((Y_1,Y_2),(X_1,X_2))
+        \end{aligned}
+      \]
+    \item Here we can borrow from the vector space structure of $T_{p_1}M_1 \oplus T_{p_2}M_2$, and we note that 
+      $\alpha(X_1, X_2) = (\alpha X_1, \alpha X_2)$. So we have
+      \[
+        \begin{aligned}
+          g_{(p_1,p_2)}(\alpha(X_1,X_2),(Y_1,Y_2))  &= g_{(p_1,p_2)}((\alpha X_1,\alpha X_2),(Y_1,Y_2)) \\
+                                                    &= (g_1)_{p_1}(\alpha X_1,Y_1) +  (g_2)_{p_2}(\alpha X_2, Y_2) \\
+                                                    &= \alpha (g_1)_{p_1}(X_1,Y_1) +  \alpha (g_2)_{p_2}(X_2, Y_2) \\
+                                                    &= \alpha \left( (g_1)_{p_1}(X_1,Y_1) +  (g_2)_{p_2}(X_2, Y_2)\right) \\
+                                                    &= \alpha g_{(p_1,p_2)}((X_1,X_2),(Y_1,Y_2)) 
+        \end{aligned}
+      \]
+    \item We can also borrow from the vector space structure of $T_{p_1}M_1 \oplus T_{p_2}M_2$, by noting that $(X_1, X_2) + (Y_1, Y_2) = (X_1 + Y_1, X_2 + Y_2)$. So we have that
+    \[
+      \begin{aligned}
+        g_{(p_1,p_2)}((X_1,X_2) + (Y_1, Y_2),(Z_1,Z_2))  &=  g_{(p_1,p_2)}((X_1 + Y_1, X_2 + Y_2),(Z_1,Z_2))   \\
+                                                         &=  (g_1)_{p_1}(X_1 + Y_1, Z_1) +  (g_2)_{p_2}(X_2 + Y_2, Z_2) \\
+                                                         &=  (g_1)_{p_1}(X_1, Z_1) + (g_1)_{p_1}(Y_1, Z_1) + (g_2)_{p_2}(X_2, Z_2) + (g_2)_{p_2}(Y_2, Z_2) \\
+                                                         &= g_{(p_1,p_2)}((X_1,X_2),(Z_1,Z_2)) + g_{(p_1,p_2)}((Y_1,Y_2),(Z_1,Z_2))
+      \end{aligned}
+    \]
+    \item This property is pretty straight-forward, first we have
+      \[
+        g_{(p_1, p_2)}((X_1,X_2), (X_1,X_2)) =  (g_1)_{p_1}(X_1,X_1) + (g_2)_{p_2}(X_2, X_2) \geq 0
+      \]
+      Furthere more if this term on the right is zero, we must have that $(g_1)_{p_1}(X_1, X_1) = 0$ and $(g_2)_{p_2}(X_2, X_2) = 0$, implying that both $X_1 = 0$ and $X_2 = 0$. This would imply that $(X_1, X_2)$ is the zero vector in the vector space $T_{p_1}M_1 \oplus T_{p_2}M_2$.
+  \end{enumerate}
+  Thus, we have an inner product that depends smoothly on $(p_1, p_2)$ and therefore $g$ is a Riemannian metric.
+\end{proof}
+
+\section*{Problem 4}%
+If $(M,g)$ is a Riemannian manifold, and $\left\{ (U_i, (x_i^j)) \right\}_i$ is a covering of coordinate charts on $M$, prove that the functions
+
+\[
+  (g_i)_{k,l}(p) = \inn*{\pdv{x^k_i}}{\pdv{x^l_i}}_p
+\]
+uniquely determine the Riemannian metric $g$ on $M$.
+
+\begin{proof}
+  Let $X,Y \in T_pM$. Given a coordinate chart about $p$, $(U_i, (x_i^j))$ for a specific $i$, we can write $X,Y$ in terms of the standard basis
+  \[
+    X = X^j \pdv{x_i^j} \quad and \quad Y = Y^j \pdv{x_i^j}
+  \]
+  Using the linearity and symmetric property of the inner product (and summation convention), we get 
+  \[
+    \begin{aligned}
+      g_p(X,Y) &= \inn*{X}{Y}_p = \inn*{X^k \pdv{x_i^k}}{Y^l\pdv{x_i^l}} \\
+               &=  X^k \inn*{\pdv{x_i^k}}{Y^l\pdv{x_i^l}}_p \\
+               &= X^kY^l \inn*{\pdv{x_i^k}}{\pdv{x_i^l}}_p \\
+               &= X^kY^l (g_i)_{k,l}(p)
+    \end{aligned}
+  \]
+  Thus, we can compute the inner product at an arbitrary point $p$ using the components $(g_i)_{k,l}$, so these component functions determine the Riemannian metric. Furthermore, these component functions cannot determine another riemannian metric, due to linearity properties of the metric. Therefore the metric induced by the components is unique.
+\end{proof}
+
+
+\end{document}
