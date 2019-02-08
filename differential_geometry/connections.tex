@@ -1,0 +1,67 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Affine Connections}%
+Suppose we have a $V \in \Gamma^{\infty}(TM)$. Can we take derivatives of $V$? Let $M=\mathds{R}^n$. Let $\gamma:(-\epsilon, \epsilon) \rightarrow \mathds{R}^n$ be a smooth curve. We may define the derivative of $V$ along $\gamma$ to be 
+\[
+  \frac{\tilde{D}\gamma}{dt} = \lim_{t \rightarrow 0} \frac{V_{\gamma(t)} - V_{\gamma(0)}}{t}
+\]
+If $V = V^j \pdv{x^j}$ this gives
+\[
+  \frac{\tilde{D}\gamma}{dt} =  \dv{t} (V^j(\gamma(t))) \pdv{x^j}
+\]
+
+\subsection*{Example}%
+Let $V = \pdv{y}$ and $W = x\pdv{x} + \pdv{y}$ be vector fields on $\mathds{R}^2$. Let $\gamma(t) = (t,0)$. Find $\frac{\tilde{D}V}{dt}$ and $\frac{\tilde{D}W}{dt}$ along $\gamma$.
+\[
+  \frac{\tilde{D}V}{dt} = 0
+\]
+\[
+  \frac{\tilde{D}W}{dt} = \pdv{x}
+\]
+
+\subsection*{Example}%
+Consider the charts $(U_1^+, \varphi_1^+) = (U_1, (x^j))$ and $(U_2^+, \varphi_2^+) = (U_2, (y^j))$. Let $V = \pdv{x^1}$ on some $U \subset U_1 \cap U_2$. Then 
+\[
+  \frac{\tilde{D}V}{dt} = 0
+\]
+But under the differential of the transition map and in the other coordinates $(y^j)$
+\[
+  V = \pdv{x^1} = -\frac{x^1}{\sqrt{1 - (x^1)^2 - (x^2)^2}} \pdv{y^1}
+\]
+So $\frac{\tilde{D}V}{dt}$.
+
+\end{document}

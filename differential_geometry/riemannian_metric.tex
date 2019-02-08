@@ -163,9 +163,36 @@ Note that when this is the standard metric on $\mathds{R}^3$ we get the familiar
 \begin{defn}
   Let $R \subset M$ be a region (open, connected subset) with $\bar{R}$ compact, and $R \subset U$ where $(U, \varphi) = (U, (x^j))$ is a coordinate chart. We define the volume of $R$ to be 
   \[
-    \text{Vol}(R) = \int_{\varphi(R)} \sqrt{\text{det}(g_{ij})}\ dx^1 \dots dx^n
+    \text{Vol}(R) = \int_{\varphi(R)} \sqrt{|\text{det}(g_{ij})|}\ dx^1 \dots dx^n
   \]
-  where by $g_{ij}$ we mean the coordinate representation
+  where by $g_{ij}$ we mean the coordinate representation (matrix)
 \end{defn}
 We claim that $Vol(R)$ does not depend on choice of $(U, \varphi)$.
+
+\begin{defn}[Partitions of Unity]
+  Let $\{U_j\}_{j\in J}$ be an open cover of $M$. Then there exists a set of smooth functions $\{f_j\}_{j \in J}$ where $f_j \in C^{\infty}(M)$ for all $j \in J$. 
+  \begin{enumerate}
+    \item $f_j(x) \geq 0$ for all $x\in M$, $j \in J$.
+    \item $\text{supp}(f_j) = \overline{\{x \in M: f_j(x) \neq 0\}} \subset U_j$ for all $j \in J$.
+    \item $\sum_{j \in J}f_j(x) = 1$ for all $x \in M$.
+  \end{enumerate}
+  We call $\{f_j\}$ a partition of unity subordinate to $\{U_j\}_{j \in J}$.
+\end{defn}
+These partitions of unity allow us to piece together local constructions in a smooth way. Now suppose that $R \subset M$ is a reigion and $\{U_j\}_{j\in J}$ a cover of $M$ where each $U_j$ is the domain of a chart $(U_j, \varphi_j)$. So let $\{f_j\}$ be a partition of unity subordinate to $\{U_j\}$ then we define
+\[
+  \text{vol}(R) = \sum_{j\in J} \int_{\varphi_j(U_j \cap R)} f_j \sqrt{|\text{det}(g_{ik})|} dx_j^1 \dots dx_j^n
+\]
+
+\begin{thm}
+  Every smooth manifold $M$ admits a Riemannian metric. 
+\end{thm}
+
+\begin{proof}
+  Let $\left\{ (U_j,\varphi_j) \right\}_{j\in J}$ be a cover of $M$ by coordinate charts. Each $\varphi_j: U_j \rightarrow \mathds{R}^n$ induces a metric on $U_j$ denote by $g^j$ let $\{f_j\}$ be a partition of unity subordinate to $\{U_j\}_{j \in J}$. Define a global metric by
+  \[
+    g(p)(V,W) =  \sum_{j} f_j(p) g^j(p)(v,w)
+  \]
+  for all $v,w \in T_pM$.
+\end{proof}
+
 \end{document}

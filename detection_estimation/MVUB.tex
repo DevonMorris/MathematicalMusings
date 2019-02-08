@@ -78,4 +78,38 @@ Which does not depend of $\theta$, thus we have that
 \]
 Therefore $k$ is sufficient for $\theta$.
 
+\subsection*{Example}
+Let $T_n(\bm{x}) = [\sum_{i=0}^n x_i, x_{n+1}, \dots, x_{N-1}]$. So we have that $\text{dim}(t_n) = N-n$. Which one would we prefer? The one with the lowest dimension. Now let
+\[
+  S_k = W_n(\mathbf{t}_n) = t_1 + \sum_{i=n+1}^{N-1} t_i  = k
+\]
+This guarantees that we have sufficiency. To show minimality, we see that
+\[
+  \bm{t}_{N-1} = W_n(\mathbf{t}_n)
+\]
+So we see that $\bm{t}_{N-1}$ is a function of all the other statistics we have found. So it is minimal among the statistics we have found. The set is not exhaustive, but we have found a sufficient statistic of dimension 1 so it's minimal among all statistics. 
+
+Lastly, we wish to show completeness. Consider 
+\[
+  W_n[T_n(\bm{x})] = \left( \sum_{i=0}^n x_i \right) - \frac{n+1}{N-1-n} \sum_{j=n+1}^{N-1}x_j = k_n - \frac{n+1}{N-1-n} \sum_{j=n+1}^{N-1} x_j
+\]
+So if we look at the expectation,
+\[
+  E_{\theta} \left[ W_n[T_n(\bm{x})] \right] = \sum_{i=0}^n E[X_i] - \frac{n+1}{N-1-n} \sum_{j = n+1}^{N-1} E[X_j] = (n+1)\theta - (n+1)\theta  = 0
+\]
+However, we see that $W_n[T_n(\bm{X})]$ does not equal zero with probability 1, for $n = 0, \dots, N-2$. Now let's analyze $N-1$, $T_{N-1} = k$
+\[
+  W[T_{N-1}(\bm{x})] = W(k)
+\]
+\[
+  P_{\theta}(k) = {N \choose k} \theta^k(1-\theta)^k
+\]
+so
+\[
+  E_{\theta} [W_\theta(k)] = \sum_{k=0}^{N-1} W(k) \theta^k(1-\theta)^{N-k} = 0
+\]
+This will be zero for all $\theta$ if and only if $W(k) = 0$. Therefore for $T_{N-1}$ is complete.
+
+
+
 \end{document}
