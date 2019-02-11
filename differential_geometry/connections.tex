@@ -62,6 +62,100 @@ But under the differential of the transition map and in the other coordinates $(
 \[
   V = \pdv{x^1} = -\frac{x^1}{\sqrt{1 - (x^1)^2 - (x^2)^2}} \pdv{y^1}
 \]
-So $\frac{\tilde{D}V}{dt}$.
+So $\frac{\tilde{D}V}{dt}$ is not invariant under coordinate transformations. So our ``derivative'' is not well defined. Simply because $V_{\gamma(t)}$ and $V_{\gamma(0)}$ live in different tangent spaces.
+
+If we could identify vectors in distinct tangent spaces in some canonical way, we could take define derivatives. We will actually do the opposite by defining derivatives and using them to identify tangent spaces.
+
+\begin{defn}
+  An affine connection on a smooth manifold $M$ is a map $\nabla: \Gamma^{\infty}(TM) \times \Gamma^{\infty}(TM) \rightarrow \Gamma^{\infty}(TM)$ which is denoted by $\nabla: (X,Y) \mapsto \nabla_X Y$ and which satisfies 
+  \begin{enumerate}
+    \item $\nabla_{fX+gY}Z = f\nabla_X Z + g \nabla_Y Z$ (linear over smooth functions)
+    \item $\nabla_X(Y+Z) = \nabla_X Y + \nabla_X Z$ (linear over constant real numbers)
+    \item $\nabla_X(fY) =  f\nabla_X Y + X(f)Y$ (transformation for non-constant function)
+  \end{enumerate}
+\end{defn}
+ for all $X,Y,Z \in \Gamma^{\infty}(TM)$ and $f,g \in C^{\infty}(M)$. 
+
+\begin{rem} Here are some consequences of this definition.
+  \begin{enumerate}
+    \item The first property implies that $\nabla_X Y(p)$ depends only on $X(p)$ and not on $X$ in some neighborhood of $p$.
+    \item Property $3$ transforms strangely because we have to consider the information of $f$ in a neighborhood of $p$. Equivalently $\nabla_X Y(p)$ depends on $Y$ in a neighborhood of $p$.
+  \end{enumerate} 
+\end{rem}
+
+In coordinates: $X = X^j \pdv{x^j}$, $Y= Y^j \pdv{x^i}$.
+\[
+  \begin{aligned}
+    \nabla_X Y &= \nabla_{X^j \pdv{x^j}} \left(Y^i \pdv{x^i} \right) = X^j \nabla_{\pdv{x^j}} \left(Y^i \pdv{x^i}  \right) \\
+               &= X^j Y^i \nabla_{\pdv{x^j}} \pdv{x^i} + X(Y^i) \pdv{x^i} \\
+               &= X^j Y^i \nabla_{\pdv{x^j}} \pdv{x^i} + X^j \pdv{Y^i}{x^j} \pdv{x^i} \\
+               &= X^jY^i\Gamma^{k}_{ij} \pdv{x^k} + X^j \pdv{Y^i}{x^j}\pdv{x^i}
+  \end{aligned}
+\]
+Where we define $\nabla_{\pdv{x^j}}\pdv{x^i} = \Gamma^{k}_{ij} \pdv{x^k}$  and call them the christoffel symbols of the affine connection $\nabla$. The first term makes everything transform correctly and the second term is what we intuitevly think of as the derivative. We see in coordinates that $\nabla_X Y$ depends on $X^i, Y^j$ and on $X(Y^j)$ (which is why we need to know $Y$ in some neighborhood. Connections allow us to take derivatives of $X(f)$ along curves.
+
+\begin{defn}
+  If $\gamma: I \rightarrow M$ is smooth a vector field $X$ along $\gamma$ is a smooth map $X: I \rightarrow TM$ such that $X(t) \in T_{\gamma(t)}M$ for all $t \in I$.
+\end{defn}
+
+\begin{prop}
+  Let $M$ be a smooth manifold with affine connection $\nabla$. Then there exits a unique correspondence that associates to each vector field $X$ along a smooth curve $\gamma: I \rightarrow M$ another vector field $ \frac{DX}{dt}$ called the covariant derivative of $X$ along $\gamma$, such that
+  \begin{enumerate}
+    \item $\frac{D(X + Y)}{dt} = \frac{DX}{dt} + \frac{DY}{dt}$
+    \item $\frac{D(fX)}{dt} = \dv{f}{t} X + f \frac{DX}{dt}$
+    \item If $X$ can be extended to a vector field $Y \in \Gamma^{\infty}(TM)$, then 
+      \[
+        \frac{DX}{dt} = \nabla_{\dv{\gamma}{t}} Y
+      \]
+  \end{enumerate}
+\end{prop}
+
+\begin{defn}
+  Let $M$ be a smooth manifold, $\nabla$ an affine connection, and $\gamma: [a,b] \rightarrow M$ a smooth curve. A vector field $X$ along $\gamma$ is parallel if 
+  \[
+    \frac{DV}{dt} = 0
+  \]
+  at every $t \in [a,b]$.
+\end{defn}
+
+\begin{prop}
+  Let $M$ be a smooth manifold with affine connection $\nabla$ and let $\gamma: [a,b] \rightarrow M$ be a smooth curve with $X_0 \in T_{\gamma(t_0)}M$ for some $t_0 \in [a,b]$. Then there exists a unique parallel vector field $X$ along $\gamma$ with $X(t_0) = X_0$.
+\end{prop}
+
+For any $t \in [a,b]$, we call the vector $X_t = X(t) \in T_{\gamma(t)}M$ the parallel transport  of $X_0$ along the curve $\gamma$. Note the parallel transport of $X_0$ depends on the curve $\gamma$, unless $M$ has zero curvature (See wikipedia). 
+
+\begin{proof}
+  It suffices to prove this in a single coordinate chart. Let $\gamma: [a,b] \rightarrow U \subset M$, where $(U, \varphi) = (U, (x^j))$ is a single coordinate chart. Suppose such a vector field $X$ exists. Then $\frac{DV}{dt} = 0$, so we have
+  \[
+    \begin{aligned}
+      0 &= \dv{X^j}{t} \pdv{x^j} + X^j \dv{\gamma^i}{t} \nabla_{\pdv{x^i}} \pdv{x^j} \\
+        &= \dv{X^j}{t} \pdv{x^j} + X^j \dv{\gamma^i}{t} \Gamma_{ij}^k \pdv{x^k} \\
+        &= \dv{X^k}{t} + X^j \dv{\gamma^i}{t} \Gamma_{ij}^k \\
+    \end{aligned}
+  \]
+  Since this is the zero vector we must have each component is zero
+  \[
+    \dv{X^k}{t} + X^k \dv{\gamma^i}{t} \Gamma_{ij}^k = 0
+  \]
+  So by the theory of ordinary differential equations, we have existence and uniqueness for all initial conditions $X(t_0)^i = X^i_{t_0}$. Since the ODE is linear the solutions exist for all time in this interval.
+\end{proof}
+
+\section*{Riemannian Connections}%
+We would like our affine connections to respect the metric $g$ when $M$ is equipped with one. 
+
+\begin{defn}
+  Let $(M,g)$ be a Riemannian manifold with affine connection $\nabla$. We say that $\nabla$ is compatible with $g$ if for any smooth curve $\gamma: [a,b] \rightarrow M$, and any parallel vector fields $X,Y$ along $\gamma$, $g(X_t,Y_t) = c$ for some $c \in \mathds{R}$ and all $t \in [a,b]$. 
+\end{defn}
+
+\begin{prop}
+  $\nabla$ is compatible with $g$ if and only if for any smooth curve $\gamma: [a,b] \rightarrow M$ and any vector fields $X,Y$ along $\gamma$ we have 
+  \[
+    \dv{t} g(X_t, Y_t)  = g \left( \frac{DX}{dt}, Y \right) + g \left( X, \frac{DY}{dt} \right)
+  \]
+\end{prop}
+
+\begin{proof}
+  Suppose $X,Y$ are parallel.  Then $\frac{DX}{dt} = \frac{DY}{dt} = 0$, which implies that$\dv{t} g(X,Y) = 0$.
+\end{proof}
 
 \end{document}

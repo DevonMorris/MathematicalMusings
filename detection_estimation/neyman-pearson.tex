@@ -25,11 +25,105 @@
 \setlength{\parindent}{0.0in}
 \setlength{\parskip}{0.0in}
 
-\newtheorem{prop}{Proposition}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{lem}{Lemma}
 \newtheorem*{defn}{Definition}
 
 \begin{document}
 \section*{Neyman-Pearson Detection}%
-Any yes-no question can be presented as a binary hypothesis. Here is some terminology. $\bm{X}$ is a random vector drawn from distribution $F_{\bm{\theta}}(\bm{X})$. Such that $\bm{\theta} \in \Theta$ and $\Theta = \Theta_0 \cup \Theta_1$, and we stipulate $\Theta_0 \cap \Theta_1 = \varnothing$. We want to test for the hypotheses, $H_0: \bm{\theta} \in \Theta_0$ and $H_1: \bm{\theta} \in \Theta_1$ and $\bm{\theta}$ is unknown. We first estimate $\bm{\theta}$ and then have a classification test. If $\Theta_i$ contains a single element then $H_i$ is a simple hypothesis, else $H_i$ is composite.
+Any yes-no question can be presented as a binary hypothesis. Here is some terminology. $\bm{X}$ is a random vector drawn from distribution $F_{\bm{\theta}}(\bm{X})$. Such that $\bm{\theta} \in \Theta$ and $\Theta = \Theta_0 \cup \Theta_1$, and we stipulate $\Theta_0 \cap \Theta_1 = \varnothing$. We want to test for the hypotheses, $H_0: \bm{\theta} \in \Theta_0$ and $H_1: \bm{\theta} \in \Theta_1$ and $\bm{\theta}$ is unknown. We first estimate $\bm{\theta}$ and then have a classification test. If $\Theta_i$ contains a single element then $H_i$ is a simple hypothesis, else $H_i$ is composite. So we define the detector
+\[
+  \phi(\bm{x}) = 
+  \begin{cases}
+    1 \sim H_1 & \bm{x} \in R \\
+    0 \sim H_0 & \bm{x} \in A
+  \end{cases}
+\]
+where $R,A \subset \mathds{R}^n$, and $R = A^c$. We need to define size, which is also known as $P_{FA}$, $\alpha$. 
+\[
+  \alpha := P_{\bm{\theta}_0}[\phi(\bm{x}) = 1]
+\]
+This is under the assumption that we have a simple hypothesis, we can also say
+\[
+  \alpha = E_{\bm{\theta}_0} \left[ \phi(\bm{x}) \right]
+\]
+If $H_0$ is composite, we take the highest $\alpha$.
+\[
+  \alpha = \sup_{\bm{\theta} \in \Theta_0} E_{\bm{\theta}_0} \left[ \phi(\bm{x}) \right]
+\]
+We define the power of a test
+\[
+  \beta := P_{\bm{\theta}_1} \left[ \phi(\bm{x}) = 1\right] = E_{\bm{\theta_1}} \left[ \phi(\bm{x}) \right]
+\]
+we want $\alpha$ to be zero, $\beta$ to be one. We can never get this. 
+
+\subsection*{Receiver Operator Characteristic}%
+This is a plot of $P_D$ vs $P_{FA}$. The line with slope 1 is the chance curve. We usually get some $\phi$ that thresholds a detection statistic. We will always call this the ROC curve. Just look this up in google for pictures.
+
+\subsection*{Neyman-Pearson Detection}%
+A Neyman-Pearson detector is given by
+\[
+  \phi(\bm{x}) = 
+  \begin{cases}
+    1 & f_{\bm{\theta}_1}(\bm{x}) > kf_{\bm{\theta}_0}(\bm{x}) \\
+  \gamma & f_{\bm{\theta}_1}(\bm{x}) = k f_{\bm{\theta}_0}(\bm{x}) \\
+    0 & f_{\bm{\theta}_1}(\bm{x}) < k f_{\bm{\theta}_0}(\bm{x}) \\
+  \end{cases}
+\]
+with $k \geq 0$.
+
+\begin{lem}[Neyman-Pearson Lemma]
+  The N-P test $\phi(\bm{x})$ yields the most powerful test among all other of size $\alpha$. 
+\end{lem}
+
+\begin{proof}
+  Let $\phi'(\bm{x})$ be some non-N-P test, such that $\alpha' \leq \alpha$. Consider 
+  \[
+    \int [\phi(\bm{x}) - \phi'(\bm{x})][f_{\bm{\theta}_1}(\bm{x}) - kf_{\bm{\theta}_0}(\bm{x})] \ dx = (\beta - \beta') + k(\alpha' - \alpha)
+  \]
+  Under $H_1$, $\bm{x} \in R$, we have that
+  \[
+    \begin{aligned}
+      f_{\bm{\theta}_1} (\bm{x}) - k f_{\bm{\theta}_0} (\bm{x})  &> 0 \\
+      \phi(\bm{x}) - \phi(\bm{x})  &\geq 0 \\
+    \end{aligned}
+  \]
+  Under $H_0$, $\bm{x} \in A$, we have that
+  \[
+    \begin{aligned}
+       f_{\bm{\theta}_1} (\bm{x}) - k f_{\bm{\theta}_0} (\bm{x})  &< 0 \\
+       \phi(\bm{x}) - \phi(\bm{x})  &\leq 0 \\
+    \end{aligned}
+  \]
+  So we have that
+  \[
+    \beta - \beta' \geq k(\alpha - \alpha')
+  \]
+  for $k \geq 0$. Therefore $\phi$ has power greater than or equal to the power of $\phi'$.
+\end{proof}
+Typically we set $\alpha$ and design $k$ based on $\alpha$.
+\[
+  \alpha = E_{\bm{\theta}_0} [\phi(\bm{x})] = 1 - P_{\bm{\theta}_0}[f_{\bm{\theta}_1}(\bm{x}) < k f_{\bm{\theta}_0}(\bm{x})] + \gamma P_{\bm{\theta}_0}[f_{\bm{\theta}_1}(\bm{x}) = k f_{\bm{\theta}_0}(\bm{x})]
+\]
+If the set of equality is a set of measure zero, then we just solve for $k$.
+
+\subsubsection*{Example}%
+Let $\bm{x} = \theta + \bm{\eta}$.  Under $H_0$, $\theta = -\mu$. Under $H_1$, $\theta = \mu$. $\eta$ has the pdf
+\[
+  f_{\eta} = 
+  \begin{cases}
+    1 - |\eta| & |\eta| \leq 1 \\
+    0 & \text{else}
+  \end{cases}
+\]
+Find $k$ for $N-P$ detector for $\alpha = 1/32$. Remember example from class with two triangles.
+
+\begin{enumerate}
+  \item Pick $\alpha$
+  \item $x_{\alpha} = F^{-1}_{bm{\theta}_0}(1 - \alpha)$
+  \item $k = f_{\bm{\theta}_1}(\bm{x}_{\alpha})/f_{\bm{\theta}_0}(\bm{x}_{\alpha})$
+\end{enumerate}
+
+
 
 \end{document}
