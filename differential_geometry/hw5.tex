@@ -1,0 +1,126 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 5}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Problem 1}%
+Let $M$ be a smooth manifold with Riemannian metric $g$. Let $\gamma: [a,b] \rightarrow M$ be a smooth curve, and $\tau: [c,d] \rightarrow [a,b]$ a smooth map. Prove that the length of the curve $\gamma$ is the same as the length of the curve $\gamma \circ \tau: [c,d] \rightarrow M$.
+
+\begin{proof}
+Lets first start by examining the length of the curve $\gamma \circ \tau$ 
+\[
+  \begin{aligned}
+    \ell_c^d(\gamma \circ \tau) &= \int_c^d \sqrt{g\left(\dv{\gamma \circ \tau}{t}, \dv{\gamma \circ \tau}{t}\right)}\ dt \\
+             &= \int_c^d \sqrt{g\left(\dv{\tau}{t} \dv{\gamma}{\tau}, \dv{\tau}{t} \dv{\gamma}{\tau}\right)}\ dt
+  \end{aligned}
+\]
+At this point, we note that $\dv{\tau}{t}$ is a scalar, so we have
+\[
+  \begin{aligned}
+    \ell_c^d(\gamma \circ \tau) &= \int_c^d \left|  \dv{\tau}{t} \right|\sqrt{g\left(\dv{\gamma}{\tau}, \dv{\gamma}{\tau}\right)}\ dt \\
+             &= \int_a^b \sqrt{g \left( \dv{\gamma}{\tau}, \dv{\gamma}{\tau} \right)} d\tau \\
+             &= \ell_a^b(\gamma)
+  \end{aligned}
+\]
+using substitution. Therefore, both $\gamma$ and $\gamma \circ \tau$ have the same length.
+\end{proof}
+
+\section*{Problem 2}%
+Consider the metric on $S^n \subset \mathds{R}^{n+1}$ induced from the standard metric on $\mathds{R}^{n+1}$. Show that the antipodal map $\alpha: S^n \rightarrow S^n$ is an isometry. Use this fact to define a metric on $\mathds{RP}^n$ such that the projection map $S^n \rightarrow \mathds{RP}^n$ is a local isometry.
+
+\begin{proof}
+  We note that if we think of $S^n$ as a subset of $\mathds{R}^3$ that our antipodal map is given by $\alpha(p) = -p$. Thus we have that $d\alpha_p(V) = -V$. Thus we have 
+  \[
+    g_p(V,W) = g_p(-V,-W) = g_{-p}(d\alpha_p(V), d\alpha(W))
+  \]
+  therefore, $\alpha$ is an isometry. Now we wish to define a metric $g^{\mathds{RP}^n}$ so that that makes $\pi: S^3 \rightarrow \mathds{RP}^2$ a local isometry. Let $U_i \subset S^n$, be the set $ U_i = \left\{ x \in S^n | x^i > 0 \right\}$. We note that $\eval{\pi}_{U_i}: U_i \rightarrow \mathds{RP}^n$ is a diffeomorphism onto its image. So there is a $(\eval{\pi}_{U_i})^{-1}: \pi(U_i) \rightarrow U_i$. Consider the candidate 
+  \[
+    g^{\mathds{RP}^n}_{[p]}(V,W) = g_p\left(\left(d\pi_p\right)^{-1} V, \left(d\pi_p\right)^{-1} W  \right)
+  \]
+  This automatically satisfies the properties of the inner product, due to differential being linear and the properties of $g$. Now we just have to make sure that $g^{\mathds{RP}^n}$ is well defined. Now we note that $\alpha^{-1} = \alpha$, so $d\alpha = (d\alpha)^{-1}$ and $\pi \circ \alpha = \pi$. Since $[p] \sim [-p]$ in $\mathds{RP}^n$
+  \[
+    \begin{aligned}
+      g_{[-p]}^{\mathds{RP}^n}(V,W) &= g_{-p}\left(\left(d\pi_{-p}\right)^{-1} V, \left(d\pi_{-p}\right)^{-1} W  \right) \\
+                                    &= g_{p}\left((d\alpha_p)^{-1}\left(d\pi_{-p}\right)^{-1} V, (d\alpha_p)^{-1}\left(d\pi_{-p}\right)^{-1} W  \right) \\
+                                    &= g_{p}\left(\left(d(\pi \circ \alpha)_{p}\right)^{-1} V, \left(d(\pi \circ \alpha)_{p}\right)^{-1} W \right) \\
+                                    &= g_{p} \left( (d\pi_p)^{-1}V, (d\pi_p)^{-1}W \right) \\
+                                    &= g_{[p]}^{\mathds{RP}^n}(V,W)
+    \end{aligned}
+  \]
+  So this metric is well-defined. Therefore we have created a local isometry.
+\end{proof}
+
+\section*{Problem 3}%
+Let $M$ be a smooth path-connected manifold with Riemannian metric $g$. Recall that $\ell_a^b(\gamma)$ denotes the length of a smooth curve $\gamma: [a,b] \rightarrow M$. For any $p,q \in M$, let
+\[
+  d(p,q) = \inf \left\{ \ell_a^b(\gamma)\ |\ \gamma:[a,b] \rightarrow M \text{ is piecewise smooth with } \gamma(a)=p, \gamma(b) = q \right\}
+\]
+prove that the pair $(M,d)$ is a metric space.
+
+\begin{proof}
+  We will show that the 4 properties of metric spaces hold
+  \begin{enumerate}
+    \item We note that $d(p,q) \geq 0$, since $g \left( \dv{\gamma}{t}, \dv{\gamma}{t} \right) \geq 0$ by the properties of the Riemannian metric.
+    \item We note  that if $p = q$ then there exists a gamma with $\dv{\gamma}{t} = 0$ so that $\ell^b_a = 0$ and thus $d(p,q) = 0$. Now suppose that $p \neq q$ every $\gamma$ connecting $p$ and $q$ must have $\dv{\gamma}{t} \neq 0$ on a set with positive measure, so $d(p,q) \neq 0$.
+    \item We note that $d(p,q) = d(q,p)$ because
+      \[
+        \begin{aligned} 
+          \ell_a^b(\gamma) &= \int_a^b \sqrt{ g \left( \dv{\gamma}{t}, \dv{\gamma}{t} \right)}\ dt\\
+                   &= \int_b^a \sqrt{ g \left( \dv{\gamma}{t}, \dv{\gamma}{t} \right)}\ (-dt)\\
+                   &= \int_b^a \sqrt{ g \left( -\dv{\gamma}{s}, -\dv{\gamma}{s} \right)}\ ds\\
+                   &= \int_b^a \sqrt{ g \left( \dv{\gamma}{s}, \dv{\gamma}{s} \right)}\ ds\\
+                   &= \ell_b^a(\gamma)
+        \end{aligned}
+     \]
+     and since piecewise curves with $\gamma(a) = p$, $\gamma(b) = q$ can be reparameterized so that $\gamma'(b)=p$ and $\gamma'(a) = q$ so the curves connecting $p$ and $q$ are essentially the same up to direction.
+   \item Consider $p,q,r \in M$ we note that
+     \[
+       \begin{aligned}
+         d(p,q) =& \inf \left\{ \ell_a^b(\gamma)\ |\ \gamma:[a,b] \rightarrow M \text{ is piecewise smooth with } \gamma(a)=p, \gamma(b) = q \right\} \\
+         \leq& \inf \left\{ \ell_a^b(\gamma)\ |\ \gamma:[a,b] \rightarrow M \text{ is piecewise smooth with } \gamma(a)=p, \gamma(b) = q, \gamma(c) = r, c \in [a,b] \right\} \\
+         \leq& \inf \left\{ \ell_a^c(\gamma)\ |\ \gamma:[a,c] \rightarrow M \text{ is piecewise smooth with } \gamma(a)=p, \gamma(c) = r \right\} \\
+                &+\inf \left\{ \ell_c^b(\gamma)\ |\ \gamma:[c,b] \rightarrow M \text{ is piecewise smooth with } \gamma(c)=r, \gamma(b) = q \right\} \\
+                &= d(p,r) + d(r,q)
+       \end{aligned}
+     \]
+  \end{enumerate}
+\end{proof}
+
+\section*{Problem 4}%
+Let $F: M \rightarrow N$ be a smooth immersion, and let $g_N$ be a Riemannian metric on $N$. Let $(U, \varphi)$ and $(V, \psi)$ be charts on $M$ and $N$ with $F(U) \subset V$, and let $(g_N)_{ij}$ be the local coordinate description of $g_N$ under the chart $(V, \psi)$. If $g_M$ is the metric induced on $M$ from the immersion $F$, describe how the local coordinate description of $g_M$ under $(U, \varphi)$, denoted by $(g_M)_{ij}$ are related to functions $(g_N)_{ij}$.
+
+
+
+
+
+\end{document}
