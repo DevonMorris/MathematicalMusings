@@ -117,7 +117,35 @@ prove that the pair $(M,d)$ is a metric space.
 \end{proof}
 
 \section*{Problem 4}%
-Let $F: M \rightarrow N$ be a smooth immersion, and let $g_N$ be a Riemannian metric on $N$. Let $(U, \varphi)$ and $(V, \psi)$ be charts on $M$ and $N$ with $F(U) \subset V$, and let $(g_N)_{ij}$ be the local coordinate description of $g_N$ under the chart $(V, \psi)$. If $g_M$ is the metric induced on $M$ from the immersion $F$, describe how the local coordinate description of $g_M$ under $(U, \varphi)$, denoted by $(g_M)_{ij}$ are related to functions $(g_N)_{ij}$.
+Let $F: M \rightarrow N$ be a smooth immersion, and let $g_N$ be a Riemannian metric on $N$. Let $(U, \varphi) = (U, (x^j))$ and $(V, \psi) = (V, (y^j))$ be charts on $M$ and $N$ with $F(U) \subset V$, and let $(g_N)_{ij}$ be the local coordinate description of $g_N$ under the chart $(V, \psi)$. If $g_M$ is the metric induced on $M$ from the immersion $F$, describe how the local coordinate description of $g_M$ under $(U, \varphi)$, denoted by $(g_M)_{ij}$ are related to functions $(g_N)_{ij}$.
+
+\begin{proof}[solution]
+ We first know that since $g_M$ is the induced metric that
+ \[
+   g_M(X,Y) = g_N\left( dF_p(X), dF_p(Y) \right)
+ \]
+ We are looking for $(g_M)_{ij}$ at the point $p \in M$, which is given by
+ \[
+   (g_M)_{ij} = g_M\left(\pdv{x^i}, \pdv{x^j}\right) = g_N \left( dF_p \left( \pdv{x^i} \right), dF_p\left(\pdv{x^j}\right) \right)
+ \]
+ At this point we note that in coordinates $\pdv{x^i}$ is just the standard basis vector $e^i$ in coordinates $dF_p \left( \pdv{x^i} \right)$ is
+ \[
+   W^k = \pdv{\hat{F}^k}{x^j}\delta^{ij} = \pdv{\hat{F}^k}{x^i} 
+ \]
+ This implies that 
+ \[
+   dF_p \left( \pdv{x^i} \right) = \pdv{\hat{F}^j}{x^i} \pdv{y^j}
+ \]
+ So we have that
+ \[
+   \begin{aligned}
+     (g_M)_{ij} &= g_N \left( \pdv{\hat{F}^k}{x^i} \pdv{y^k}, \pdv{\hat{F}^l}{x^j} \pdv{y^l} \right)\\
+                &= \pdv{\hat{F}^k}{x^i} \pdv{\hat{F}^l}{x^j} g_N \left( \pdv{y^k}, \pdv{y^l} \right) \\
+                &= \pdv{\hat{F}^k}{x^i} \pdv{\hat{F}^l}{x^j} (g_N)_{kl}
+   \end{aligned}
+ \]
+ Which makes sense because $g_N$ can be thought of as a (0,2) tensor, so it must transform covariantly.
+\end{proof}
 
 
 
