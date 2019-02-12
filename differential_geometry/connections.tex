@@ -29,6 +29,7 @@
 \newtheorem*{prop}{Proposition}
 \newtheorem*{defn}{Definition}
 \newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
 \newtheorem*{rem}{Remark}
 
 \DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
@@ -155,7 +156,90 @@ We would like our affine connections to respect the metric $g$ when $M$ is equip
 \end{prop}
 
 \begin{proof}
-  Suppose $X,Y$ are parallel.  Then $\frac{DX}{dt} = \frac{DY}{dt} = 0$, which implies that$\dv{t} g(X,Y) = 0$.
+  Suppose $X,Y$ are parallel.  Then $\frac{DX}{dt} = \frac{DY}{dt} = 0$, which implies that $\dv{t} g(X,Y) = 0$. Conversely, assume that $g$ and $\nabla$ are compatible. We will pick an orthonormal basis $\left\{ X_1(t_0), \dots, X_n(t_0) \right\}$ for $T_{\gamma(t_0)}M$. Extend this basis to a collection of parallel vector fields along $\gamma: [a,b] \rightarrow M$, say $X_1, \dots, X_n$. Since $\nabla$ is compatible with $g$, $X_1(t), \dots, X_n(t)$ is an orthonormal basis of $T_{\gamma(t)}M$ for all $t \in [a,b]$. We will write our vector fields as $V = V^iX_i$ and $W = W^jX_j$, where $V^i, W^j \in C^{\infty}([a,b])$. So we have
+  \[
+    \frac{DV}{dt} = \dv{V^i}{t}X_j + V^j \frac{DX_j}{dt} = \dv{V^j}{t}X_j
+  \]
+  and similarly for $W$
+  \[
+    \frac{DW}{dt} = \dv{W^j}{t}X_j
+  \]
+  Now we proceed with the computation of the inner products
+  \[
+    \begin{aligned}
+      g \left( \frac{DV}{dt}, W \right) + g \left( V, \frac{DW}{dt} \right) &= g \left( \dv{V^j}{t} X_j, W^iX_i \right) + g \left( V^jX_j, \dv{W^i}{t} X_i \right) \\
+                                                                            &= \dv{V^j}{t}W^ig \left(X_j, X_i \right) + V^j \dv{W^i}{t}g \left(X_j, X_i \right) \\
+                                                                            &= \dv{V^j}{t}W^i\delta_{ij}+ V^j \dv{W^i}{t}\delta_{ji} \\
+                                                                            &= \sum_j \left( \dv{V^j}{t} W^j + V^j \dv{W^j}{t} \right) \\
+                                                                            &= \dv{t} g(V,W)
+    \end{aligned}
+  \]
 \end{proof}
+
+\begin{cor}
+  A connection $\nabla$ on $(M,g)$ is compatible with $g$ if and only if $X(g(Y,Z)) = g(\nabla_X Y, Z) + g(Y, \nabla_X Z)$ for all $X,Y,Z \in \Gamma^{\infty}(TM)$
+\end{cor}
+
+\begin{defn}
+  The torsion tensor T of an affine connection $\nabla$ is a map $T: \Gamma^{\infty}(TM) \times \Gamma^{\infty}(TM)  \rightarrow \Gamma^{\infty}(TM)$ defined by 
+  \[
+    T(X,Y) =  \nabla_X Y - \nabla_Y X - [X,Y]
+  \]
+  We say a connection $\nabla$ is torsion free or symmetric if $T(X,Y) = 0$ for all $X,Y \in \Gamma^{\infty}(TM)$. Equivalently 
+  \[
+    [X,Y] = \nabla_X Y - \nabla_Y X
+  \]
+\end{defn}
+
+\begin{rem}
+ Notice that if $\nabla$ is torsion free we have that
+ \[
+   0 = \left[ \pdv{x^i}, \pdv{x^j} \right] = \nabla_{\pdv{x^i}} \pdv{x^j} - \nabla_{\pdv{x^j}} \pdv{x^i} = \Gamma_{ij}^k \pdv{x^k} - \Gamma_{ji}^k \pdv{x^k}
+ \]
+ Which implies that
+ \[
+   \Gamma_{ij}^k = \Gamma_{ji}^k
+ \]
+\end{rem}
+
+\begin{thm}[Fundamental Theorem of Riemannian Geometry]
+  Given a Riemannian manifold $(M,g)$ there exists a unique connection $\nabla$ which is symmetric (torsion-free) and compatible with $g$. We call this unique connection the Riemannian (Levi-Civita) connection on $(M,g)$.
+\end{thm}
+
+\begin{proof}
+  Suppose such a $\nabla$ exists then by compatibility with $g$ we have 
+  \[
+    \begin{aligned}
+      X \left( g \left( Y, Z \right) \right) &= g \left( \nabla_X Y, Z \right) + g \left( Y, \nabla_X Z \right) \\
+      Y \left( g \left( Z, X \right) \right) &= g \left( \nabla_Y Z, X \right) + g \left( Z, \nabla_Y X \right) \\
+      Z \left( g \left( X, Y \right) \right) &= g \left( \nabla_Z X, Y \right) + g \left( X, \nabla_Z Y \right) \\
+    \end{aligned}
+  \]
+  So if we add the first two and subtract the third, we get
+  \[
+    X(g(Y,Z)) + Y(g(Z,X)) - Z(g(X,Y)) = g([X,Z], Y) + g([Y,Z], X) + g([X,Y],Z) + 2 g (Z, \nabla_Y X)
+  \]
+  by torsion-free property. Solving this equation for $g(Z, \nabla_Y X)$, we get 
+  \[
+    g(Z, \nabla_Y X) = \frac{1}{2}  \left( X(g(Y,Z)) + Y(g(Z,X)) - Z(g(X,Y)) - g([X,Z], Y) - g([Y,Z], X) - g([X,Y], Z) \right) 
+  \]
+  This expression completely determines $\nabla_Y X$ and it gives us existence and uniqueness.
+\end{proof}
+We recall that
+\[
+  \begin{aligned}
+    \nabla_X Y &= \left(X^jY^l \Gamma_{lj}^k + X^j \pdv{Y^k}{x^j}\right) \pdv{x^k}
+    [X,Y] &= \left( X^j \pdv{Y^k}{x^j} - Y^j \pdv{X^k}{x^j} \right) \pdv{x^k}
+  \end{aligned}
+\]
+If we compute $g \left( \pdv{x^i}, \nabla_Y X \right)$ by pluggin it into the above, we get
+\[
+  \Gamma_{lj}^k = g^{im} \frac{1}{2} \left( \pdv{x^j}g_{li} + \pdv{x^l}g_{ij} - \pdv{x^i}g_{jl} \right)
+\]
+where $g^{ik}$ is the inverse of $g_{ik}$, on $\mathd{R}^n$ we have that
+\[
+  \Gamma_{ij}^k = 0
+\]
+
 
 \end{document}
