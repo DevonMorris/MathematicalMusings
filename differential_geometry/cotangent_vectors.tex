@@ -1,0 +1,83 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\begin{document}
+
+\section*{Linear Functionals}%
+Given a vector space $V$, we can analyze functions $\alpha: V \rightarrow \mathds{R}$, that are linear in their arguments. Thus, for $a,b \in \mathds{R}$, $x,y \in V$ we have
+\[
+  \alpha(a x + b y) = a \alpha(x) + b \alpha(y)
+\]
+We can define operations on thse functionals such as addition and multiplication by
+\[
+  \begin{aligned}
+    (\alpha + \beta)(x) &= \alpha(x) + \beta(x) \\
+    (c\alpha)(x) &= c\alpha(x)
+  \end{aligned}
+\]
+With these operations, it can be easily shown that these linear functionals form a vector space in their own right called the dual space and we denote it by $V^*$. Regarding this dual space an interesting question is the existence of a canoncical basis for $V^*$. Given a basis $\{e_i\}$ for $V$, we define the functionals $\{\sigma^i\}$ such that
+\[
+  \sigma^i(e_j) = \delta^i_j
+\]
+Imposing the constraint of linearity, we have
+\[
+  \sigma^i(v) = \sigma^i \left( v^je_j \right) = v^j\sigma^i(e_j) = v^j \delta_j^i = v^i
+\]
+or in other words, these functionals index the vector and read off the $i$th component. 
+
+\begin{thm}
+  Let $\{e_i\}$ be a basis for $V$. The linear functionals $\{\sigma^i\}$ given by 
+  \[
+    \sigma^i(e_j) = \delta^i_j
+  \]
+  form a basis for the cotangent space $V^*$
+\end{thm}
+
+\begin{proof}
+  First we will verify that the $\sigma^i$ are linearly independent. Thus suppose that
+  \[
+    a_i \sigma^i = 0
+  \]
+  where $0$ is the zero functional. Thus we have that
+  \[
+    a_i \sigma^i(e_j) = a_i \delta^i_j = a_j = 0
+  \]
+  therefore we have that $a_j = 0$ for all $j$. Thus, we have linear independence. Now, we wish to check and see if the $\sigma^i$ span $V^*$. Given any $\alpha \in V^*$ and $v \in V$ we have that
+  \[
+    \alpha(v) =  \alpha(v^ie_i) = v^i\alpha(e_i) = \delta_j^iv^j \alpha(e_i) = \sigma^i(v) \alpha(e_i) = (\alpha(e_i)\sigma^i)(v)
+  \]
+  Thus, we have expressed any $\alpha$ as a linear combination of $\{\sigma^i\}$ and therefore, $\{\sigma^i\}$ forms a basis for $V^*$.
+\end{proof}
+
+
+
+\section*{Cotangent Vectors}%
+
+\end{document}
