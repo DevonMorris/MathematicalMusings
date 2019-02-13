@@ -124,6 +124,51 @@ Find $k$ for $N-P$ detector for $\alpha = 1/32$. Remember example from class wit
   \item $k = f_{\bm{\theta}_1}(\bm{x}_{\alpha})/f_{\bm{\theta}_0}(\bm{x}_{\alpha})$
 \end{enumerate}
 
+\subsection*{Neyman-Pearson Likelihood Ratio Test}%
+We use the notation
+\[
+  \ell(\bm{x}) = \frac{f_{\bm{\theta}_1}(\bm{x})}{f_{\bm{\theta}_0}(\bm{x})}
+\]
+to define the likelihood ratio of two hypotheses. Note this is useful if this likelihood ratio is monotonically increasing. We will analyze Neyman-Pearson in the gaussian case. Specifically a binary hypothesis test with uncommon means and common variance.
+\[
+  \begin{aligned}
+    H_0 &: \bm{x} \sim \mathcal{N} \left( \bm{m}_0, R \right) \\
+    H_1 &: \bm{x} \sim \mathcal{N} \left( \bm{m}_1, R \right) \\
+  \end{aligned}
+\]
+In this case we have the likelihood ratio of
+\[
+  \ell(\bm{x}) = \text{exp} \left( -\frac{1}{2}(\bm{x} - \bm{m}_1)^\top R^{-1} (\bm{x} - \bm{m}_1) + \frac{1}{2}(\bm{x} - \bm{m}_0)^\top R^{-1} (\bm{x} - \bm{m}_0)\right)
+\] 
+and we define the log likelihood
+\[
+  \mathcal{L}(\bm{x}) = \ln \left( \ell(\bm{x}) \right)= (\bm{m}_1 - \bm{m}_0)^\top R^{-1} \bm{x} + \frac{1}{2} (\bm{m}_0 + \bm{m}_0)^\top R^{-1}(\bm{m}_0 - \bm{m}_1)
+\]
+We can also rewrite it as
+\[
+  \mathcal{L}(\bm{x}) = (\bm{m}_1 - \bm{m}_0)^\top R^{-1} (\bm{x} - \bm{x_0})
+\]
+where $\bm{x}_0 = \frac{1}{2} (\bm{m}_1 + \bm{m}_0)$. This is a \underline{super simple} statistic. Let $\bm{w} := R^{-1}(\bm{m}_1 - \bm{m}_0)$ and we get $\mathcal{L}(\bm{x}) = \bm{w}^\top (\bm{x} - \bm{x}_0)$. This statistic is also a gaussian random variable and 
+\[
+  \mathcal{L}(X) \sim \mathcal{N} \left( - \frac{d^2}{2}, d^2 \right)
+\]
+where $d = \bm{w}^\top R \bm{w}$. We define a detector as
+\[
+  \phi(\bm{x}) = 
+  \begin{cases}
+    1 & \mathcal{L}(\bm{x}) > \eta \\
+    0 & \mathcal{L}(\bm{x}) \leq \eta
+  \end{cases}
+\]
+where $\eta = \ln(k)$.
+We get that the size and power
+\[
+  \alpha = \int_{\eta}^{\infty} \frac{1}{(2\pi)^2 d} \text{exp} \left( -\frac{1}{2} (y + d/2)^2d^{-2} \right) = 1 - \Phi \left( \frac{\eta + d^2/2}{d} \right) = 1 - \Phi(z)
+\]
+where $z = (\eta + d^2/2)/2$, from this it is straightforward to show tha
+\[
+  \beta = 1 - \Phi(z - d)
+\]
 
 
 \end{document}
