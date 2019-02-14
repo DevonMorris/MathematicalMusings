@@ -84,13 +84,61 @@ Now that we have proven the existence of a dual space for any vector space, we c
   Let $M$ be a smooth manifold. At every point $p \in M$, there is a dual space to the tangent space $(T_pM)^*$, we call this the cotangent space and denote it by $T_p^*M$.
 \end{defn}
 
+\subsection*{Definition from Equivalence Classes}%
+
 \begin{rem}
-  The tangent space $T_pM$ can be thought of as derivatives or derivations $[\gamma]_p$ that act on function $f \in C^{\infty}(M)$. For example if $[\gamma]_p = X_p \in T_pM$ then $X_p$ is really defined by the way it acts on $f$, 
+  The tangent space $T_pM$ can be thought of as derivatives or derivations $[\gamma]_p$ that act on function $f \in C^{\infty}(M)$. For example if $[\gamma]_p = X \in T_pM$ then $X$ is really defined by the way it acts on $f$, 
   \[
     X(f) = (f \circ \gamma)'(0).
   \]
 \end{rem}
-  In other words $T_pM$ can be thought of as smooth functions $X_p: U \rightarrow \mathds{R}$ where $U$ is a neighborhood of $p$. The cotangent space then $T_p^*M$ should be thought of as linear functionals $\alpha: T_pM \rightarrow \mathds{R}$, in other words, for $X_p,Y_p \in T_pM$ we have
+In other words $T_pM$ can be thought of as smooth functions $X: U \rightarrow \mathds{R}$ where $U$ is a neighborhood of $p$. However, we can think about this same structure from a different angle. Consider $f,g \in C^{\infty}(U)$ such that for all $X \in T_pM$
+  \[
+    X(f) = (f \circ \gamma)'(0) = (g \circ \gamma)'(0) = X(g)
+  \]
+  In local coordinates, we have
+  \[
+    X(f) = \dv{\gamma^j}{t} \pdv{f}{x^j} = \dv{\gamma^j}{t} \pdv{g}{x^j} = X(g)
+  \]
+  Since this must hold for all $X$ we necessarily have that $\pdv{f}{x^j} = \pdv{g}{x^j}$. This definition forms an equivalence relation. Under this relation we say that $f \sim_p g$ and denote its classes by $[f]_p$. In this way we can consider $[f]_p: T_pM \rightarrow \mathds{R}$ acting on $X$ by
+  \[
+    [f]_p(X) = X(f) = (f \circ \gamma)'(0)
+  \]
+  We note that this operation is well-defined because of the relation we defined above. Furthermore, we note that $[f]_p$ is linear in its vector argument (thinking of tangent vectors as derivations)
+  \[
+    [f]_p(a X + bY) = (a X + b Y)(f) = aX(f) + bY(f).
+  \]
+  Thus we must have that $[f]_p \in T_p^*M$, implying that elements of $T_p^*M$ are made up of these equivalence classes of functions. Now, we wish to find a dual basis. Given a coordinate basis $\{ \pdv{x^j}\}$ for $T_pM$, we want an $h^i \in C^{\infty}(M)$ such that
+  \[
+    [h^i]_p \left( \pdv{x^j} \right) = (h \circ (x^j)^{-1})'(0) = \delta^i_j
+  \]
+  We note that we can always find $(x^j)^{-1}(0) = p$ just by shifting our charts. From this it should be obvious that $x^i$ should be the best representative of $[h^i]_p$. So our coordinate basis for the dual space $T_p^*M$ is given by $\{[x^i]_p\}$. So any $[f]_p$ can be written
+  \[
+    [f]_p = a_i [x^i]_p
+  \]
+  Using the properties of derivations we have
+  \[
+    [f]_p(X) = X(a_i[x^i]_p) = a_i X([x^i]_p) = a_i \dv{\gamma^j}{t} \pdv{x^i}{x^j} = a_i \dv{\gamma^i}{t} = \pdv{f}{x^i} \dv{\gamma^i}{t}
+  \]
+  where the last equality comes from the calculation of $X(f)$ in local coordinates. Since this relation must hold for any $X$ we have that
+  \[
+    a_i = \pdv{f}{x^i}
+  \]
+  for a suitable representative $f$ and local coordinates $(x^j)$. We call these the local coordinates of the dual space.
+  
+\subsection*{Definition as Linear Functionals}%
+  
+If we look more carefully at the definition via equivalence classes, we can see that the distinguishing factor of $[f]_p \in T_p^*M$ is its first order behavior in a neighborhood of $p$. This is especially apparent in the coordinate description
+\[
+  [f]_p(X) = \dv{\gamma^j}{t}\pdv{f}{x^j}
+\]
+We have seen this expression before in a different context
+\[
+  df_p(X) = \pdv{f}{x^j}\dv{\gamma}{t}
+\]
+We note that this is a vector in $T_f(p)\mathds{R} \cong \mathds{R}$, so we can really think of it as a scalar, which is why I didn't write a basis vector component.
+
+The cotangent space then $T_p^*M$ can also be thought of as linear functionals $\alpha: T_pM \rightarrow \mathds{R}$, in other words, for $X_p,Y_p \in T_pM$ we have
   \[
     \alpha(a X_p + b Y_p) = a \alpha(X_p) + b \alpha(Y_p) 
   \]
@@ -116,10 +164,10 @@ Now that we have proven the existence of a dual space for any vector space, we c
   \]
   At this point we note that elements of $T_p^*M$ are called covariant vectors, covectors or 1-forms. We can also create a vector bundle called the cotangent bundle
    \begin{defn}
-     The cotangent bundle $T*M$ is the disjoint union of all the cotangent spaces $T*M = \coprod_{p \in M} T^*_p$
+     The cotangent bundle $T^*M$ is the disjoint union of all the cotangent spaces $T*M = \coprod_{p \in M} T^*_p$
    \end{defn}
   
-  Similar to vector fields, covector fields $\alpha(p)$ are sections of the cotangent bundle, $\alpha(p) \in \Gamma^{\infty}(T^*M)$.
+  Similar to vector fields, covector fields $\alpha: M \rightarrow T^*M$ are smooth sections of the cotangent bundle, $\alpha \in \Gamma^{\infty}(T^*M)$.
 
 
 \end{document}
