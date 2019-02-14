@@ -134,40 +134,27 @@ If we look more carefully at the definition via equivalence classes, we can see 
 \]
 We have seen this expression before in a different context
 \[
-  df_p(X) = \pdv{f}{x^j}\dv{\gamma}{t}
+  df_p(X) = [f]_p(X) = \pdv{f}{x^j}\dv{\gamma^j}{t}
 \]
-We note that this is a vector in $T_f(p)\mathds{R} \cong \mathds{R}$, so we can really think of it as a scalar, which is why I didn't write a basis vector component.
+Which makes sense because $df_p$ captures the first order behavior of $f$ at $p$. Thus, the cotangent space then $T_p^*M$ can also be thought of as differentials of functions $f \in C^{\infty}(U)$.
 
-The cotangent space then $T_p^*M$ can also be thought of as linear functionals $\alpha: T_pM \rightarrow \mathds{R}$, in other words, for $X_p,Y_p \in T_pM$ we have
-  \[
-    \alpha(a X_p + b Y_p) = a \alpha(X_p) + b \alpha(Y_p) 
-  \]
-  We already have a structure that acts linearly on the tangent space, namely the differential. Note for  $f \in C^{\infty}(M)$, $df: T_pM \rightarrow T_{f(p)}\mathds{R}$. However, $T_{f(p)}\mathds{R} \cong \mathds{R}$ so we can think of $df: T_pM \rightarrow \mathds{R}$ as a linear functional on $T_pM$. Thus 
   \[
     df(X_p) = X_p(f) = (f \circ \gamma)'(0)
   \]
-  In local coordinates $(U, (x^j))$, we have
-  \[
-    df(X_p) = df \left(X^j \pdv{x^j} \right) = X^j df \left( \pdv{x^j} \right) = X^j \pdv{f}{x^j}
-  \]
-  We can also think of the coordinates $x^j$ as $x^j \in C^{\infty}(M)$. From this formulation, it's clear that $\{dx^i\}$ forms the dual basis for $T^*_pM$ since
-  \[
-    dx^i \left( \pdv{x^j} \right) = \pdv{x^j}{x^i} = \delta^i_j
-  \]
+  So instead of denoting our local basis as $\{[x^j]\}$ we will instead denote them as $\{dx^j\}$.
   Thus any $\alpha \in T_p^*M$ can be expressed as 
   \[
     \alpha = \alpha_i dx^i
   \]
   We call these expressions differential forms. In local coordinates, we have
   \[
-    \alpha = df = \pdv{f}{x^j} dx^j
+    \alpha = df_p = \pdv{f}{x^j} dx^j
   \]
-  At this point we note that elements of $T_p^*M$ are called covariant vectors, covectors or 1-forms. We can also create a vector bundle called the cotangent bundle
+  At this point we note that elements of $T_p^*M$ are called covariant vectors, covectors. We can also create a vector bundle called the cotangent bundle.
    \begin{defn}
-     The cotangent bundle $T^*M$ is the disjoint union of all the cotangent spaces $T*M = \coprod_{p \in M} T^*_p$
+     The cotangent bundle $T^*M$ is the disjoint union of all the cotangent spaces $T^*M = \coprod_{p \in M} T^*_p$
    \end{defn}
   
-  Similar to vector fields, covector fields $\alpha: M \rightarrow T^*M$ are smooth sections of the cotangent bundle, $\alpha \in \Gamma^{\infty}(T^*M)$.
-
+   Similar to vector fields, covector fields $\alpha: M \rightarrow T^*M$ are smooth sections of the cotangent bundle, $\alpha \in \Gamma^{\infty}(T^*M)$. For $f \in C^{\infty}(M)$, these covector fields $df_p = \pdv{f}{x^j} dx^j$ are called 1-forms.
 
 \end{document}
