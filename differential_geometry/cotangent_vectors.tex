@@ -76,6 +76,11 @@ or in other words, these functionals index the vector and read off the $i$th com
   \]
   Thus, we have expressed any $\alpha$ as a linear combination of $\{\sigma^i\}$ and therefore, $\{\sigma^i\}$ forms a basis for $V^*$.
 \end{proof}
+Thus any $\alpha \in V^*$ can be written as $a_i \sigma^i$. This gives a nice computation of $\alpha(v)$ in coordinates
+\[
+  \alpha(v) = a_i\sigma^i(v^je_j) = a_iv^j \sigma^i(e_j) = a_iv^j \delta^i_j = a_iv^i
+\]
+or put simply you just multiply the components and sum them.
 
 \section*{Cotangent Vectors}%
 Now that we have proven the existence of a dual space for any vector space, we can define analyze the dual of the tangent space $T_pM$.
@@ -126,7 +131,7 @@ In other words $T_pM$ can be thought of as smooth functions $X: U \rightarrow \m
   \]
   for a suitable representative $f$ and local coordinates $(x^j)$. We call these the local coordinates of the dual space.
   
-\subsection*{Definition as Linear Functionals}%
+\subsection*{Definition as Differentials}%
   
 If we look more carefully at the definition via equivalence classes, we can see that the distinguishing factor of $[f]_p \in T_p^*M$ is its first order behavior in a neighborhood of $p$. This is especially apparent in the coordinate description
 \[
@@ -141,20 +146,55 @@ Which makes sense because $df_p$ captures the first order behavior of $f$ at $p$
   \[
     df(X_p) = X_p(f) = (f \circ \gamma)'(0)
   \]
-  So instead of denoting our local basis as $\{[x^j]\}$ we will instead denote them as $\{dx^j\}$.
+  So instead of denoting our local basis as $\{[x^j]_p\}$ we will instead denote them as $\{dx^j_p\}$.
   Thus any $\alpha \in T_p^*M$ can be expressed as 
   \[
-    \alpha = \alpha_i dx^i
+    \alpha = \alpha_i dx^i_p
   \]
-  We call these expressions differential forms. In local coordinates, we have
+  We call these expressions differential forms. To simplify notation, we will usually write $dx^j$ when $p$ is clear from context. In local coordinates, we have
   \[
     \alpha = df_p = \pdv{f}{x^j} dx^j
   \]
-  At this point we note that elements of $T_p^*M$ are called covariant vectors, covectors. We can also create a vector bundle called the cotangent bundle.
+  At this point we note that elements of $T_p^*M$ are called covariant vectors, covectors. We can also create a vector bundle called the cotangent bundle. 
    \begin{defn}
      The cotangent bundle $T^*M$ is the disjoint union of all the cotangent spaces $T^*M = \coprod_{p \in M} T^*_p$
    \end{defn}
   
-   Similar to vector fields, covector fields $\alpha: M \rightarrow T^*M$ are smooth sections of the cotangent bundle, $\alpha \in \Gamma^{\infty}(T^*M)$. For $f \in C^{\infty}(M)$, these covector fields $df_p = \pdv{f}{x^j} dx^j$ are called 1-forms.
+   Similar to vector fields, covector fields $\alpha: M \rightarrow T^*M$ are smooth sections of the cotangent bundle, $\alpha \in \Gamma^{\infty}(T^*M)$. For $f \in C^{\infty}(M)$, these covector fields $df = \pdv{f}{x^j} dx^j$ are called 1-forms.
+
+ \section*{Pullback}%
+ Since $df \in T_p^*M$ are vectors (covectors) in their own right, we would like to move them from one manifold to another like we do with the push-forward (differential) $dF_p: T_pM \rightarrow T_{F(p)}N$, for $F: M \rightarrow N$.  However, we can think of this as some vector acting on functions $g \in C^{\infty}(V)$, or equivalently we can think of $dg_{F(p)} \in T_{F(p)}^N$ as a 1-form acting on these vectors
+ \[
+   dg_{F(p)} \left( dF_p \left(X\right) \right)
+ \]
+ Since $X$ is an input and both $dF_p$ and $dg_{F(p)}$ are linear, the function $dg_F \circ dF_p: T_pM \rightarrow \mathds{R}$, must be an element of the cotangent space $T_p^*M$. Thus we have moved a covector $dg_{F(p)}$ from $T_{F(p)}N$ to $T_pM$.
+ \begin{defn}
+   Let $M,N$ be smooth manifolds with $F: M \rightarrow N$ a smooth function. Furthermore let $dF_p: T_pM \rightarrow T_{F(p)}N$ be the push-forward (differential) of $F$ and let $X \in T_pM$. We define the pullback $dF*: T_{F(p)}N \rightarrow T_pM$ as 
+   \[
+     dF^*(dg_{F(p)})(X) = dg_{F(p)}(dF_p(X))
+   \]
+   or when $p$ and $F(p)$ are clear from context
+   \[
+     dF^*(dg)(X) = dg(dF(X))
+   \]
+   We say that this is the pullback of $T_{F(p)}N$ under $F$.
+ \end{defn}
+ We note that the pullback inherits linearity from the linearity of the differential. Consider how this pullback works in local coordinates $(U, (x^j))$ and $(V, (y^j))$
+ \[
+   \begin{aligned}
+     dF^*(dg)(X) &= dF^* \left( \alpha_jdy^j \right) \left(X^i \pdv{x^i}  \right) \\
+                 &= \alpha_j dF^*\left( dy^i \right) \left( X^i \pdv{x^i} \right) \\
+                 &= \alpha_j dy^j \left( dF \left(X^i \pdv{x^i}\right) \right) \\
+                 &= \alpha_j dy^j \left( \pdv{F^k}{x^i}X^i \pdv{y^k} \right) \\
+                 &= \alpha_j \pdv{F^k}{x^i} X^i dy^j \left( \pdv{y^k} \right) \\
+                 &= \alpha_j \pdv{F^k}{x^i} X^i \delta^j_k \\
+                 &= \alpha_k \pdv{F^k}{x^i} X^i
+   \end{aligned}
+ \]
+ From this we can see that the components of $dF^*(dg)$ in the $\{dx^i\}$ basis are 
+ \[
+   dF^*(dg) = \alpha_k \pdv{F^k}{x^i} dx^i
+ \]
+ Transforming with the transpose of the jacobian. One important consequence of this is that if $dg \in \Gamma^{\infty}(T^*N)$ then by definition $dF^*(dg) \in \Gamma^{\infty}(T^*M)$, or in other words covector fields pulled back are still covector fields. This is not the case for vectors fields pushed-forward with the differential map. 
 
 \end{document}
