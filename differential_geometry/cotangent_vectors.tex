@@ -28,6 +28,7 @@
 \newtheorem*{prop}{Proposition}
 \newtheorem*{defn}{Definition}
 \newtheorem*{thm}{Theorem}
+\newtheorem*{rem}{Remark}
 \begin{document}
 
 \section*{Linear Functionals}%
@@ -76,8 +77,49 @@ or in other words, these functionals index the vector and read off the $i$th com
   Thus, we have expressed any $\alpha$ as a linear combination of $\{\sigma^i\}$ and therefore, $\{\sigma^i\}$ forms a basis for $V^*$.
 \end{proof}
 
-
-
 \section*{Cotangent Vectors}%
+Now that we have proven the existence of a dual space for any vector space, we can define analyze the dual of the tangent space $T_pM$.
+
+\begin{defn}
+  Let $M$ be a smooth manifold. At every point $p \in M$, there is a dual space to the tangent space $(T_pM)^*$, we call this the cotangent space and denote it by $T_p^*M$.
+\end{defn}
+
+\begin{rem}
+  The tangent space $T_pM$ can be thought of as derivatives or derivations $[\gamma]_p$ that act on function $f \in C^{\infty}(M)$. For example if $[\gamma]_p = X_p \in T_pM$ then $X_p$ is really defined by the way it acts on $f$, 
+  \[
+    X(f) = (f \circ \gamma)'(0).
+  \]
+\end{rem}
+  In other words $T_pM$ can be thought of as smooth functions $X_p: U \rightarrow \mathds{R}$ where $U$ is a neighborhood of $p$. The cotangent space then $T_p^*M$ should be thought of as linear functionals $\alpha: T_pM \rightarrow \mathds{R}$, in other words, for $X_p,Y_p \in T_pM$ we have
+  \[
+    \alpha(a X_p + b Y_p) = a \alpha(X_p) + b \alpha(Y_p) 
+  \]
+  We already have a structure that acts linearly on the tangent space, namely the differential. Note for  $f \in C^{\infty}(M)$, $df: T_pM \rightarrow T_{f(p)}\mathds{R}$. However, $T_{f(p)}\mathds{R} \cong \mathds{R}$ so we can think of $df: T_pM \rightarrow \mathds{R}$ as a linear functional on $T_pM$. Thus 
+  \[
+    df(X_p) = X_p(f) = (f \circ \gamma)'(0)
+  \]
+  In local coordinates $(U, (x^j))$, we have
+  \[
+    df(X_p) = df \left(X^j \pdv{x^j} \right) = X^j df \left( \pdv{x^j} \right) = X^j \pdv{f}{x^j}
+  \]
+  We can also think of the coordinates $x^j$ as $x^j \in C^{\infty}(M)$. From this formulation, it's clear that $\{dx^i\}$ forms the dual basis for $T^*_pM$ since
+  \[
+    dx^i \left( \pdv{x^j} \right) = \pdv{x^j}{x^i} = \delta^i_j
+  \]
+  Thus any $\alpha \in T_p^*M$ can be expressed as 
+  \[
+    \alpha = \alpha_i dx^i
+  \]
+  We call these expressions differential forms. In local coordinates, we have
+  \[
+    \alpha = df = \pdv{f}{x^j} dx^j
+  \]
+  At this point we note that elements of $T_p^*M$ are called covariant vectors, covectors or 1-forms. We can also create a vector bundle called the cotangent bundle
+   \begin{defn}
+     The cotangent bundle $T*M$ is the disjoint union of all the cotangent spaces $T*M = \coprod_{p \in M} T^*_p$
+   \end{defn}
+  
+  Similar to vector fields, covector fields $\alpha(p)$ are sections of the cotangent bundle, $\alpha(p) \in \Gamma^{\infty}(T^*M)$.
+
 
 \end{document}
