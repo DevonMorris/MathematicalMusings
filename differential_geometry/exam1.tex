@@ -1,0 +1,181 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Exam 1}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\begin{document}
+\section*{Problem 1}%
+Let $M$ be a smooth manifold of dimension $n$, and let $\left\{ (U){\lambda}, \varphi_{\lambda} \right\}_{\lambda \in \Lambda}$ be a collection of coordinate charts that cover $M$. Suppose that for each $\lambda \in \Lambda$, there are $n^2$ functions $g_{i,j}^\lambda: U_{\lambda} \rightarrow \mathds{R}$, where $1 \leq i,j \leq n.$ State a set of necessary and sufficient conditions on the functions $\left\{ g_{i,j}^\lambda \right\}$, so that there exists a Riemannian metric $g$ on $M$ whose coordinate description under the chart $(U_\lambda, \varphi_\lambda)$ is given by the $n^2$ functions $g_{i,j}^\lambda$.
+
+\begin{prop}
+  $g$ is a riemannian metric on $M$ if and only if $g_{i,j}^\lambda$ have the following properties
+  \begin{enumerate}
+    \item $g_{i,j}^\lambda \in C^{\infty}(U_\lambda)$
+    \item $g_{i,j}^\lambda(p) = g_{j,i}^\lambda(p)$ for all $p  \in U_\lambda$
+    \item The matrix $g^\lambda(p)$ formed by $[g^\lambda(p)]_{i,j} = g_{i,j}^\lambda(p)$, is positive definite for all $p \in U_\lambda$
+    \item The $g_{i,j}^\lambda$ are related by the differential of the transition maps as follows
+      \[
+        g_{i,j}^{\lambda} = \pdv{\tilde{\lambda}^k}{x^i}\pdv{\tilde{\lambda}^l}{x^j} g_{k,l}^{\lambda'}
+      \]
+      where $\tilde{\lambda}: \lambda(U_\lambda \cap U_{\lambda'}) \rightarrow \lambda'(U_\lambda \cap U_{\lambda'})$ and $\tilde{\lambda} = \lambda' \circ \lambda^{-1}$. In other words the $g_{i,j}^\lambda$ are related by the covariant transformation of the transition maps.
+  \end{enumerate}
+\end{prop}
+
+\begin{proof}
+  First let us suppose that $g$ is a riemannian metric. 
+  \begin{enumerate}
+    \item By definition we have that $g_{i,j} \in C^{\infty}(U_\lambda)$
+    \item Since $g(p)$ is symmetric, we have that 
+      \[
+        g_{i,j}(p) = \inn*{\eval{\pdv{}{x^i}}_p}{\eval{\pdv{}{x^j}}_p} = \inn*{\eval{\pdv{}{x^j}}_p}{\eval{\pdv{}{x^i}}_p} = g_{j,i}(p)
+      \]
+    \item Assume to the contrary that $[g^\lambda(p)]$ is not positive definite for some $p \in U_\lambda$, then there exists an element, $X \in T_pM$, such that $X \neq 0$ and its coordinate representation $x$ satisfies
+      \[
+        \inn*{X}{X} = x^ig_{i,j}(p)x^j \leq 0.
+      \]
+      This violates the positive-definiteness of the inner product, therefore we must have that $[g^\lambda(p)]$ is positive definite.
+    \item Let $(U_\lambda, \lambda) = (U_\lambda, (x^j))$ and $(U_{\lambda'}, \lambda') = (U_{\lambda'}, (y^j))$, be coordinate charts with nontrivial intersection. Consider the identity transformation on the manifold $\text{Id}_M$, the differential of this transformation is also the identity transformation on $T_pM$. Then we must have that
+      \[
+        \pdv{x^j} = d(Id_M) \left( \pdv{x^j} \right) = \pdv{\tilde{\lambda^i}}{x^j} \pdv{y^i}
+      \]
+      Thus, we have that
+      \[
+        \begin{aligned}
+          g_{ij}^\lambda(p) &= \inn*{\pdv{x^i}}{\pdv{x^j}} \\
+                            &= \inn*{\pdv{\tilde{\lambda}^k}{x^i}\pdv{y^k}}{\pdv{\tilde{\lambda}^l}{x^j}\pdv{y^l}} \\
+                            &= \pdv{\tilde{\lambda}^k}{x^i}\pdv{\tilde{\lambda}^l}{x^j} \inn*{\pdv{y^k}}{\pdv{y^l}} \\
+                            &=  \pdv{\tilde{\lambda}^k}{x^i}\pdv{\tilde{\lambda}^l}{x^j} g_{k,l}^{\lambda'}
+        \end{aligned}
+      \]
+  \end{enumerate}
+
+  Now we will assume that the conditions on $g_{i,j}$ hold. For a coordinate chart $(U_{\lambda}, \lambda) = (U_{\lambda}, (x^j))$, and vectors $X, Y, Z \in T_pM$,
+  \[
+    X = u^i \pdv{x_i} \quad Y = v^i \pdv{x_i} \quad Z = w^i \pdv{x_i}
+  \]
+  we define
+  \[
+    \inn*{X}{Y} = g_{i,j}^{\lambda}(p)u^iv^j.
+  \]
+  Thus, it suffices to show that this operation is a well-defined inner product on $T_pM$. We will first check the conditions of an inner product. Let $\alpha, \beta \in \mathds{R}$, we have that
+  \begin{enumerate}
+    \item Using the symmetry of $g_{i,j}^\lambda$, we have that
+      \[
+        \inn*{X}{Y} = g_{i,j}^\lambda(p) u^iv^j = g_{j,i}^\lambda(p) v^j u^i = \inn*{Y}{X}.
+      \]
+    \item For scaling, we have
+      \[
+        \inn*{\alpha X}{Y} = g_{i,j}^\lambda(p) (\alpha u^i)v^j = \alpha g_{i,j}^\lambda(p) u^iv^j = \alpha \inn*{X}{Y}
+      \]
+    \item For linearity, we have
+      \[
+        \inn*{X + Y}{Z} = g_{i,j}^\lambda(p) (u^i + v^i)w^j = g_{i,j}^\lambda(p) u^iw^j + g_{i,j}^\lambda(p) v^iw^j = \inn*{X}{Z} + \inn*{Y}{Z}
+      \]
+    \item For positive-definiteness, we have
+      \[
+        \inn*{X}{X} = g_{i,j}^\lambda(p) u^iu^j \geq 0
+      \]
+      since $[g(p)]_{i,j}$ is positive definite. Furthermore since $[g(p)]_{i,j}$ is strictly positive definite we have equality if and only if $X = 0$.
+  \end{enumerate}
+  Now we know that we have a coordinate representation under this chart that acts like an inner product. However, we have made a choice among different coordinates about the same point, so we must show that it is well defined under different coordinates. Let $(U_{\lambda'}, \lambda') = (U_{\lambda'}, (y^j))$ so that
+  \[
+    X = u^i \pdv{x^i} = a^i \pdv{y^i} \quad Y = v^i \pdv{x^i} = b^i \pdv{y^i}
+  \]
+  Let us consider
+  \[
+    \begin{aligned}
+      g_{k,l}^{\lambda'}(p) a^k b^l
+    \end{aligned}
+  \]
+  We note that by the same logic as above $a^k = u^i \pdv{\tilde{\lambda}^k}{x^i}$ and $b^l = v^j \pdv{\tilde{\lambda}^l}{x^j}$, so we have that
+  \[
+    \begin{aligned}
+      g_{k,l}^{\lambda'}(p) a^k b^l &= g_{k,l}^{\lambda'}(p) u^i v^j \pdv{\tilde{\lambda}^k}{x^i} \pdv{\tilde{\lambda}^l}{x^j} \\
+                                    &= g_{i,j}^\lambda(p) u^i v^j
+    \end{aligned}
+  \]
+  So we have that our inner product is well-defined. Therefore we have found necessary and sufficient conditions for $g_{i,j}$ to define an inner product on the manifold.
+    
+  
+\end{proof}
+
+\section*{Problem 2}%
+Let $M$ be a smooth manifold, and $S \subset M$. Prove that $S$ is an embedded manifold of $M$ if and only if $S$ the image of a smooth embedding $\iota: S_0 \rightarrow M$.
+
+\begin{proof}
+  Suppose that $S$ is an embedded submanifold of $M$ of dimension $k$. Thus, for every $p \in M$, there exists a $k$-slice chart $(U,\varphi)$ for $S$. So we have that 
+  \[
+    \varphi(U \cap S) = \left\{ \left( x^1, \dots, x^k, 0, \dots, 0 \right) \right\}
+  \]
+  We will now define a new map
+  \[
+    \begin{aligned}
+      \psi &= \pi \circ \varphi: U \cap S \rightarrow \mathds{R}^k \\
+           &p \mapsto (x^1, \dots, x^k)
+    \end{aligned}
+  \]
+  where we are essentially just projecting onto the the first $k$ coordinates. Now we want to see if these $U \cap S$ form a smooth structure on $S$. We note they they necessarily cover $S$ and that since they are the composition of smooth maps, we must have that the coordinate charts are compatible. Now we note that in coordinates we can create a map $\iota: S \rightarrow M$, with a coordinate representation 
+  \[
+    \varphi \circ \iota \phi^{-1}(x^1, \dots, x^k) = (x^1, \dots, x^k, 0, \dots, 0)
+  \]
+  By inspection this is obviously a smooth immersion. Furthermore since the projection is the inverse operation we have that $\iota$ is homeomorphic onto its image. Therefore, we have a smooth embedding.
+
+
+  Now suppose that $S$ is the image of some smooth embedding $\iota: S_0 \rightarrow M$. It suffices to show that for each $p \in \iota(S_0)$, there is a chart $(U, \varphi)$ containing $\iota(p)$ such that $\iota(S_0) \cap U$ is a $k$-slice. We note that $\iota$ must have constant rank. By the rank theorem there exist charts $(V, \psi)$ about $p$ and $(U,\varphi)$ about $\iota(p)$ such that $\iota(U) \subset V$ and 
+  \[
+    \varphi \circ \iota \circ \psi^{-1}(x^1, \dots, x^k) = (x^1, \dots, x^k, 0, 0, \dots, 0)
+  \]
+  So we essentially have a slice about $\iota(V) \cap U$. Since $\iota$ is a homeomorphism and has a smooth inverse, there must be some $W$ such that $\iota(V) = W \cap \iota(S_0)$. Thus let $U' = U \cap W$ and restrict $\varphi$ to $U'$. Thus we have constructed a $k$-slice and therefore $S = \iota(S_0)$ is an embedded submanifold.
+\end{proof}
+
+\section*{Problem 3}%
+
+Define the torus $\mathds{T}^2$ as the quotient
+\[
+  \mathds{T}^2 = \mathds{R}^2 / \mathds{Z}^2 = \mathds{R}^2 / \left\{ (x,y) \sim (x+n, y+m)\text{ for } m,n \in \mathds{Z} \right\}
+\]
+Notice that any open square of the form $(a, a+1) \times (b, b+1) \subset \mathds{R}^2$ induces a coordinate chart $(U_{a,b}, \varphi_{a,b})$ on $\mathds{T}^2$ in a natural way.
+
+\begin{enumerate}[(a)]
+  \item Show that the standard metric on $\mathds{R}^2$ induces a metric on $\mathds{R}^2$. Compute the coordinate representations $g_{i,j}$ of this metric on $\mathds{T}^2$ in the chart $(U_{a,b}, \varphi_{a,b})$, as well as the Christoffel symbols of the associated Levi-Civita connection.
+  \item Notice that the map $\psi: \mathds{R}^2 \rightarrow \mathds{R}^4$ defined by 
+    \[
+      \varphi(\alpha,\beta) = (\cos(2\pi\alpha), \sin(2\pi\alpha), \cos(2\pi \beta), \sin(2\pi\beta))
+    \]
+    induces a well-defined map $\tilde{\psi}: \mathds{T}^2 \rightarrow \mathds{R}^4$, which is a diffeomerophism onto its image $T_1 = \tilde{\psi}(\mathds{T}^2)$. Equip $T_1$ with the metric induced by the standard metric on $\mathds{R}^4$. Show that $\tilde{\psi}: \mathds{T}^2 \rightarrow T_1$ is an isometry. (You do not need to show that it is a diffeomorphism).
+\end{enumerate}
+
+
+
+
+
+\end{document}
