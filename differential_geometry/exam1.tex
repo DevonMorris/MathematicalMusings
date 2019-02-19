@@ -143,11 +143,11 @@ Let $M$ be a smooth manifold, and $S \subset M$. Prove that $S$ is an embedded m
            &p \mapsto (x^1, \dots, x^k)
     \end{aligned}
   \]
-  where we are essentially just projecting onto the the first $k$ coordinates. Now we want to see if these $U \cap S$ form a smooth structure on $S$. We note they they necessarily cover $S$ and that since they are the composition of smooth maps, we must have that the coordinate charts are compatible. Now we note that in coordinates we can create a map $\iota: S \rightarrow M$, with a coordinate representation 
+  where we are essentially just projecting onto the the first $k$ coordinates. Now we want to see if these $U \cap S$ form a smooth structure on $S$. We note these necessarily cover $S$ and that since they are the composition of smooth maps, we must have that the coordinate charts are compatible. Now, we note that in coordinates we can create a map $\iota: S \rightarrow M$, with a coordinate representation 
   \[
-    \varphi \circ \iota \phi^{-1}(x^1, \dots, x^k) = (x^1, \dots, x^k, 0, \dots, 0)
+    \varphi \circ \iota \circ \psi^{-1}(x^1, \dots, x^k) = (x^1, \dots, x^k, 0, \dots, 0)
   \]
-  By inspection this is obviously a smooth immersion. Furthermore since the projection is the inverse operation we have that $\iota$ is homeomorphic onto its image. Therefore, we have a smooth embedding.
+  By inspection this is obviously a smooth immersion. Furthermore, since the projection is the inverse operation we have that $\iota$ is homeomorphic onto its image. Therefore, we have a smooth embedding.
 
 
   Now suppose that $S$ is the image of some smooth embedding $\iota: S_0 \rightarrow M$. It suffices to show that for each $p \in \iota(S_0)$, there is a chart $(U, \varphi)$ containing $\iota(p)$ such that $\iota(S_0) \cap U$ is a $k$-slice. We note that $\iota$ must have constant rank. By the rank theorem there exist charts $(V, \psi)$ about $p$ and $(U,\varphi)$ about $\iota(p)$ such that $\iota(U) \subset V$ and 
