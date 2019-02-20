@@ -157,25 +157,76 @@ Let $M$ be a smooth manifold, and $S \subset M$. Prove that $S$ is an embedded m
   So we essentially have a slice about $\iota(V) \cap U$. Since $\iota$ is a homeomorphism and has a smooth inverse, there must be some $W$ such that $\iota(V) = W \cap \iota(S_0)$. Thus let $U' = U \cap W$ and restrict $\varphi$ to $U'$. Thus we have constructed a $k$-slice and therefore $S = \iota(S_0)$ is an embedded submanifold.
 \end{proof}
 
-\section*{Problem 3}%
+\section*{Problem 3 (Version 2)}%
 
 Define the torus $\mathds{T}^2$ as the quotient
 \[
-  \mathds{T}^2 = \mathds{R}^2 / \mathds{Z}^2 = \mathds{R}^2 / \left\{ (x,y) \sim (x+n, y+m)\text{ for } m,n \in \mathds{Z} \right\}
+  \mathds{T}^2 = \mathds{R}^2 / 2\pi \mathds{Z}^2 = \mathds{R}^2 / \left\{ (x,y) \sim (x+2\pi n, y+2\pi m)\text{ for } m,n \in \mathds{Z} \right\}
 \]
-Notice that any open square of the form $(a, a+1) \times (b, b+1) \subset \mathds{R}^2$ induces a coordinate chart $(U_{a,b}, \varphi_{a,b})$ on $\mathds{T}^2$ in a natural way.
+Notice that any open square of the form $(a, a+2\pi) \times (b, b+2\pi) \subset \mathds{R}^2$ induces a coordinate chart $(U_{a,b}, \varphi_{a,b})$ on $\mathds{T}^2$ in a natural way.
 
 \begin{enumerate}[(a)]
-  \item Show that the standard metric on $\mathds{R}^2$ induces a metric on $\mathds{R}^2$. Compute the coordinate representations $g_{i,j}$ of this metric on $\mathds{T}^2$ in the chart $(U_{a,b}, \varphi_{a,b})$, as well as the Christoffel symbols of the associated Levi-Civita connection.
+  \item Show that the standard metric on $\mathds{R}^2$ induces a metric on $\mathds{T}^2$. Compute the coordinate representations $g_{i,j}$ of this metric on $\mathds{T}^2$ in the chart $(U_{a,b}, \varphi_{a,b})$, as well as the Christoffel symbols of the associated Levi-Civita connection.
   \item Notice that the map $\psi: \mathds{R}^2 \rightarrow \mathds{R}^4$ defined by 
     \[
-      \varphi(\alpha,\beta) = (\cos(2\pi\alpha), \sin(2\pi\alpha), \cos(2\pi \beta), \sin(2\pi\beta))
+      \psi(\alpha,\beta) = (\cos(\alpha), \sin(\alpha), \cos(\beta), \sin(\beta))
     \]
     induces a well-defined map $\tilde{\psi}: \mathds{T}^2 \rightarrow \mathds{R}^4$, which is a diffeomerophism onto its image $T_1 = \tilde{\psi}(\mathds{T}^2)$. Equip $T_1$ with the metric induced by the standard metric on $\mathds{R}^4$. Show that $\tilde{\psi}: \mathds{T}^2 \rightarrow T_1$ is an isometry. (You do not need to show that it is a diffeomorphism).
+  \item Notice that the map $\omega: \mathds{R}^2 \rightarrow \mathds{R}^3$ defined by
+    \[
+      \omega(\alpha,\beta) = ((\cos(\beta) + 4)\cos(\alpha), (\cos(\beta) + 4)\sin(\alpha) , \sin(\beta))
+    \]
+    induces a well defined map $\tilde{\omega}: \mathds{T}^2 \rightarrow \mathds{R}^3$, which is a diffeomorphism onto its image $T_2 = \tilde{\omega}(\mathds{T}^2)$. Equip $T_2$ with the metric induced by the standard metric on $\mathds{R}^3$.
+
+    If $S$ is the open square $(0, 2\pi) \times (0, 2\pi)$ and $S' = \omega(S) \subset T_2$, then the restriction of $\omega^{-1}$ to $S'$ is a coordinate chart $\omega^{-1}: S' \rightarrow \mathds{R}^2$ on $T_2$. Compute the coordinate representation of the metric on $T_2$ in this chart, as well as the associated Christoffel symbols.
 \end{enumerate}
 
-
-
-
+\begin{proof}[Solution]
+  \begin{enumerate}[(a)]
+    \item  First we note that $\mathds{T}^2$ contains elements of the form $[(a,b)]$. Our charts $(U_{a,b}, \varphi_{a,b})$, thus choose the representative that lies in the region $(a,a + 2\pi) \times (b, b + 2\pi)$, if such one exists. Note, for example if $a = b = 0$ then $[(0,0)] \notin U_{0,0}$. These charts are easily characterized by looking at their inverse mappings
+      \[
+        \begin{aligned}
+          \varphi_{a,b}^{-1}:& (a, a+ 2\pi) \times (b, b+2\pi) \rightarrow \mathds{T}^2 \\
+          &(y^1,y^2) \mapsto [(y^1,y^2)] 
+        \end{aligned}
+      \]
+      Let $\left\{ \pdv{y^j} \right\}$ be the basis for $T_{[(y^1, y^2)]}\mathds{T}^2$. We wish to investigate the coordinates of the differential $d \varphi_{a,b}$ where we are using the identity chart on $T_{(y^1 + 2\pi m, y^2 + 2\pi n)} \mathds{R}^2 \cong \mathds{R}^2$ (i.e. $\text{Id}((x^1, x^2)) = (x^1, x^2)$. So in coordinates we have
+      \[
+        \hat{\varphi}_{a,b}(y^1, y^2) = \text{Id} \circ \varphi_{a,b} \circ \varphi_{a,b}^{-1} (y^1, y^2) = (y^1, y^2)
+      \]
+      So for $v = v^i \pdv{y^i} \in  T_{[(y^1, y^2)]}\mathds{T}^2$. We have that the vector under the differential simply is
+      \[
+        d\varphi_{a,b} \left( \eval{\pdv{y^i}}_{[(y^1, y^2)]} \right) = \eval{\pdv{x^i}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}
+      \]
+      Thus we can use the metric on $T_{(x^1, x^2)}\mathds{R}^2$. Specifically, we have
+      \[
+        \inn*{v}{w}^{\mathds{T}^2}_{[(y^1, y^2)]} = \inn*{d\varphi_{a,b}(v)}{d\varphi_{a,b}(w)}_{(y^1 + 2\pi m, y^2 + 2\pi n)}^{\mathds{R}^2}
+      \]
+      Now the question arises of whether under a different coordinate chart this is well-defined. The answer is yes, since the metric on $\mathds{R}^2$ is translation invariant. For a coordinate chart $(U_{c,d}, (z^i))$, where $[(z^1, z^2)] = [(y^1, y^2)]$, the translation invariance of the metric on $\mathds{R}^2$, gives us
+      \[
+        \begin{aligned}
+          \inn{v}{w}^{\mathds{T}^2}_{[(z^1, z^2)]} &= \inn*{d \varphi_{c,d}(v)}{d \varphi_{c,d}(w)}_{(z^1 + 2\pi m', z^2 + 2\pi n')} \\
+                                                   &= \inn*{ v^i \eval{\pdv{x^i}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}}{w^j \eval{\pdv{x^i}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}  \\
+                                                   &= \inn*{ v^i \eval{\pdv{x^i}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}}{w^j \eval{\pdv{x^i}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}  \\
+                                                   &= \inn*{d\varphi_{a,b}(v)}{d\varphi_{a,b}(w)}_{(y^1 + 2\pi m, y^2 + 2\pi n)}^{\mathds{R}^2} \\
+                                                   &= \inn{v}{w}^{\mathds{T}^2}_{[(y^1, y^2)]}
+        \end{aligned}
+      \]
+      Therefore, this induced metric is well defined. Fortunately, the components of the metric $g_{i,j}$ are very easy to compute
+      \[
+        g_{i,j} = \inn*{\pdv{y^i}}{\pdv{y^j}}^{\mathds{T}^2} = \inn*{\pdv{x^i}}{\pdv{x^j}}^{\mathds{R}^2} = \delta_{i,j}
+      \]
+      We further note that
+      \[
+        g^{i,j} = \delta^{i,j}
+      \]
+      Computing the Christoffel symbols of the Levi-Civita connection gives
+      \[
+        \Gamma^{k}_{i,j} = 0
+      \]
+      for all $i,j,k \in {1,2}$, since we essentially have the same metric as $\mathds{R}^2$.
+  \end{enumerate}
+  
+\end{proof}
 
 \end{document}
