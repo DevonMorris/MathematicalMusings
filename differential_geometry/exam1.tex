@@ -205,9 +205,9 @@ Notice that any open square of the form $(a, a+2\pi) \times (b, b+2\pi) \subset 
       Now the question arises of whether under a different coordinate chart this is well-defined. The answer is yes, since the metric on $\mathds{R}^2$ is translation invariant. For a coordinate chart $(U_{c,d}, (z^i))$, where $[(z^1, z^2)] = [(y^1, y^2)]$, the translation invariance of the metric on $\mathds{R}^2$, gives us
       \[
         \begin{aligned}
-          \inn{v}{w}^{\mathds{T}^2}_{[(z^1, z^2)]} &= \inn*{d \varphi_{c,d}(v)}{d \varphi_{c,d}(w)}_{(z^1 + 2\pi m', z^2 + 2\pi n')} \\
-                                                   &= \inn*{ v^i \eval{\pdv{x^i}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}}{w^j \eval{\pdv{x^i}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}  \\
-                                                   &= \inn*{ v^i \eval{\pdv{x^i}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}}{w^j \eval{\pdv{x^i}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}  \\
+          \inn{v}{w}^{\mathds{T}^2}_{[(z^1, z^2)]} &= \inn*{d \varphi_{c,d}(v)}{d \varphi_{c,d}(w)}_{(z^1 + 2\pi m', z^2 + 2\pi n')}^{\mathds{R}^2} \\
+                                                   &= \inn*{ v^i \eval{\pdv{x^i}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}}{w^j \eval{\pdv{x^i}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}}_{(z^1 + 2\pi m', z^2 + 2\pi n')}^{\mathds{R}^2}  \\
+                                                   &= \inn*{ v^i \eval{\pdv{x^i}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}}{w^j \eval{\pdv{x^i}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}}_{(y^1 + 2\pi m, y^2 + 2\pi n)}^{\mathds{R}^2}  \\
                                                    &= \inn*{d\varphi_{a,b}(v)}{d\varphi_{a,b}(w)}_{(y^1 + 2\pi m, y^2 + 2\pi n)}^{\mathds{R}^2} \\
                                                    &= \inn{v}{w}^{\mathds{T}^2}_{[(y^1, y^2)]}
         \end{aligned}
@@ -225,8 +225,220 @@ Notice that any open square of the form $(a, a+2\pi) \times (b, b+2\pi) \subset 
         \Gamma^{k}_{i,j} = 0
       \]
       for all $i,j,k \in {1,2}$, since we essentially have the same metric as $\mathds{R}^2$.
+
+    \item We note that this map $\tilde{\psi}: \mathds{T}^2 \rightarrow \mathds{R}^4$ is given by
+      \[
+        \tilde{\psi}\left([(\alpha,\beta)]\right) = \psi(\alpha,\beta)
+      \]
+      We note that this map is well defined since $\sin$ and $\cos$ are $2\pi$ periodic and any other representative of the same class will give the same output. At this point we note that $\tilde{\psi}(\mathds{T}^2) = T_1 \subset \mathds{R}^4$, so our immersion from $T_1$ to $\mathds{R}^4$ can be simply given as the identity map. This induces the following metric on $T_1$
+      \[
+        \inn*{v}{w}_p^{T_1} = \inn*{d \text{Id}(v)}{d \text{Id}(w)}_{\text{Id}(p)}^{\mathds{R}^4} = \inn*{v}{w}_p^{\mathds{R}^4}
+      \]
+      Since we know that $\tilde{\psi}$ is a diffeomorphism it suffices to show that
+      \[
+        \inn*{v}{w}_{[(a,b)]}^{\mathds{T}^2} = \inn*{d\tilde{\psi}(v)}{d\tilde{\psi}(w)}_{\tilde{\psi}([(a,b)])}^{T_1}
+      \]
+      for all $v,w \in T_{[(a,b)]}\mathds{T}^2$. It suffices to show that this relation holds for all combinations of $v,w \in \left\{ \pdv{\alpha}, \pdv{\beta} \right\}$ since we can leverage the linearity of the differential and the inner product. Let us first analyze the differential $d\tilde{\psi}$. In local coordinates $(U_{a,b}, (\alpha, \beta))$ about $[(\alpha, \beta)]$ and the standard coordinates $(y^i)$ of $\mathds{R}^4$ for $T_1$, we have
+      \[
+        \begin{aligned}
+          d \tilde{\psi} \left( \pdv{\alpha} \right) &= -\sin(\alpha)\pdv{y^1} + \cos(\alpha) \pdv{y^2} \\
+          d \tilde{\psi} \left( \pdv{\beta} \right) &= -\sin(\beta)\pdv{y^3} + \cos(\beta) \pdv{y^4}
+        \end{aligned}
+      \]
+      Using the metric derived in part $(a)$, we have that
+      \[
+        \begin{aligned}
+          \inn*{\pdv{\alpha}}{\pdv{\alpha}}_{[(\alpha,\beta)]}^{\mathds{T}^2} &= 1 \\
+                                                                              &= (-\sin(\alpha))^2 + \cos(\beta)^2 + 0 \\
+                                                                              &= (-\sin(\alpha))^2\inn*{\pdv{y^1}}{\pdv{y^1}}^{T_1} + \cos(\beta)^2 \inn*{\pdv{y^2}}{\pdv{y^2}}^{T_1} - 2\sin{\alpha}\cos{\beta} \inn*{\pdv{y^1}}{\pdv{y^2}}^{T_1} \\
+                                                                              &= \inn*{-\sin(\alpha)\pdv{y^1}}{-\sin(\alpha) \pdv{y^1}}^{T_1} + \inn*{\cos(\beta)\pdv{y^2}}{\cos(\beta)\pdv{y^2}}^{T_1} + 2\inn*{-\sin(\alpha) \pdv{y^1}}{\cos(\beta)\pdv{y^2}}^{T_1} \\
+                                                                              &= \inn*{-\sin(\alpha) \pdv{y^1} + \cos(\beta) \pdv{y^2}}{-\sin(\alpha) \pdv{y^1} + \cos(\beta) \pdv{y^2}}^{T_1} \\
+                                                                              &= \inn*{d \tilde{\psi} \left( \pdv{\alpha} \right)}{d \tilde{\psi}\left( \pdv{\alpha}\right)}^{T_1}
+        \end{aligned}
+      \]
+      Similarly we have that
+      \[
+        \begin{aligned}
+          \inn*{\pdv{\beta}}{\pdv{\beta}}_{[(\alpha,\beta)]}^{\mathds{T}^2} &= 1 \\
+                                                                              &= (-\sin(\beta))^2 + \cos(\beta)^2 + 0 \\
+                                                                              &= (-\sin(\beta))^2\inn*{\pdv{y^3}}{\pdv{y^3}}^{T_1} + \cos(\beta)^2 \inn*{\pdv{y^4}}{\pdv{y^4}}^{T_1} - 2\sin{\beta}\cos{\beta} \inn*{\pdv{y^3}}{\pdv{y^4}}^{T_1} \\
+                                                                              &= \inn*{-\sin(\beta)\pdv{y^3}}{-\sin(\beta) \pdv{y^3}}^{T_1} + \inn*{\cos(\beta)\pdv{y^4}}{\cos(\beta)\pdv{y^4}}^{T_1} + 2\inn*{-\sin(\beta) \pdv{y^3}}{\cos(\beta)\pdv{y^4}}^{T_1} \\
+                                                                              &= \inn*{-\sin(\beta) \pdv{y^3} + \cos(\beta) \pdv{y^4}}{-\sin(\beta) \pdv{y^3} + \cos(\beta) \pdv{y^4}}^{T_1} \\
+                                                                              &= \inn*{d \tilde{\psi} \left( \pdv{\beta} \right)}{d \tilde{\psi}\left( \pdv{\beta}\right)}^{T_1}
+        \end{aligned}
+      \]
+      and lastly
+      \[
+        \begin{aligned}
+          \inn*{\pdv{\alpha}}{\pdv{\beta}}_{[(\alpha, \beta)]}^{\mathds{T}^2} &= 0 \\
+                                                                              &= \inn*{ -\sin(\alpha)\pdv{y^1} + \cos(\beta)\pdv{y^2}}{-\sin(\beta)\pdv{y^3} + \cos(\beta)\pdv{y^4}}^{T_1} \\
+                                                                              &= \inn*{d \tilde{\psi} \left( \pdv{\alpha} \right)}{d \tilde{\psi}\left( \pdv{\beta}\right)}^{T_1}
+        \end{aligned}
+      \]
+      Since $ \text{span}\left\{ \pdv{y^1}, \pdv{y^2} \right\} \perp \text{span} \left\{ \pdv{y^3}, \pdv{y^4} \right\}$. Therefore we have shown that $\tilde{\psi}$ is an isometry.
+    \item We note that this map $\tilde{\omega}: \mathds{T}^2 \rightarrow \mathds{R}^4$ is given by
+      \[
+        \tilde{\omega} \left( [(\alpha, \beta)] \right) =  \omega(\alpha, \beta).
+      \]
+      This map is well defined because $\sin$ and $\cos$ are $2\pi$ periodic and any other representative of this same class will give the same output. At this point we note that $\tilde{\omega}(\mathds{T}^2) = T_2 \subset \mathds{R}^3$, so our immersion can be simply given by the identity map. This mapping induces the following metric on $T_2$
+      \[
+        \inn*{v}{w}_p^{T_2} = \inn*{d \text{Id}(v)}{d \text{Id}(w)}_{\text{Id}(p)}^{\mathds{R}^3} = \inn*{v}{w}_p^{\mathds{R}^3}
+      \]
+      Now we can define a coordinate chart on $S' = \omega(S) \subset T_2$, given by $\omega^{-1}: S' \rightarrow \mathds{R}^2$. Using the standard coordinates $(y^i)$ on $\mathds{R}^3$ and the coordinates given by $\omega^{-1}$ the coordinate representation of the identity map is
+      \[
+        \hat{\text{Id}}(\alpha, \beta) = (\text{Id} \circ (\omega^{-1})^{-1})(\alpha,\beta) = \omega(\alpha,\beta)
+      \]
+      Now, we will analyze the differential of this map in coordinates
+      \[
+        \begin{aligned}
+          d \text{Id} \left( \pdv{\alpha} \right) &= -(\cos(\beta) + 4)\sin(\alpha)\pdv{y^1} + (\cos(\beta) + 4)\cos(\alpha) \pdv{y^2} \\
+          d \text{Id} \left( \pdv{\beta} \right)                  &= -\sin(\beta)\cos(\alpha)\pdv{y^1} - \sin(\beta)\sin(\alpha) \pdv{y^2} + \cos(\beta) \pdv{y^3}
+        \end{aligned}
+      \]
+      Now we can find the components $g_{i,j}$, where $1$ denotes $\alpha$ and $2$ denotes $\beta$. Thus, we have
+      \[
+        \begin{aligned}
+          g_{11} &= \inn*{\pdv{\alpha}}{\pdv{\alpha}}^{T_2} \\
+                 &= \inn*{-(\cos(\beta) + 4)\sin(\alpha)\pdv{y^1} + (\cos(\beta) + 4)\cos(\alpha) \pdv{y^2}}{ -(\cos(\beta) + 4)\sin(\alpha)\pdv{y^1} + (\cos(\beta) + 4)\cos(\alpha) \pdv{y^2}} \\
+                 &= (\cos(\beta) + 4)^2\sin(\alpha)^2  + (\cos(\beta) + 4)^2\cos(\alpha)^2 \\
+                 &= (\cos(\beta) + 4)^2
+        \end{aligned}
+      \]
+      \[
+        \begin{aligned}
+        g_{22} &= \inn*{\pdv{\beta}}{\pdv{\beta}}^{T_2} \\
+               &= \inn*{-\sin(\beta)\cos(\alpha)\pdv{y^1} - \sin(\beta)\sin(\alpha) \pdv{y^2} + \cos(\beta) \pdv{y^3}}{-\sin(\beta)\cos(\alpha)\pdv{y^1} - \sin(\beta)\sin(\alpha) \pdv{y^2} + \cos(\beta) \pdv{y^3}} \\
+               &= \sin(\beta)^2\cos(\alpha)^2 + \sin(\beta)^2\sin(\alpha)^2 + \cos(\beta)^2 \\
+               &= 1
+        \end{aligned}
+      \]
+      \[
+        \begin{aligned}
+          g_{12} &= \inn*{-(\cos(\beta) + 4)\sin(\alpha)\pdv{y^1} + (\cos(\beta) + 4)\cos(\alpha) \pdv{y^2}}{-\sin(\beta)\cos(\alpha)\pdv{y^1} - \sin(\beta)\sin(\alpha) \pdv{y^2} + \cos(\beta) \pdv{y^3}} \\
+                 &= (\cos(\beta) + 4)\sin(\alpha)\sin(\beta)\cos(\alpha) - (\cos(\beta) + 4)\cos(\alpha)\sin(\beta)\sin(\alpha) \\
+                 &= 0 = g_{21}
+        \end{aligned}
+      \]
+      So we have the matrix
+      \[
+        [g]_{ij} = 
+        \begin{bmatrix}
+          (\cos(\beta) + 4)^2 & 0 \\
+          0 & 1
+        \end{bmatrix}
+      \]
+      which has an inverse of
+      \[
+        [g]^{ij} = 
+        \begin{bmatrix}
+          (\cos(\beta) + 4)^{-2} & 0 \\
+          0 & 1
+        \end{bmatrix}
+      \]
+      Now (assuming we are using the Levi-Civita connection) we can calculate our christoffel symbols as
+      \[
+        \Gamma_{kl}^i  = \frac{1}{2}g^{im} \left(\pdv{g_{mk}}{x^l} + \pdv{g_{ml}}{x^k} - \pdv{g_{kl}}{x^m} \right)
+      \]
+      Note due to the symmetry under the Levi-Civita connection, we only have to compute $\Gamma_{11}^1, \Gamma_{12}^1, \Gamma_{22}^1, \Gamma_{11}^2, \Gamma_{12}^2, \Gamma_{22}^2$, since $\Gamma_{ij}^k = \Gamma_{ji}^k$. So we have
+      \[
+        \begin{aligned}
+        \Gamma_{11}^1 &= \frac{1}{2} g^{1,m} \left( \pdv{g_{m,1}}{\alpha} + \pdv{g_{m,1}}{\alpha} - \pdv{g_{11}}{x^m} \right) \\
+                      &= \frac{1}{2} \left(g^{1,1}\pdv{g_{1,1}}{\alpha} + g^{1,2}\pdv{g_{2,1}}{\alpha} + g^{1,1}\pdv{g_{1,1}}{\alpha} + g^{1,2}\pdv{g_{1,2}}{\alpha} - g^{1,1}\pdv{g_{1,1}}{\alpha} - g^{1,2}\pdv{g_{1,1}}{\beta} \right) \\
+                      &= 0 \\
+        \Gamma_{12}^1 &= \frac{1}{2} g^{1,m} \left( \pdv{g_{m,1}}{\beta} + \pdv{g_{m,2}}{\alpha} - \pdv{g_{1,2}}{x^m}\right) \\
+                      &= \frac{1}{2} \left(g^{1,1} \pdv{g_{1,1}}{\beta} + g^{1,2}\pdv{g_{2,1}}{\beta} + g^{1,1} \pdv{g_{2,1}}{\alpha} + g^{1,2} \pdv{g_{2,2}}{\alpha} - g^{1,1}\pdv{g_{1,2}}{\alpha} - g^{1,2}\pdv{g_{1,2}}{\beta} \right) \\
+                      &= \frac{1}{2} \left( -2(\cos(\beta) + 4)^{-2}(\cos(\beta) + 4)\sin(\beta) \right) \\
+                      &= - \sin(\beta)(\cos(\beta) + 4)^{-1} \\
+        \Gamma_{22}^1 &= \frac{1}{2} g^{1,m} \left( \pdv{g_{m,2}}{\beta} + \pdv{g_{m,2}}{\beta} - \pdv{g_{2,2}}{x^m} \right) \\
+                      &= \frac{1}{2} \left( g^{1,1}\pdv{g_{1,2}}{\beta} + g^{1,2}\pdv{g_{2,2}}{\beta} + g^{1,1}\pdv{g_{1,2}}{\beta} + g^{1,2}\pdv{g_{2,2}}{\beta} - g^{1,1}\pdv{g_{2,2}}{\alpha} - g^{1,2}\pdv{g_{2,2}}{\beta} \right) \\
+                      &= 0 \\
+        \Gamma_{11}^2 &= \frac{1}{2} g^{2,m} \left( \pdv{g_{m,1}}{\alpha} + \pdv{g_{m,1}}{\alpha} - \pdv{g_{1,1}}{x^m}\right) \\
+                      &=  \frac{1}{2} \left( g^{2,1} \pdv{g_{1,1}}{\alpha} + g^{2,2} \pdv{g_{2,1}}{\alpha} + g^{2,1}\pdv{g_{1,1}}{\alpha} + g^{2,2} \pdv{g_{2,1}}{\alpha} - g^{2,1}\pdv{g_{1,1}}{\alpha} - g^{2,2} \pdv{g_{1,1}}{\beta} \right) \\
+                      &= \frac{1}{2}(-2(\cos(\beta)+4)\sin(\beta)) \\
+                      &= -\sin(\beta)(\cos(\beta) + 4) \\
+        \Gamma_{12}^2 &= \frac{1}{2} g^{2,m}\left(\pdv{g_{m,1}}{\beta} + \pdv{g_{m,2}}{\alpha} - \pdv{g_{1,2}}{x^m} \right) \\
+                      &= \frac{1}{2} \left( g^{2,1}\pdv{g_{1,1}}{\beta} + g^{2,2}\pdv{g_{2,1}}{\beta} + g^{2,1} \pdv{g_{2,1}}{\alpha} + g^{2,2} \pdv{g_{2,2}}{\alpha} - g^{2,1} \pdv{g_{1,2}}{\alpha} - g^{2,2} \pdv{g_{1,2}}{\beta} \right) \\
+                      &=  0 \\
+      \Gamma_{22}^2 &= \frac{1}{2} g^{2,m} \left( \pdv{g_{m,2}}{\beta} + \pdv{g_{m,2}}{\beta} - \pdv{g_{2,2}}{x^m} \right) \\
+                    &= \frac{1}{2} \left( g^{2,1} \pdv{g_{1,2}}{\beta} + g^{2,2}\pdv{g_{2,2}}{\beta} + g^{2,1} \pdv{g_{1,2}}{\beta} + g^{2,2} \pdv{g_{2,2}}{\beta} - g^{2,1} \pdv{g_{2,2}}{\alpha} - g^{2,2} \pdv{g_{2,2}}{\beta}  \right) \\
+                    &=  0
+        \end{aligned}
+      \]
   \end{enumerate}
-  
+\end{proof}
+
+\section*{Problem 4}%
+
+Let $(\tilde{M}, \tilde{g})$ be a Riemannian manifold of dimension $m$, with Levi-Civita connection $\tilde{\nabla}$. Let $M$ be a $n$-dimensional submanifold of $\tilde{M}$, and let $g$ be the metric on $M$ induced by $\tilde{g}$.
+
+\medskip
+
+For each $p \in M$, the tangent space $T_pM$ is an $n$-dimensional subspace of $T_p\tilde{M}$, and we let $\text{pr}: T_p \tilde{M} \rightarrow T_pM$ be the orthogonal projection.
+\begin{enumerate}[(a)]
+  \item For any $X,Y \in \Gamma^{\infty}(TM)$, let $\tilde{X}$ and $\tilde{Y}$, denote extensions of $X$ and $Y$ to the manifold $\tilde{M}$. Show that the map 
+    \[
+      \nabla: \Gamma^{\infty}(TM) \times \Gamma^{\infty}(TM) \rightarrow \Gamma^{\infty}(TM)
+    \]
+    defined by $\nabla_X Y = \text{pr}(\tilde{\nabla}_{\tilde{X}}\tilde{Y})$ is a connection on $M$.
+  \item Show that $\nabla$ is in fact the Levi-Civita connection on $(M,g)$.
+  \item Use the above fact to prove that the great circles of $S^2 \subset \mathds{R}^3$, with the induced metric and Levi-Civita connection, are geodesics.
+\end{enumerate}
+
+\begin{proof}
+  \begin{enumerate}[(a)]
+    \item Let $X,Y,Z \in \Gamma^{\infty}(TM)$ and let $f,g \in C^{\infty}(M)$. Let $\tilde{X}, \tilde{Y}, \tilde{Z} \in \Gamma^{\infty}(T\tilde{M})$ be extensions of $X,Y,Z$. By this, we mean that $\tilde{X}_p = X_p$ for all $p \in M$. Furthermore, let $\tilde{f}, \tilde{g} \in C^{\infty}(\tilde{M})$, be smooth extensions of $f,g$, i.e. that $\eval{\tilde{f}}_M = f$. We note that $\tilde{f}\tilde{X}$ and $\tilde{g}\tilde{Y}$ are smooth extensions of $fX$ and $gY$, and $\tilde{f}\tilde{X} + \tilde{g}\tilde{Y}$ is a smooth extension of $fX + gY$, from the linearity of $\text{pr}$. Now we will check the properties of an affine connection.
+      \begin{enumerate}[1.]
+        \item Consider $\nabla_{fX + gY}Z$
+          \[
+            \begin{aligned}
+              \nabla_{fX + gY}Z &= \text{pr} \left( \tilde{\nabla}_{\tilde{f}\tilde{X} + \tilde{g}\tilde{Y}}\tilde{Z}\right) \\
+                                &= \text{pr} \left( \tilde{f} \tilde{\nabla}_{\tilde{X}}\tilde{Z} + \tilde{g} \tilde{\nabla}_{\tilde{Y}}\tilde{Z}  \right)
+            \end{aligned}
+          \]
+          At this point we note that $\text{pr}$ is a linear operator and $\text{pr} \left( \tilde{f} \tilde{X} \right) = f \text{pr} \left( \tilde{X} \right)$, since $\tilde{f}(p) = f(p)$ by construction. So we have
+          \[
+            \begin{aligned}
+              \nabla_{fX + gY}Z &= f \text{pr} \left( \tilde{\nabla}_{\tilde{X}}\tilde{Z} \right) + g\text{pr} \left( \tilde{\nabla}_{\tilde{Y}}\tilde{Z} \right) \\
+                                &= f \nabla_{X}Z + g \nabla_{Y}Z
+            \end{aligned}
+          \]
+        \item  Now consider $\nabla_{X}(Y+Z)$
+          \[
+            \begin{aligned}
+              \nabla_{X}(Y+Z) &= \text{pr} \left( \tilde{\nabla}_{\tilde{X}} (\tilde{Y} + \tilde{Z}) \right) \\
+                              &= \text{pr} \left( \tilde{\nabla}_{\tilde{X}} \tilde{Y} + \tilde{\nabla}_{\tilde{X}} \tilde{Z} \right) \\
+                              &= \text{pr} \left(\tilde{\nabla}_{\tilde{X}} \tilde{Y}\right) + \text{pr} \left( \tilde{\nabla}_{\tilde{X}} \tilde{Z}\right) \\
+                              &= \nabla_X Y + \nabla_X Z
+            \end{aligned}
+          \]
+          again using linearity of $\text{pr}$.
+        \item Lastly, consider $\nabla_X (fY)$
+          \[
+            \begin{aligned}
+            \nabla_X (fY) &= \text{pr} \left( \tilde{\nabla}_{\tilde{X}} \tilde{f}\tilde{Y} \right) \\
+                          &= \text{pr} \left( \tilde{f} \tilde{\nabla}_{\tilde{X}} \tilde{Y} +  \tilde{X}(f)\tilde{Y}\right)\\
+                          &= f\text{pr} \left(\tilde{\nabla}_{\tilde{X}} \tilde{Y}\right) + \tilde{X}(\tilde{f})\text{pr} \left(\tilde{Y}\right) \\
+                          &= f \nabla_X Y + \tilde{X}(\tilde{f})Y 
+            \end{aligned}
+          \]
+          At this point we note that $\tilde{X}$ and $\tilde{f}$ have to agree with $X$ and $f$ on a small neighborhood of $p$ or they would not be smooth extensions. Thus we have that $\tilde{X}(\tilde{f}) = X(f)$.
+      \end{enumerate}
+      Lastly, We must determine if $\nabla$ is well-defined, since we could choose a different $\tilde{X}'$ such that $\tilde{X} \neq \tilde{X}'$. However, we know that in the $X$ argument the connection only depends on $X_p$. Furthermore in the $Y$ argument, the connection depends on $Y$ in a neighborhood of $p$. However for two extensions of $Y$, $\tilde{Y} \neq \tilde{Y}'$, they must agree on some neighborhood of $p$ or they wouldn't be smooth extensions. Therefore, $\nabla$ is well-defined.
+    \item Let $X,Y,Z \in \Gamma^{\infty}(TM)$. Consider $g \left(Z, \nabla_Y X\right)$.  Note $\tilde{g}$ and $g$ and have to agree on $T_pM$. Also note that $[\tilde{X}, \tilde{Y}](\tilde{f}) = [X, Y](f)$ since the extensions must agree on some neighborhood of $p$.
+      \[
+        \begin{aligned}
+          g(Z, \nabla_Y X) &=  g\left(Z, \text{pr} \left( \tilde{\nabla}_{\tilde{Y}} \tilde{X} \right)\right) \\
+                           &=  \tilde{g} \left(\tilde{Z}, \tilde{\nabla}_{\tilde{Y}} \tilde{X} \right) \\
+                           &= \frac{1}{2}\left( \tilde{X}( \tilde{g}( \tilde{Y}, \tilde{Z})) + \tilde{Y}(\tilde{g}(\tilde{Z},\tilde{X})) - \tilde{Z}(\tilde{g}(\tilde{X}, \tilde{Y})) - \tilde{g}([\tilde{X}, \tilde{Z}], \tilde{Y}) - g([\tilde{Y}, \tilde{Z}], \tilde{X}) - g([\tilde{X}, \tilde{Y}], \tilde{Z}) \right) \\
+                           &= \frac{1}{2}\left( X( g( Y, Z)) + Y(g(Z,X)) - Z(g(X, Y)) - g([X, Z], Y) - g([Y, Z], X) - g([X, Y], Z) \right)
+        \end{aligned}
+      \]
+      Therefore, $\nabla$ is the Levi-Civita connection on $M$.
+    \item Let $\gamma: [a,b] \rightarrow S^2$ be an arc of a great circle. It suffices to show that
+      \[
+        \frac{D}{dt} \left( \dv{\gamma}{t} \right) = \nabla_{\dv{\gamma}{t}} \tilde{\dv{\gamma}{t}} = 0
+      \]
+  \end{enumerate}
 \end{proof}
 
 \end{document}
