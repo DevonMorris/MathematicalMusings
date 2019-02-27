@@ -1,0 +1,194 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 6}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Problem 1}%
+Consider the upper half-plane 
+\[
+  \mathds{R}^2_+ = \left\{ (x,y) \in \mathds{R}^2, y > 0 \right\}
+\]
+with the metric given by $g_{11} = g_{22} = \frac{1}{y^2}, g_{12} = 0$ (metric of Labatchevski's non-euclidean geometry).
+
+\begin{enumerate}[(a)]
+  \item Show that the Christoffel symobls of the Riemannian connection are: $ \Gamma_{11}^1 =\Gamma_{12}^2 = \Gamma_{22}^1 = 0 $, $\Gamma_{11}^2 = \frac{1}{y}$, $\Gamma_{12}^1 = - \frac{1}{y}$.
+  \item Let $v_0 = (0,1)$ be a tangent vector at point $(0,1)$ of $\mathds{R}^2_+$. Let $v(t)$ be the parallel transport of $v_0$ along the curve $x = t, y=1$. Show that $v(t)$ makes an angle $t$ with the direction of the $y$-axis, measured in the clockwise sense.
+\end{enumerate}
+
+\begin{proof}[solution]
+  \begin{enumerate}[(a)]
+    \item Since our connection is Riemannian, we can calculate the Christoffel symbols with
+  \[
+    \Gamma_{kl}^i = \frac{1}{2} g^{im} \left( \pdv{g_{mk}}{x^l} + \pdv{g_{ml}}{x^k} - \pdv{g_{kl}}{x^m} \right)
+  \]
+  Where $g^{11} = g^{22} = y^2$, $g^{12} = 0$. Thus we have
+  \[
+    \begin{aligned}
+      \Gamma_{11}^1 &= \frac{1}{2} g^{1m} \left( \pdv{g_{m1}}{x^1} + \pdv{g_{m1}}{x^1} - \pdv{g_{11}}{x^m} \right) \\
+                    &= \frac{1}{2} y^2 \left(0 + 0 - 0 \right) + \frac{1}{2} 0\left(0 + 0 + \frac{2}{y^3}  \right) \\
+                    &= 0 \\
+      \Gamma_{12}^2 &= \frac{1}{2} g^{2m} \left( \pdv{g_{m1}}{x^2} + \pdv{g_{m2}}{x^1} - \pdv{g_{12}}{x^m} \right) \\
+                    &= \frac{1}{2} 0 \left(-\frac{2}{y^3} + 0 - 0\right) + \frac{1}{2}y^2 \left(0 + 0 - 0 \right) \\ 
+                    &= 0 \\
+      \Gamma_{22}^1 &= \frac{1}{2} g^{1m} \left( \pdv{g_{m1}}{x^1} + \pdv{g_{m1}}{x^1} - \pdv{g_{11}}{x^m} \right) \\
+                    &= \frac{1}{2} y^2 \left(0 + 0 - 0\right) + \frac{1}{2} 0 \left(0 + 0 + \frac{2}{y^3} \right) \\
+                    &= 0 \\
+      \Gamma_{11}^2 &= \frac{1}{2} g^{2m} \left( \pdv{g_{m1}}{x^1} + \pdv{g_{m1}}{x^1} - \pdv{g_{11}}{x^m} \right) \\
+                    &= \frac{1}{2} 0 \left( 0 + 0 - 0 \right) + \frac{1}{2} y^2 \left(0 + 0 + \frac{2}{y^3} \right) \\
+                    &= \frac{1}{y} \\
+      \Gamma_{12}^1 &= \frac{1}{2} g^{1m} \left( \pdv{g_{m1}}{x^2} + \pdv{g_{m2}}{x^1} - \pdv{g_{12}}{x^m} \right) \\
+                    &= \frac{1}{2}  y^2 \left( -\frac{2}{y^3} + 0 - 0 \right) - \frac{1}{2} 0 \left( 0 + 0 - 0 \right) \\
+                    &= -\frac{1}{y}
+    \end{aligned}
+  \]
+\item Let $v(t) = (a(t), b(t))$ be the parallel transport of $v_0$ along $x = t, y = 1$, so we get
+  \[
+    \frac{Dv}{dt} = 0
+  \]
+  Let $V$ be the local extension of $v(t)$
+  In components we have
+  \[
+    \begin{aligned}
+      \frac{Dv}{dt} &= \nabla_{\dv{\gamma}{t}} V =  \dv{\gamma^j}{t}V^i \Gamma_{ij}^k \pdv{x^k} + \dv{\gamma^j}{t}\pdv{V^i}{x^j} \pdv{x^i} = \dv{\gamma^j}{t}V^i \Gamma_{ij}^k \pdv{x^k} + \dv{V^i}{t} \pdv{x^i} \\
+                    &= a\Gamma_{11}^2 \pdv{y} + 0a \Gamma_{12}^1 \pdv{x} + b\Gamma_{21}^1 \pdv{x} + \dv{a}{t} \pdv{x} + \dv{b}{t} \pdv{y}\\
+                    &= \left(-\frac{b}{y}  + \dv{a}{t} \right)\pdv{x} + \left(\frac{a}{y} + \dv{b}{t}\right)\pdv{y} \\
+    \end{aligned}
+  \]
+  Now desiring to know $\theta$ we set $a = \sin \theta(t)$ and $b = \cos \theta(t)$ and we get the equations
+  \[
+    \begin{aligned}
+    \cos \theta \dv{\theta}{t} - \cos \theta &= 0 \\
+    -\sin \theta \dv{\theta}{t} + \sin \theta &= 0
+    \end{aligned}
+  \]
+  From this it is clear that $\dv{\theta}{t} = 1$. Furthermore $\theta(0) = 0$. Therefore, $\theta(t) = t$. Note: I defined $\theta$ differently than Do' Carmo, because I wanted $\theta(t)$ to actually be the clockwise angle from the $y$-axis.
+  \end{enumerate}
+\end{proof}
+
+  \section*{Problem 2}%
+  It is possible to introduce a Riemannian metric in the tangent bundle $TM$ of a Riemannian manifold $M$ in the following manner. Let $(p,v) \in TM$ and $V,W$ be tangent vectors in $TM$ at $(p,v)$. Choose curves in $TM$
+  \[
+    \begin{aligned}
+    \alpha: t \mapsto (p(t), v(t)),
+    \beta: s \mapsto (q(s), w(s)),
+    \end{aligned}
+  \]
+  with $p(0) = q(0) = p$, $v(0) = w(0) = v$, and $V = \alpha'(0)$, $W = \beta'(0)$. Define an inner product on $TM$ by 
+  \[
+    \inn*{V}{W}_{(p,v)} = \inn*{d\pi(V)}{d\pi(W)}_p +  \inn*{\frac{Dv}{dt}(0)}{\frac{Dw}{ds}(0)}_p
+  \]
+  where $d\pi$ is the differential of $\pi: TM \rightarrow M$, $\pi(p,v) = p$.
+  \begin{enumerate}[a)]
+    \item Prove that this inner product is well-defined and introduces a Riemannian metric on $TM$.
+    \item A vector $(p,v) \in TM$ that is orthogonal (for the metric above) to the fiber $\pi^{-1}(p) = T_pM$ is called a \textit{horizontal vector}. A curve 
+      \[
+        t \mapsto (p(t), v(t))
+      \]
+      in $TM$ is \textit{horizontal} if its tangent vector is horizontal for all $t$. Prove that the curve
+      \[
+        t \rightarrow (p(t), v(t))
+      \]
+      is horizontal if and only if the vector field $v(t)$ is parallel along $p(t)$ in $M$.
+    \item Prove that the geodesic field is a horizontal vector field.
+    \item Prove that the trajectories of the geodesic field are geodesics on $TM$ in the metric above.
+  \end{enumerate}
+
+  \begin{proof}
+    \begin{enumerate}[a)]
+      \item Let $\alpha'$, $\beta'$ be curves in $TM$ such that 
+        \[
+          \begin{aligned}
+            \tilde{\alpha}&: t \mapsto (\tilde{p}(t), \tilde{v}(t)) \\
+            \tilde{\beta}&: s \mapsto (\tilde{q}(s), \tilde{w}(s))
+          \end{aligned}
+        \]
+        with $\tilde{p}(0) = \tilde{q}(0) = p$, $\tilde{v}(0) = \tilde{w}(0) = v$, and $V = \tilde{\alpha}'(0), W = \tilde{\beta}'(0)$. We note that our inner product is
+        \[
+          \inn*{V}{W}_{(p,v)} =  \inn*{d\pi(V)}{d\pi(W)}_p + \inn*{ \frac{D\tilde{v}}{dt}(0)}{\frac{D\tilde{w}}{s}(0)}_p
+        \]
+        Let us first begin by analyzing the differential of our $\pi$ map. We note that 
+        \[
+          d\pi_p(V) = (\pi \circ \tilde{\alpha})'(0) = \tilde{p}'(0)
+        \]
+        furthermore since $V = \tilde{\alpha}'(0) = \alpha'(0)$ we must have that $p'(0) = \tilde{p}'(0)$ and similarly, $\tilde{q}'(0) = q'(0)$. Similarly we have that, using local extensions $\tilde{Y}$ and $Y$ of $\tilde{v}$ and $v$ respectively
+        \[
+          \frac{D\tilde{v}}{dt}(0) = \eval{\nabla_{\dv{\tilde{p}}{t}} \tilde{Y}}_{t = 0} = \eval{\nabla_{\dv{p}{t}}\tilde{Y}}_{t=0} = \eval{\nabla_{\dv{p}{t}}Y}_{t=0} = \frac{Dv}{dt}(0)
+        \]
+        Since the covariant derivative must be well-defined under different extensions. Similarly, we have $\frac{D\tilde{w}}{dt}(0) = \frac{Dw}{dt}(0)$. Thus we have that
+        \[
+          \begin{aligned}
+            \inn*{d\pi(V)}{d\pi(W)}_p + \inn*{ \frac{D\tilde{v}}{dt}(0)}{\frac{D\tilde{w}}{s}(0)}_p  &= \inn*{\tilde{p}'(0)}{\tilde{q}'(0)}_p + \inn*{ \frac{D\tilde{v}}{dt}(0)}{\frac{D\tilde{w}}{s}(0)}_p  \\
+            &= \inn*{{p}'(0)}{{q}'(0)}_p + \inn*{ \frac{Dv}{dt}(0)}{\frac{Dw}{s}(0)}_p  \\
+          \end{aligned}
+        \]
+        Therefore the inner product is well-defined. Note that all other properties of the inner product are inherited from the inner product on $M$ and linearity of the covariant derivative and derivative. Smoothness is inherited from the smoothness of the affine connection, the differential map and the riemannian metric.
+      \item Suppose that the curve $(p(t), v(t))$ is horizontal. Thus we have that $(p'(t), v'(t))$ is horizontal for all $t$. Which implies that for any $W_t \in \pi^{-1}(p(t)) = T_{p(t)}M \cong T_{v(t)}T_{p(t)}M$ (which can be thought of as a subspace of $T_{(p(t),v(t))}TM$), we have that $(p'(t), v'(t)) \perp W$. Since $W_t$ is in $T_{v(t)}T_{p(t)}M$ it can be expressed as $W_t = \gamma_t'(0)$ such that
+        \[
+          \gamma_t(s) \mapsto  (p(t), q(s))
+        \]
+        $q(0) = v$,$q'(0) = w$, we note that $d\pi_{p(t)}(W_t) = 0$. So therefore we have that
+        \[
+          \inn*{V_t}{W_t} = \inn*{\frac{Dv}{dt}(t)}{\frac{Dw}{dt}(t)} = 0
+        \]
+        Since this is equal to 0 for an arbitrary $w$ we must have that
+        \[
+          \frac{Dv}{dt} = 0
+        \]
+        Or in other words, $v(t)$ is parallel along $p(t)$. Similarly, if we have that 
+        \[
+          \frac{Dv}{dt} = 0
+        \]
+        for all $t$, then by taking the inner product we have
+        \[
+          \inn*{\frac{Dv}{dt}(t)}{\frac{Dw}{dt}(t)} = 0
+        \]
+        for some $w$. Now choosing $w \in T_{v(t)}T_{p(t)}M$, we can say associate some curve $\gamma_t(s) = (p(t),v(t) + sw)$, and think of $w \in T_pM$. We note that differential of this vector under $\pi$ is zero so we have
+        \[
+          \inn{V_t}{W_t} = \inn*{d\pi(V_t)}{d\pi(W_t)}+p + \inn*{\frac{Dv}{dt}(t)}{\frac{Dw}{dt}(t)} =0
+        \]
+        giving us the orthogonality condition for all time. Therefore, we have that $(p(t), v(t))$ is horizontal if and only if $v(t)$ is parallel along $p(t)$.
+      \item In the geodesic vector field $G$ we have that the integral curves are of the form $t \mapsto (\gamma(t), \dv{\gamma}{t})$ where $\gamma$ is a geodesic, implying that 
+        \[
+          \frac{D}{dt} \left( \dv{\gamma}{t} \right) = 0
+        \]
+        or in other words the vector field $\dv{\gamma}{t}$ is parallel along $\gamma$. Thus, each vector in $G$ can be associated to a curve in $TM$, $(\gamma(t), \dv{\gamma}{t})$ that is horizontal. Therefore the vector field is horizontal.
+      \item Note that the trajectories of the geodesic flow are given by $(\gamma(t), \dv{\gamma}{t})$, so we want 
+        \[
+          \frac{D}{dt} \left( \left( \dv{\gamma}{t}, \dv[2]{\gamma}{t} \right) \right) = 0
+        \]
+        Where now $\frac{D}{dt}$ is the covariant derivative on $TM$. Since we have a riemannian metric there exists a levi-civita connection $\nabla^{TM}$ on $TM$ and therefore there is an associated covariant derivative on $TM$. Intuitively, we should have that this lifted trajectory has the same length as the original trajectory. Therefore it should also be a geodesic.
+    \end{enumerate}
+
+  \end{proof}
+
+\end{document}
