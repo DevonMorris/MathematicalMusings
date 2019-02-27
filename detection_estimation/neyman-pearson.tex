@@ -120,7 +120,7 @@ Find $k$ for $N-P$ detector for $\alpha = 1/32$. Remember example from class wit
 
 \begin{enumerate}
   \item Pick $\alpha$
-  \item $x_{\alpha} = F^{-1}_{bm{\theta}_0}(1 - \alpha)$
+  \item $x_{\alpha} = F^{-1}_{\bm{\theta}_0}(1 - \alpha)$
   \item $k = f_{\bm{\theta}_1}(\bm{x}_{\alpha})/f_{\bm{\theta}_0}(\bm{x}_{\alpha})$
 \end{enumerate}
 
@@ -165,10 +165,46 @@ We get that the size and power
 \[
   \alpha = \int_{\eta}^{\infty} \frac{1}{(2\pi)^2 d} \text{exp} \left( -\frac{1}{2} (y + d/2)^2d^{-2} \right) = 1 - \Phi \left( \frac{\eta + d^2/2}{d} \right) = 1 - \Phi(z)
 \]
-where $z = (\eta + d^2/2)/2$, from this it is straightforward to show tha
+where $z = (\eta + d^2/2)/2$, from this it is straightforward to show that
 \[
   \beta = 1 - \Phi(z - d)
 \]
-
+Consider the binary system with source $\bm{s}$ where $\bm{s}$ goes through a mapper with outputs
+\[
+  \bm{m}_0 =
+  \begin{bmatrix}
+    m_0(0) \\
+    \vdots \\
+    m_{N-1}(0)
+  \end{bmatrix}
+  \quad 
+  \bm{m}_1 =
+  \begin{bmatrix}
+    m_0(1) \\
+    \vdots \\
+    m_{N-1}(1)
+  \end{bmatrix}
+\]
+and there is noise added to this signal so we have
+\[
+  \bm{x} = \bm{m} + \bm{n}
+\]
+We can define two hypotheses like
+\[
+  \begin{aligned}
+    H_0: i = 0 \\
+    H_1: i = 1
+  \end{aligned}
+\]
+So we can form a detector
+\[
+  \phi(\bm{x}) = 
+  \begin{cases}
+    0 & \mathcal{L}(\bm{x}) \leq \eta \\
+    1 & \mathcal{L}(\bm{x}) > \eta
+    
+  \end{cases}
+\]
+For this application we want $\alpha = 1 - \beta$. Under the special case where $\bm{m}_0^\top R^{-1} \bm{m}_0 = \bm{m}_1^\top R^{-1} \bm{m}_1 = E_s$.
 
 \end{document}

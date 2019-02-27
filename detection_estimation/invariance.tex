@@ -1,0 +1,88 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{defn}{Definition}
+
+\begin{document}
+\section*{Invariance}%
+If no UMP test exists, maybe there exists some constraints on the class of tests such that $T \subset \{ \text{all possible tests} \}$ where some $\phi \in T$ is UMP with respect to $T$. For example let $\bm{x} \sim f_{\bm{\theta}_i}(\bm{x})$ where $\bm{\theta}_i = (\theta_1, \dots, \theta_p) \in \Theta_i$. But 
+\[
+  H_i: (\theta_1, \dots, \theta_r), r < p
+\]
+where the nuisance parameters are $(\theta_{r+1}, \dots, \theta_p)$. 
+
+\subsection*{Strategy}%
+
+\begin{enumerate}
+  \item 
+Find a transformation $\bm{y} = g(\bm{x})$ which ``introduces'' only $(\theta_{r+1}, \dots, \theta_p)$. We call $g(\bm{x})$ an invariance transform. 
+  \item Find $\phi(\bm{x})$ such that $\phi(g(\bm{x})) = \phi(\bm{x})$ for all $\bm{x}$, this is an invariant test
+  \item Seek the invariant $\phi(t)$ which is UMP with respect to $T$.
+\end{enumerate}
+Consider the system $y \sim \mathcal{N}(\bm{m}_i + \gamma \bm{1}, \bm{I})$. Let's go through our steps
+
+\begin{enumerate}
+  \item we define $\bm{z} = g(\bm{y})$ by
+    \[
+      \bm{z} = \bm{y} + c \bm{1}
+    \]
+    so we get $\bm{z} \sim \mathcal{N}( \bm{m}_i + (\gamma + c)\bm{1}, \bm{I})$
+  \item Let $\bm{z} = P\bm{y} = (I - \frac{1}{N} \bm{1}\bm{1}^\top)\bm{y}$, the orhotonal projection onto the $\bm{1}$ vector. This gives us a maximal invariant statistic.
+  \item Without bias, 
+    \[
+      \phi(\bm{x}) = 
+      \begin{cases}
+        1 \sim H_1 & t > t_0 \\
+        0 \sim H_0 & t \leq t_0
+      \end{cases}
+    \]
+    where $t = [\bm{m}_1 - \bm{m}_1]^\top \bm{x}$, for $R = \sigma^2 I$. So
+    \[
+      t_{y,i} = \left( P[\bm{m}_1 - \bm{m}_0]\right)^\top P \bm{x} = [\bm{m}_1 - \bm{m}_0]^\top P \bm{x}
+    \]
+    The problem with this is we get $R_z = PR_yP = P$ which is not full rank. So we actually create a different projection $P'$ so that $\bm{z}' = P' \bm{y}$. Where $P' = \bm{u}^\perp$. Note that the covariance is now $R_z = P' P'^\top$ which is full rank and invertible. Now our statistic is
+    \[
+      t_{z,i} = [\bm{m}_1 - \bm{m}_0] ^\top P'^\top P' \bm{y}
+    \]
+    Now consider the system $\bm{y} = \gamma Q_A (\bm{x} + \bm{\eta})$. Where $Q_A$ is a rotation in the plane orthogonal to $\bm{x}$. So $\bm{y} \sim \mathcal{N} \left(\gamma \mu \bm{m}_i, \gamma^2 I  \right)$. We have the test
+    \[
+        H_0: \mu \leq 0 \quad H_1: \mu > 0
+    \]
+    We build $Q_A$ by $Q_A = U_AQU_A^T + P_m$, where $U_A$ is a basis for the subspace $A$. Thus we have
+    \begin{enumerate}
+      \item $g(\bm{y}) = cQ_A' \bm{y}$. So therefore $\bm{z} = g(\bm{y})$. So we have that
+        $\bm{z} \sim \left(c\gamma\mu \bm{m}, \gamma^2c^2 I\right)$.
+      \item We will propose the statistic 
+        \[
+          \bm{t} = \frac{\bm{m}^\top \bm{y}}{(\bm{m}^\top\bm{m})^{1/2}(\bm{y}^\top \bm{y})^{1/2}} = \sin \psi
+        \]
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
