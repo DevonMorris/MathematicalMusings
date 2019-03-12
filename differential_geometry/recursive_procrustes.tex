@@ -1,0 +1,89 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+\section*{Problem Formulation}%
+
+\subsection*{Orthogonal Procrustes}%
+
+In statistics, the Orthogonal Procrustes problem is a well known problem that seeks to find the optimal rotation between two related data sets. Specifically, if $X,Y \in \mathds{R}^{N \times M}$ where we can think of $X,Y$ being composed of columns of $N$-vectors, where those vectors are rotationally biased by some $R \in SO(N)$. Specifically, we have the problem
+\[
+  R = \argmin_{\Omega: \Omega^\top \Omega = I} \norm{X - \Omega Y}_F
+\]
+At first glance, this problem looks like it would require some fancy nonlinear optimizer, however, there is a closed from solution using the SVD. The solution proceeds as follows
+
+\[
+  \begin{aligned}
+    R &= \argmin_{\Omega: \Omega^\top \Omega = I} \norm{X - \Omega Y}_F^2 \\
+      &= \argmin_{\Omega: \Omega^\top \Omega = I} \inn*{X - \Omega Y}{X - \Omega Y}_F \\
+      &= \argmin_{\Omega: \Omega^\top \Omega = I} \norm{X}_F^2 + \norm{\Omega Y}_F^2 - 2\inn*{X}{\Omega Y}_F \\
+  \end{aligned}
+\]
+At this point we note that the frobenius norm is invariant under orthogonal transformations, so we have
+\[
+  \begin{aligned}
+    R &= \argmin_{\Omega: \Omega^\top \Omega = I} \norm{X}_F^2 + \norm{Y}_F^2 - 2\inn*{X}{\Omega Y}_F \\
+      &= \argmax_{\Omega: \Omega^\top \Omega = I} \inn*{X}{\Omega Y}_F \\
+      &= \argmax_{\Omega: \Omega^\top \Omega = I} \tr \left( X^\top \Omega Y \right) \\
+      &= \argmax_{\Omega: \Omega^\top \Omega = I} \tr \left( YX^\top \Omega \right) \\
+      &= \argmax_{\Omega: \Omega^\top \Omega = I} \inn*{XY^\top}{\Omega}_F \\
+  \end{aligned}
+\]
+Now we note that $XY^\top$ has a singular value decomposition given by $XY^\top = U\Sigma V^\top$. So we have that
+\[
+  \begin{aligned}
+    R &= \argmax_{\Omega: \Omega^\top \Omega = I} \inn*{U\Sigma V^\top}{\Omega}_F \\
+      &= \argmax_{\Omega: \Omega^\top \Omega = I} \tr \left( V\Sigma U^\top \Omega \right) \\
+      &= \argmax_{\Omega: \Omega^\top \Omega = I} \tr \left( \Sigma U^\top \Omega V \right) \\
+      &= \argmax_{\Omega: \Omega^\top \Omega = I} \inn*{\Sigma}{U^\top \Omega V} \\
+  \end{aligned}
+\]
+Since $U^\top \Omega V$ is an orthonormal matrix, then we have that the inner product is maximized when $U^\top \Omega V = I$, or in other words $R = UV^\top$. At this point we note that we have not constrained $R$ to have determinant $1$. So instead of $R = UV^\top$ set
+\[
+  R = U 
+  \begin{bmatrix}
+    1 & 0 & \cdots & 0 \\
+    0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & c
+  \end{bmatrix} V^\top
+\]
+where $c = \det(UV^\top)$, since $UV^\top$ is orthonormal then, $c = \pm 1$. This process of "fixing" the determinant is known as the Kabsch algorithm. If the data is collected in a way that is obviously rotationally (and not reflectively) biased, then you shouldn't get $c = -1$. 
+
+\end{document}
