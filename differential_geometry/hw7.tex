@@ -33,6 +33,9 @@
 \DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
 
 \begin{document}
+
+\section*{Problem 1}%
+
 Denote by $(u,v)$ the cartesian coordinates of $\mathds{R}^2$. Show that the function $\varphi: U \rightarrow \mathds{R}^3$ given by 
 \[
   \varphi(u,v) = (f(v) \cos u, f(v) \sin(u), g(v)),
@@ -58,6 +61,11 @@ where $f$ and $g$ are differentiable functions, with $f'(v)^2 + g'(v)^2 \neq 0$ 
       r \cos \beta = \text{const.}
     \]
     where $r$ is the radius of the parallel $P$.
+  \item Use Clairaut's relation to show that a geodesic of the paraboloid
+    \[
+      (f(v) = v, g(v) = v^2, 0 < v < \infty, -\epsilon < u < 2\pi + \epsilon)
+    \]
+    which is not a meridian, intersects itself an infinite number of times.
 \end{enumerate}
 
 \begin{proof}[Solution.]
@@ -132,19 +140,53 @@ where $f$ and $g$ are differentiable functions, with $f'(v)^2 + g'(v)^2 \neq 0$ 
                                                     &= 0
         \end{aligned}
       \]
-      So we have that the energy is constant. Now we note that along any parallel $P$ that the component of the tangent vector along $\pdv{v}$ must be zero. Without loss of generality assume that the tangent vector is given by$\pdv{u}$ (this is fine since we will just divide by the length later). We now wish to compute $r \cos \beta$. We first note that the radius is given by $f$, now we compute $\cos \beta$. Let $k = |\gamma'(t)|$, which must be constant, we have that
+      So we have that the energy is constant. Now we note that along any parallel $P$ that the component of the tangent vector along $\pdv{v}$ must be zero. Without loss of generality assume that the tangent vector is given by$h(u)\pdv{u}$. We now wish to compute $r \cos \beta$. We first note that the radius is given by $f$, now we compute $\cos \beta$. Let $k = |\gamma'(t)|$, which must be constant, we have that
       \[
         \begin{aligned}
-          \cos \beta &=  \inn*{\dv{u}{t} \pdv{u} + \dv{v}{t} \pdv{v}}{\pdv{u}}/ k\\
-                     &=  \frac{f^2}{k} \dv{u}{t}
+          \cos \beta &=  \inn*{\dv{u}{t} \pdv{u} + \dv{v}{t} \pdv{v}}{h(u)\pdv{u}}/ h(u)kf\\
+                     &=  \frac{f}{k} \dv{u}{t}
         \end{aligned}
       \]
-      Now let's take the time derivative of $f \cos \beta = \frac{f^3}{k} \dv{u}{t}$, and we get
+      Now let's take the time derivative of $f \cos \beta = \frac{f^2}{k} \dv{u}{t}$, and we get
       \[
         \begin{aligned}
-          3\frac{f^2f'}{k}\dv{u}{t}\dv{v}{t} + \frac{f^3}{k} \dv[2]{u}{t} = \frac{f^3}{k} \left(\dv[2]{u}{t} + 3\frac{ff'}{f^2}\dv{u}{t}\dv{v}{t}\right)
+          2\frac{ff'}{k}\dv{u}{t}\dv{v}{t} + \frac{f^2}{k} \dv[2]{u}{t} = \frac{f^2}{k} \left(\dv[2]{u}{t} + 2\frac{ff'}{f^2}\dv{u}{t}\dv{v}{t}\right) = 0
         \end{aligned}
       \]
+      by the first equation. Therefore, we must have that
+      \[
+        r \cos \beta = \text{const.}
+      \]
+  \end{enumerate}
+\end{proof}
+
+\section*{Problem 2}%
+A subset $A$ of a differential manifold $M$ is contractible to a point $a \in A$ when the mapping $\text{id}_A$ and $k_a: x \in A \rightarrow a \in M$ are homotopic (with base point $a$). $A$ is contractible if it is contractible to one of its points.
+
+\begin{enumerate}[a)]
+  \item Show that a convex neighborhood in a Riemannian manifold $M$ is a contractible subset (with respect to any of its points).
+  \item Let $M$ be a differentiable manifold. Show that there exists a covering $\left\{ U_\alpha \right\}$ of $M$ with the following properties
+    \begin{enumerate}[i)]
+      \item $U_\alpha$ is open and contractible, for each $\alpha$
+      \item If $U_{\alpha_1}, \dots, U_{\alpha_r}$ are elements of the convering then $\cap_1^r U_{\alpha_i}$ is contractible.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{proof}
+  \begin{enumerate}[a)]
+    \item Let $D$ be a convex neighborhood and let $d \in D$. Given and $p \neq d$, $p \in D$, we have that there exists a $\gamma_p$ such that
+      \[
+        q = \gamma_q(1, d, v_q)
+      \]
+      Thus let us analyze the function given by 
+      \[
+        \begin{aligned}
+          \kappa: &[0,1] \times D \rightarrow D \\
+                  &(t,q) \mapsto \gamma_q(1 - t, d, v_q) 
+        \end{aligned}
+      \]
+      We note that this map is continuous and $\kappa(0, q) = q$ and $\kappa(1,q) = d$. Therefore we have that $D$ is contractible to a point $d$. Since $d$ was arbitrary we have that $D$ is contractible.
+    \item For any $p \in M$ there exists an $\epsilon(p) > 0$ such that $B_{\epsilon(p)}(p)$ is strongly convex. By part a) we showed that this set is contractible. Also it must be open since $\exp_p$ is a diffeomorphism on this set. Furthemore $\left\{ B_{\epsilon(p)}(p) \right\}$ covers $M$ by definition. Consider $\cap_1^r B_{\epsilon(p_i)}(p_i)$, in the case that it is empty we will say that it is contractible. If this intersection is nonempty, we have that there is some $q$ in this intersection. In this case $B_{\epsilon(q)}(q)$ contains the intersection meaning that by necessity the intersection is a convex neighborhood of $q$ therefore by part a) it must be contractible.
   \end{enumerate}
 \end{proof}
 
