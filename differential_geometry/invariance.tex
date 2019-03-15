@@ -1,0 +1,158 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+
+\section*{Lie Groups}%
+
+Let $G$ be a lie group. Recall that we have the two mappings given by 
+\[
+  \begin{aligned}
+    L_x: &G \rightarrow G \\ 
+       &y \mapsto xy \\
+    R_x: &G \rightarrow G \\
+         &y \mapsto yx
+  \end{aligned}
+\]
+and that There is a tangent space at the identity $T_eG$ which we call the lie algebra and denote it by $\mathcal{G}$.
+
+\section*{Left and Right Invariant Vector Fields}%
+Draw the picture of the circle with an invariant vector field.
+\begin{defn}
+Let $X \in \Gamma^{\infty}(TG)$, we call $X$ left invariant if 
+\[
+  dL_x(X_y) = X_{xy}
+\]
+for all $x,y \in G$, similarly $X$ is right invariant if
+\[
+  dR_x(X_y) = X_{yx}
+\]
+for all $x,y \in G$. Or for simplicity $dL_xX = X$.
+\end{defn}
+
+\begin{rem}
+  This gives us a different interpretation of the lie algebra $\mathcal{G}$ given any $v \in \mathcal{G}$, $v$ generates a left (right) invariant vector $X \in \Gamma^{\infty}(TG)$ by
+  \[
+    X_y = dL_y(v) \quad \text{ or } \quad \left(X_y = dR_y(v) \right)
+  \]
+  It should be easy to see that this is left invariant.
+  \[
+    d L_x(X_y) = dL_x(dL_y(v)) = dL_{xy}(v) = X_{xy}
+  \]
+  Similarly for right invariance. This allows us to interpret vectors in the lie algebra $\mathcal{G}$ as left (right) invariant vector fields on the manifolds.
+\end{rem}
+
+\begin{prop}
+  The lie bracket of two left (right) invariant vector field $X,Y \in \Gamma^{\infty}(TG)$ is also left (right) invariant
+\end{prop}
+
+\begin{proof}
+  \[
+    \begin{aligned}
+      dL_x [X,Y]f &=  [X,Y](f \circ L_x) = X(dL_x(Y))f - Y(dL_x(X))f \\
+                    &= (XY - YX)f = [X,Y]f
+    \end{aligned}
+  \]
+\end{proof}
+
+This allows us to endow the tangent space at the identity with the operation $[X_e, Y_e] = [X,Y]_e$ which makes it the lie algebra.
+
+\begin{defn}
+  A Riemannian metric on $G$ is left (right) invariant  if
+  \[
+    \inn*{u}{v}_y = \inn*{dL_x u}{dL_x v}_{xy}
+  \]
+  for all $x,y \in G$, $u,v \in T_yG$.
+\end{defn}
+
+\begin{rem}
+  Note that if we have an inner product on the lie algebra $\mathcal{G}$, this induces a left (right) invariant metric on $G$, as
+  \[
+    \inn*{u}{v}_x = \inn*{dL_{x^{-1}}(u)}{dL_{x^{-1}}(v)}_e
+  \]
+  for $u,v \in T_xG$, $x \in G$.
+\end{rem}
+
+\section*{Adjoint Representation}%
+
+Consider the mapping given by
+\[
+  \begin{aligned}
+    R_{x^{-1}}L_x: &G \rightarrow G \\
+                   &y \mapsto xyx^{-1}
+  \end{aligned}
+\]
+This mapping is a diffeomorphism that keeps $e$ fixed also known at the inner automorphism. 
+\begin{defn}
+The differential at the identity  of the inner automorphism $d(R_{x^{-1}}L_x)_e$  is called the adjoint
+\[
+  \begin{aligned}
+    Ad_x: &\mathcal{G} \rightarrow \mathcal{G} \\
+          &v \mapsto d(R_{x^{-1}}L_x)_ev
+  \end{aligned}
+\]
+\end{defn}
+
+We note that the differential is a linear map (transformation) and so this provides a canonical group representation of $G$ by how it tranforms lie algebra $\mathcal{G}$. In this way we consider
+\[
+  \begin{aligned}
+    Ad: &G \rightarrow Aut(\mathcal{G}) \\
+        &x \mapsto Ad_x
+  \end{aligned}
+\]
+where $Aut(\mathcal{G})$ is the automorphism group of $\mathcal{G}$ (i.e. invertible linear transformations). 
+Note: I don't know any representation theory so I don't know why this is important. 
+
+Now let $X,Y$ be left invariant vector fields. Let $x_t$ be the flow under $X$. Recall that
+\[
+  [X,Y]_y = \lim_{t \rightarrow 0} \frac{1}{t} \left[Y - dx_t Y \right]_{x_t(y)}
+\]
+we note that
+\[
+  x_t(y) = x_t(L_y(e)) = yx_t(e) = R_{x_t(e)}(y)
+\]
+so $dx_t = dR_{x_t(e)}$ and
+\[
+  \begin{aligned}
+    [X,Y]_y &= \lim_{t \rightarrow 0} \left[Y - dR_{x_t(e)}Y\right] \\
+          &= \lim_{t \rightarrow 0} \left[Y - dR_{x_t(e)}dL_{x_t(e)}Y\right] \\
+          &= \lim_{t \rightarrow 0} \left[Y - Ad_{x_t^{-1}(e)}Y\right]_{x_t(y)} \\
+  \end{aligned}
+\]
+I'm sure this is cool, but I don't know why.
+
+\end{document}

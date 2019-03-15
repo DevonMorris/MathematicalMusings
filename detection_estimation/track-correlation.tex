@@ -1,0 +1,61 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Detection \& Estimation Theory}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{defn}{Definition}
+
+\begin{document}
+\section*{Problem Formulation}%
+
+The goal of this document is to create an hypothesis test to perform track correlation between two tracks. These tracks will be elements of $\mathds{R}^6$, where we are analyzing a 2 degree of freedom system's position, velocity and acceleration. Furthermore, we assume that both tracks are represented in disparate coordinate systems. Let us call these tracks $x(t)$ and $y(t)$. Even those these measurements are not with respect to the same coordinate basis, we can think of them as being in the same coordinate frame and being offset from one another by a rotation and translation. We will further assume that these tracks are sampled at the same times and we have some discrete-time representation as $x_k$, $y_k$. For notational convenience, let $X,Y \in \mathds{R}^{6\times T}$ be data matrices representing the column-wise concatenation of these vectors, with total number of samples $T$.
+
+\section*{Distributions}%
+Since these two tracks are measurements of some dynamical system, we can assume that $x_k \sim \mathcal{N}(m_k, P_k)$ and that $y_k \sim \mathcal{N}(n_k, R_k)$. We want to create the following hypothesis test
+\[
+  \begin{aligned}
+    H_0 &: \text{The two tracks originate from different objects} \\
+    H_1 &: \text{The two tracks originate from the same object}
+  \end{aligned}
+\]
+Under $H_0$ we make the assumption that $x_k$ and $y_k$ are statistically independent (which they should be). Therefore, under $H_0$ we have that $x_k - y_k \sim \mathcal{N}(m_k - n_k, P_k + R_k)$. Under $H_1$, $x_k$ and $y_k$ are most definitely not independent. In this manner, we can think that there is a true "source track", producing both $x_k$ and $y_k$, in the following manner
+\[
+  \begin{aligned}
+    x_k &= m_k + \eta_k \\
+    y_k &= Q(m_k + t) + \nu_k
+  \end{aligned}
+\]
+where $\eta_k \sim \mathcal{N}(0, P_k)$, $\nu_k \sim \mathcal{N}(0, R_k)$, $t = [t_1, t_2, 0, 0 , 0 ,0]^\top$, $Q = I_3 \otimes R$ for $R \in SO(2)$. This implies that $y_k \sim \mathcal{N} \left(Q(m_k + t), R_k\right)$. At this point, we note that as formulated, we cannot design an invariant statistic since rotating or translating $y$ would induce coupling between $Q$ and $t$.$ It seems that the best bet is to solve for $Q$ and $t$ using procrustes analysis. Therefore, we can estimate $Q$ and $t$ in a least squares sense (check for properties of those estimators). So we have
+\[
+  x_k-y_k = m_k - Q(m_k + t) + \eta_k - \nu_k
+\]
+If we assume that $\eta_k$ and $\nu_k$ are independent (I need to check this assumption) then we have that 
+\[
+x_k - y_k \sim  \mathcal{N}(m_k - Q(m_k + t), P_k + R_k)
+\]
+
+\end{document}

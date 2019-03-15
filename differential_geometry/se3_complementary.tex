@@ -1,0 +1,123 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=40mm,bottom=40mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{rem}{Remark}
+\begin{document}
+
+\section*{Quadrotor Complementary Filter}
+Consider the state of a quadcopter given by
+\[
+  \mathbf{x} = (\mathbf{p}_{b/i}^i, R_b^i, \mathbf{v}_{b/i}^b, \bm{\omega}_{b/i}^b)
+\]
+One would think that these should naturally form a lie group in some fashion. Let $G = SE(3) \rtimes \mathfrak{se}(3)$. With a group operation $\circ$ defined as
+\[
+  \mathbf{x} \circ \mathbf{y} = (\mathbf{p}_x + R_x\mathbf{p}_y, R_xR_y, \mathbf{v}_x + R_x\mathbf{v}_y, \bm{\omega}_x + R_x \bm{\omega}_y)
+\]
+This is valid in some sense, since $TSE(3) \cong SE(3) \times \mathfrak{se}(3)$ from the parallelizability of lie groups. Now in this sense, the elements of this lie group should be thought of as geometric objects, or in other words coordinate-free objects since we have not yet imposed a coordinate system on either $\mathbf{x}$ or $\mathbf{y}$. Imposing the standard intertial NED coordinate frame for $\left\{ i \right\}$ and body FRD coordinate frame for $\left\{ b \right\}$, we must have that $\mathbf{x}$ is expressed in the $\left\{ i \right\}$ frame and $\mathbf{y}$ is expressed in the $\left\{ b \right\}$ frame. This operation forms a lie group as is easily verified. Now we wish to find out what the lie algebra $\mathfrak{g}$ looks like. It is actually fairly straight forward!. Since $T_e\mathfrak{se}(3) \cong \mathfrak{se}(3)$ is naturally identified with itself, we can write down elements of the lie algebra as
+\[
+  (\mathbf{v}, \left[ \bm{\omega} \right]_\times, \mathbf{a}, \bm{\alpha})
+\]
+Since we haven't posed this in a matrix format, we need to see how the group acts on these elements under the differential. This will allow us to create a left invariant vector field and pose standard left-invariant kinematics on the lie group.
+
+We recall that the left action $L_{\mathbf{x}}$ is given by
+\[
+  \begin{aligned}
+    L_{\mathbf{x}}: &G \rightarrow G \\
+                  &\mathbf{y} \mapsto \mathbf{x} \circ \mathbf{y}
+  \end{aligned}
+\]
+It is easy to see that $dL_{\mathbf{x}}$ is given by
+\[
+  (R \mathbf{v}, R \left[\bm{\omega}\right]_\times, R \mathbf{a}, R\bm{\alpha})
+\]
+From this, it is very easy to see that this vector field is left invariant.
+
+\subsection*{Toward an Exponential Map}%
+We would hope that this lie group we have created has a nice matrix representation and in fact it does.
+
+\[
+  \begin{bmatrix}
+    R & \mathbf{p} & \mathbf{v} & \bm{\omega} \\
+    \mathbf{0} & 1 & 0 & 0 \\
+    \mathbf{0} & 0 & 1 & 0 \\
+    \mathbf{0} & 0 & 0 & 1
+  \end{bmatrix}
+\]
+this is seen by
+\[
+  \begin{bmatrix}
+    R_x & \mathbf{p}_x & \mathbf{v}_x & \bm{\omega}_x \\
+    \mathbf{0} & 1 & 0 & 0 \\
+    \mathbf{0} & 0 & 1 & 0 \\
+    \mathbf{0} & 0 & 0 & 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    R_y & \mathbf{p}_y & \mathbf{v}_y & \bm{\omega}_y \\
+    \mathbf{0} & 1 & 0 & 0 \\
+    \mathbf{0} & 0 & 1 & 0 \\
+    \mathbf{0} & 0 & 0 & 1
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    R_xR_y & \mathbf{p}_x + R_x\mathbf{p}_y & \mathbf{v}_x + R_x\mathbf{v}_y & \bm{\omega}_x + R_x\bm{\omega}_y \\
+    \mathbf{0} & 1 & 0 & 0 \\
+    \mathbf{0} & 0 & 1 & 0 \\
+    \mathbf{0} & 0 & 0 & 1
+  \end{bmatrix}
+\]
+This implies that the lie algebra has the representation
+\[
+  \begin{bmatrix}
+    \left[ \bm{\omega} \right]_\times & \mathbf{v} & \mathbf{a} & \bm{\alpha} \\
+    \bm{0} & 0 & 0 & 0 \\
+    \bm{0} & 0 & 0 & 0 \\
+    \bm{0} & 0 & 0 & 0 \\
+  \end{bmatrix}
+\]
+So to find the exponential map on the group we have created, we can use the matrix exponential and then just extract the portions we need. Following the derivation of the exponential map on $SE(3)$ it  is straightforward to show that
+
+\[
+  \exp \left(\mathbf{v}, \left[ \bm{w} \right]_\times, \mathbf{a}, \bm{\alpha} \right) =  (V\mathbf{v}, R, V\mathbf{a}, V \bm{\alpha})
+\]
+where
+\[
+  \begin{aligned}
+    \theta &= \norm{\bm{\omega}}_2  \\
+    a &= \frac{\sin \theta}{\theta} \\
+    b &= \frac{1 - \cos \theta}{\theta^2} \\
+    c &= \frac{1 - a}{\theta^2} \\
+    R &= I + a \left[ \bm{\omega} \right]_\times + b \left[ \bm{\omega} \right]^2 \\
+    V &= I + b \left[ \bm{\omega} \right]_\times + c \left[ \bm{\omega} \right]^2 \\
+  \end{aligned}
+\]
+
+
+\end{document}
