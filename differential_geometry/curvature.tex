@@ -285,6 +285,83 @@ Now let
   The above compuations all depend of $R(X,Y)Z$ being linear in each component. So we have that $R(X,Y)Z$ at $p \in M$ only depends on values of $X,Y,Z$ at $p$. We call such an object a tensor.
 \end{rem}
 
+\subsection*{Sectional Curvature}%
+Sectional curvature is a measure of the curvature of 2-dimensional embedded (geodesic) surfaces. Let $V$ be a vector space, for $x,y \in V$, $| x \wedge y| = \sqrt{\norm{x}^2\norm{y}^2 - \inn*{x}{y}^2}$. This is simply the area of the parallelogram formed by $x,y$. 
 
+\begin{prop}
+  Let $\sigma \subset T_pM$ be a 2-dimensional subspace and let $x,y \in \sigma$ be linearly independent. Then
+  \[
+    k(x,y) =  \frac{(x,y,x,y)}{|x \wedge y|^2} = \frac{\inn*{R(x,y)x}{y}}{\norm{x}^2\norm{y}^2 - \inn*{x}{y}}
+  \]
+  is invariant under any definition of basis.
+\end{prop}
+\begin{proof}
+  Clearly $k(x,y) = k(y,x)$. Also for $\lambda \in \mathds{R} \setminus \left\{ 0 \right\}$.
+  \[
+    k(\lambda x, y) = \frac{\inn*{R(\lambda x, y) \lambda x}{y}}{\norm{\lambda x}^2 \norm{y}^2 - \inn*{\lambda x}{y}^2} = k(x,y)
+  \]
+  and finally we want to show that
+  \[
+    k(x + y, y) = k(x,y) 
+  \]
+  analyzing the numerator we have
+  \[
+    (x + y, y, x+y, y) = (x,y, x,y) + (y,y,x,y) + (x,y,y,y) + (y,y,y,y) = (x,y,x,y)
+  \]
+  due to symmetry properties. Now analyzing the denominator
+  \[
+    \begin{aligned}
+      |(x + y) \wedge y|^2 &= \norm{x + y}^2 \norm{y}^2 - \inn*{x+y}{y}^2 \\ 
+                           &= \norm{y}^2 \left( \norm{x}^2 + 2 \inn*{x}{y} + \norm{y}^2 \right) - \left( \inn*{x}{y}^2 + 2 \inn*{x}{y} \norm{y}^2 + \norm{y}^4 \right) \\
+                           &= \norm{x}^2\norm{y}^2 - \inn*{x}{y}^2
+    \end{aligned}
+  \]
+  Therefore we have $k(x+y,y) = k(x,y)$. Since any two bases of $\sigma$ can be related by these transformations we have invariance under bases.
+\end{proof}
+
+\begin{defn}
+  Given $p \in M$, and $\sigma \subset T_pM$ a 2-dimensional subspace of $T_pM$ the value of $k(\sigma) = k(x,y)$ for any basis $\left\{ x,y \right\}$ of $\sigma$ is called the sectional curvature of $\sigma$ of $\sigma$ at $p$.
+\end{defn}
+
+By knowing $k(\sigma)$ for all 2-dimensional subspaces of $\sigma \subset T_pM$ and all $p \in M$, we can recover the Riemannian curvature $R$. The crux of this theorem is that we know the riemannian metric.
+
+\begin{lem}
+  Let $V$ be a vector space with $\dim V \geq 2$. Let $R, R' : V^3 \rightarrow V$ which are linear in each factor, such that $(x,y,z,t) = \inn*{R(x,y)z}{t}$ and $(x,y,z,t)' = \inn*{R'(x,y)z}{t}$ satisfy properties 1-4. If for all linearly independent sets $\left\{ x,y \right\} \subset V$, $(x,y,x,y) = (x,y,x,y)'$, then $R = R'$.
+\end{lem}
+
+\begin{cor}
+  $k(\sigma)$ completely determines the curvature $R$. (given a metric $g$ on $M$).
+\end{cor}
+
+\begin{proof}
+  It's enough to show $(x,y,z,t) = (x,y,z,t)'$ for all $x,y,z,t \in V$. First we know that 
+  \[
+    \begin{aligned}
+      (x+z,y, x+z,y) &= (x+z,y,x+z,y)' \\
+      (x,y,x,y) + 2(x,y,z,y) + (z,y,z,y) &=(x,y,x,y)' + 2(x,y,z,y)' + (z,y,z,y)' \\
+      2(x,y,z,y) &= 2(x,y,z,y)'
+    \end{aligned}
+  \]
+  Which implies that $(x,y,z,y) = (x,y,z,y)'$. Now we have
+  \[
+    \begin{aligned}
+      (x,y+t,z,y+t) &= (x,y+t, z, y+t)' \\
+      (x,y,z,t) + (x,t,z,y) &= (x,y,z,t)' + (x,t,z,y)' \\
+    \end{aligned}
+  \]
+  This implies 
+  \[
+    \begin{aligned}
+      (x,y,z,t) - (x,y,z,t)'  &= (x,t,z,y)' - (x,t,z,y) \\
+                              &= (z,y,x,t)' - (z,y,x,t) \\
+                              &= -(y,z,x,t)' + (y,z,x,t)
+    \end{aligned}
+  \]
+  So we have $(x,y,z,t) - (x,y,z,t)' = (y,z,x,t) - (y,z,x,t)'$ which gives us invariance under cyclic permutations in the first three factors. Therefore 
+  \[
+    3 \left( (x,y,z,t) - (x,y,z,t)' \right) = 0
+  \]
+  so we have that $(x,y,z,t) = (x,y,z,t)'$.
+\end{proof}
 
 \end{document}
