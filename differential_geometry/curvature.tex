@@ -38,6 +38,79 @@
 \begin{document}
 \section*{Curvature}%
 
+\subsection*{Curvature for curves and surfaces}%
+Let $\alpha: I \rightarrow \mathds{R}^3$ be a curve parameterized by arc length. We have
+\[
+  T(s) =  \dv{\alpha}{s} = \alpha'(s)
+\]
+is the unit tangent vector and
+\[
+  N(s) = \frac{T'(s)}{\norm{T'(s)}} = \frac{a''(s)}{\norm{\alpha''(s)}}
+\]
+There is some plane by the unit normal and unit tangent vector called the osculating plane. If we put a circle such that has the same tangent as the curve and whose center lies along the subspace spanned by $N(s)$. We call this circle the osculating circle. If we let $r(s)$ be the radius of the circle at the point $\alpha(s)$, we define $r(s) = 1/k(s)$ is the curvature of $\alpha(s)$. It can be shown that 
+\[
+  k(s) = \frac{\norm{\alpha' \times \alpha''}}{\norm{\alpha'}^3}
+\]
+For surfaces we let $r: A \rightarrow \mathds{R}$ be a local paramaterization of a regular surface $S \subset \mathds{R}^3$. Then the unit normal is given by 
+\[
+N(p) = \frac{r_u \times r_v}{\norm{r_u \times r_v}}
+\]
+This gives a map $N: S \rightarrow S^2$, from the surface to the 2-sphere. We can identity $T_pS \cong T_{N(p)}S^2$. This gives us that $dN_p: T_pS \rightarrow T_{N(p)}S^2 \cong T_pS$, which is an automorphism which allows us to talk about the determinant
+\begin{defn}
+  The determinant differential of our normal map $\tilde{k}(p) = \det (dN_p)$ is called the Gaussian curvature of $S$ at $p$.
+\end{defn}
+We can think of the curvature of a surface instead as curves living in planes contiaining $N(p)$. We call the max and min curvatures of these curves the principle curvatures of $S$ at $p$. We note that both of these notions are extrinsic, in that they rely on some embedding in $\mathds{R}^3$. To define curvature natively on the manifold, we need a connection.
+
+\subsection*{Curvature on a Riemannian Manifold}%
+
+\begin{defn}
+  The curvature $R$ of a Riemannian manifold is a correspondance which associates to every pair $X,Y \in \Gamma^{\infty}(TM)$ a mapping 
+  \[
+    \begin{aligned}
+      R(X,Y): &\Gamma^{\infty}(TM) \rightarrow \Gamma^{\infty}(TM) \\
+              & Z \mapsto \nabla_Y\nabla_X Z - \nabla_X \nabla_Y Z + \nabla_{[X,Y]} Z
+    \end{aligned}
+  \]
+  for all $Z \in \Gamma^{\infty}(TM)$, where $\nabla$ is the Levi-Civita connection. We denote this operation as $R(X,Y)Z$ or sometimes as $R(X,Y,Z)$.
+\end{defn}
+
+Intuitively, we know that $\mathds{R}^n$ has zero curvature. So let's see that our definition agrees. Recall that in $\mathds{R}^n$ our Christoffel symbols are $\Gamma_{ij}^k = 0$. So we have
+\[
+  \begin{aligned}
+    \nabla_X \nabla_Y Z &= \nabla_X \left( Y^j \pdv{Z^i}{x^j} \pdv{x^i} \right) = X^k \pdv{x^k} \left( Y^j \pdv{Z^i}{x^j} \right) \pdv{x^i} \\
+                        &= X^k \pdv{Y^j}{x^k} \pdv{Z^i}{x^j} \pdv{x^i} + X^k Y^j \pdv[2]{Z^i}{x^k}{x^j} \pdv{x^i}
+  \end{aligned}
+\]
+From this it is easily seen that
+\[
+  \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z = \left( X^k \pdv{Y^j}{x^k} \pdv{Z^i}{x^j} - Y^k \pdv{X^j}{x^k} \pdv{Z^i}{x^j} \right) \pdv{x^i}
+\]
+In coordinates our lie bracket is
+\[
+  [X,Y] = \left(X^j \pdv{Y^i}{x^j} - Y^j\pdv{X^i}{x^j} \right)\pdv{x^i}
+\]
+So we have that
+\[
+  \nabla_{[X,Y]} Z = \left( X^k \pdv{Y^j}{x^k} - Y^k \pdv{X^j}{x^k} \right) \pdv{Z^i}{x^j} \pdv{x^i}
+\]
+So we have that
+\[
+  R(Y,X)Z = \nabla_X \nabla _Y Z - \nabla_Y \nabla_X Z - \nabla_{[X,Y]} = 0
+\]
+for all $X,Y,Z \in \Gamma^{\infty}(T\mathds{R}^n)$. In this way we think of $\mathds{R}^n$ as being flat.
+
+\subsection*{Geometric Interpretation}%
+Let $X,Y \in \Gamma^{\infty}(TM)$ with $[X,Y] = 0$. Let $\tau_t$ and $\rho_t$ be the parallel transport map along the flows of $X$ and $Y$ respectively up to time $t$.  Then
+\[
+  \tau_t^{-1}\rho_s^{-1} \tau_t \rho_s: T_pM \rightarrow T_pM
+\]
+and
+\[
+  \dv{t}\dv{s} \eval{\left(\tau_t^{-1}\rho_s^{-1} \tau_t \rho_s \right)}_{t=s=0} = R(X,Y)Z
+\]
+i.e $R(X,Y)Z$ measures the failure of parallel transport to commute around parallelograms on $M$.
+
+
 Recall that
 \[
   R(X,Y)Z = \nabla_Y \nabla_X Z - \nabla_X \nabla_Y Z + \nabla_{[X,Y]} Z
@@ -211,29 +284,6 @@ Now let
 \begin{rem}
   The above compuations all depend of $R(X,Y)Z$ being linear in each component. So we have that $R(X,Y)Z$ at $p \in M$ only depends on values of $X,Y,Z$ at $p$. We call such an object a tensor.
 \end{rem}
-
-\subsection*{Curvature for curves and surfaces}%
-Let $\alpha: I \rightarrow \mathds{R}^3$ be a curve parameterized by arc length. We have
-\[
-  T(s) =  \dv{\alpha}{s} = \alpha'(s)
-\]
-is the unit tangent vector and
-\[
-  N(s) = \frac{T'(s)}{\norm{T'(s)}} = \frac{a''(s)}{\norm{\alpha''(s)}}
-\]
-There is some plane by the unit normal and unit tangent vector called the osculating plane. If we put a circle such that has the same tangent as the curve and whose center lies along the subspace spanned by $N(s)$. We call this circle the osculating circle. If we let $r(s)$ be the radius of the circle at the point $\alpha(s)$, we define $r(s) = 1/k(s)$ is the curvature of $\alpha(s)$. It can be shown that 
-\[
-  k(s) = \frac{\norm{\alpha' \times \alpha''}}{\norm{\alpha'}^3}
-\]
-For surfaces we let $r: A \rightarrow \mathds{R}$ be a local paramaterization of a regular surface $S \subset \mathds{R}^3$. Then the unit normal is given by 
-\[
-N(p) = \frac{r_u \times r_v}{\norm{r_u \times r_v}}
-\]
-This gives a map $N: S \rightarrow S^2$, from the surface to the 2-sphere. We can identity $T_pS \cong T_{N(p)}S^2$. This gives us that $dN_p: T_pS \rightarrow T_{N(p)}S^2 \cong T_pS$, which is an automorphism which allows us to talk about the determinant
-\begin{defn}
-  The determinant differential of our normal map $\tilde{k}(p) = \det (dN_p)$ is called the Gaussian curvature of $S$ at $p$.
-\end{defn}
-We can think of the curvature of a surface instead as curves living in planes contiaining $N(p)$. We call the max and min curvatures of these curves the principle curvatures of $S$ at $p$.
 
 
 
