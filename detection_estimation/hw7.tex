@@ -1,0 +1,218 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy} \lhead{Devon Morris}
+\chead{Detection \& Estimation Theory - Homework 7}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{sol}{Solution}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
+
+\begin{document}
+\section*{Problem 1}%
+Return to the maximum likelihood estimate $\hat{\lambda}$ in the Poisson problem of Example 6.3. How is the estimator $\hat{\lambda}$ distributed? What is its mean? What is its variance?
+
+\begin{sol}
+  Let us recall that 
+  \[
+    \hat{\lambda} = \frac{\lambda_0}{1 + \lambda_0}x
+  \]
+  So we have that the pmf of $\hat{\lambda}$ is
+  \[
+    P[ \hat{\lambda} = x] = P[ X = (1+ \lambda_0)x/\lambda_0] = \frac{\lambda^{(1+\lambda_0)x/\lambda_0}}{(\lambda(1+\lambda_0)x/\lambda_0)!} e^{-\lambda}; \quad x= 0, \lambda_0/(1 + \lambda_0), 2\lambda_0/(1+\lambda_0), \dots \
+  \]
+  It has mean
+  \[
+    E[\hat{\lambda}] = \frac{\lambda_0}{1 + \lambda_0} E[x] = \frac{\lambda \lambda_0}{1 + \lambda_0}
+  \]
+  and variance
+  \[
+    \text{var}[\hat{\lambda}] = E \left[ \left(\frac{\lambda_0}{1 + \lambda_0}x\right)^2 \right] - \left(\frac{\lambda \lambda_0}{1 + \lambda_0}\right)^2 =  \left(\frac{\lambda_0}{1 + \lambda_0}  \right)^2 E[x^2] - \left(\frac{\lambda \lambda_0}{1 + \lambda_0}\right)^2  = \lambda \left( \frac{\lambda_0}{1 + \lambda_0} \right)^2
+  \]
+\end{sol}
+
+\section*{Problem 2}%
+Derive the Fisher information matrix for the parameters $(A, \phi, \omega, \sigma^2)$ in the model
+\[
+  \begin{aligned}
+    x_t &= s_t + n_t; \quad t = 0,1, \dots, N-1 \\
+    s_t &= A\cos(\omega t - \phi) \quad n_t \sim \mathcal{N} \left( 0, \sigma^2 \right)
+  \end{aligned}
+\]
+Plot your variance bounds versus SNR, parameterized by $N$ and vice versa. This is the problem studied in Section 6.12.
+\begin{sol}
+  We will first start with the log likelihood function. Since our noise is independent, we have
+  \[
+    L(\bm{\theta}, X) =  - \frac{N}{2} \ln{2\pi}  - \frac{N}{2} \ln{\sigma^2} - \frac{1}{2\sigma^2} \sum_{i=0}^{N-1} (x_t - A \cos(\omega t - \phi))^2
+  \]
+  which gives us a score function of
+  \[
+    \bm{s}(\bm{\theta}, X)  = 
+    \begin{bmatrix}
+      \frac{1}{\sigma^2} \sum_{i=0}^{N-1} (x_t - A\cos(\omega t - \phi))\cos(\omega t - \phi) \\
+      -\frac{1}{\sigma^2} \sum_{i=0}^{N-1} (x_t - A\cos(\omega t - \phi))A\sin(\omega t - \phi) \\
+      -\frac{1}{\sigma^2} \sum_{i=0}^{N-1}(x_t - A\cos(\omega t - \phi)) At \sin(\omega t - \phi) \\
+      - \frac{N}{2 \sigma^2} + \frac{1}{2\sigma^4} \sum_{i=0}^{N-1} (x_t - A \cos(\omega t - \phi))^2
+    \end{bmatrix}
+  \]
+  Now we will calculate the entries of our stochastic information matrix
+  \[
+    \begin{aligned}
+      J_{11}(\bm{\theta}, X) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} \cos^2(\omega t - \phi) \\
+      J_{12} (\bm{\theta}, X) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A \sin(\omega t - \phi)\cos(\omega t - \phi) + (x_t - A\cos(\omega t - \phi))\sin(\omega t - \phi) \\
+      J_{13} (\bm{\theta}, X) &=  \frac{1}{\sigma^2} \sum_{i=0}^{N-1} -A \sin(\omega t - \phi)\cos(\omega t - \phi) - (x_t - A \cos(\omega t - \phi))\sin(\omega t - \phi) \\
+      J_{14} (\bm{\theta}, X) &=  \frac{1}{\sigma^4} \sum_{i=0}^{N-1} (x_t - A \cos(\omega t - \phi)) \cos(\omega t - \phi) \\
+      J_{22}(\bm{\theta}, X) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A^2 \sin^2(\omega t - \phi) \\
+      J_{23}(\bm{\theta}, X) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A^2t \sin^2(\omega t - \phi) + (x_t - A \cos(\omega t - \phi))At\cos(\omega t - \phi) \\
+      J_{24}(\bm{\theta}, X) &= -\frac{1}{\sigma^4} \sum_{i=0}^{N-1} (x_t - A \cos(\omega t - \phi)) A \sin(\omega t - \phi) \\
+      J_{33}(\bm{\theta}, X) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A^2 t^2 \sin^2(\omega t - \phi) \\
+      J_{34}(\bm{\theta}, X) &= -\frac{1}{\sigma^4} \sum_{i=0}^{N-1} (x_t - A \cos(\omega t - \phi)) At \sin(\omega t - \phi) \\
+      J_{44}(\bm{\theta}, X) &= -\frac{N}{2\sigma^4} + \frac{1}{\sigma^6} \sum_{i=0}^{N-1} (x_t - A \cos(\omega t - \phi))^2 \\
+    \end{aligned}
+  \]
+  When we take the expectation any term containing $x_t - A \cos(\omega t - \phi)$ dissapears. So we have
+  \[
+    \begin{aligned}
+      J_{11}(\bm{\theta}) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} \cos^2(\omega t - \phi) \\
+      J_{12} (\bm{\theta}) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A \sin(\omega t - \phi)\cos(\omega t - \phi) \\
+      J_{13} (\bm{\theta}) &=  \frac{1}{\sigma^2} \sum_{i=0}^{N-1} -A \sin(\omega t - \phi)\cos(\omega t - \phi)\\ 
+      J_{14} (\bm{\theta}) &= 0 \\
+      J_{22}(\bm{\theta}) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A^2 \sin^2(\omega t - \phi) \\
+      J_{23}(\bm{\theta}) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A^2t \sin^2(\omega t - \phi) \\
+      J_{24}(\bm{\theta}) &= 0 \\
+      J_{33}(\bm{\theta}) &= \frac{1}{\sigma^2} \sum_{i=0}^{N-1} A^2 t^2 \sin^2(\omega t - \phi) \\
+      J_{34}(\bm{\theta}) &= 0 \\
+      J_{44}(\bm{\theta}) &= \frac{N}{2\sigma^4} \\
+    \end{aligned}
+  \]
+\end{sol}
+
+\section*{Problem 3}%
+Let $w = \bm{\theta}^\top \bm{\theta}$ and assume $\bm{x} \sim \mathcal{N}( H \bm{\theta}, R)$. Find the fisher information matrix for $w$.
+
+\begin{sol}
+  We first note that since $x \sim \mathcal{N}(H \bm{\theta}, R)$, that
+  \[
+    J(\bm{\theta}) = H^\top R^{-1} H
+  \]
+  This is easily seen from equation 6.135. Now we note that
+  \[
+    J(w) = \pdv{\bm{\theta}}{w} J(\bm{\theta}) \pdv{\bm{\theta}}{w}^\top
+  \]
+  It is easily seen that
+  \[
+    \pdv{w}{\bm{\theta}} = 2 \bm{\theta}
+  \]
+  And furthermore, checking the dimensions of our problem we must have that
+  \[
+    \pdv{\bm{\theta}}{w} \pdv{w}{\bm{\theta}} = 1
+  \]
+  So we must have that
+  \[
+    \pdv{\bm{\theta}}{w} =  \frac{\bm{\theta}^\top}{2 \norm{\bm{\theta}}^2}
+  \]
+  which gives us
+  \[
+    J(w) = \frac{1}{4 \norm{\bm{\theta}}^4} \bm{\theta}^\top J(\bm{\theta}) \bm{\theta}
+  \]
+\end{sol}
+
+\section*{Problem 4}%
+Prove that if an efficient estimator for a paramter $\bm{\theta}$ exists, then it is an ML estimator.
+
+\begin{proof}
+  Suppose that an efficient estimator $\hat{\bm{\theta}}$ exists. Then by the efficiency theorem we must have that 
+  \[
+    J(\bm{\theta})(\hat{\bm{\theta}} - \bm{\theta}) = \bm{s}(\bm{\theta}, \bm{X})
+  \]
+  Now consider what happens when we evaluate
+  \[
+    \bm{s}(\hat{\bm{\theta}}, \bm{X}) = J(\hat{\bm{\theta}})(\hat{\bm{\theta}} - \hat{\bm{\theta}}) = 0
+  \]
+  Thus it obeys the first order necessary conditions to be an optimum. Furthermore since $\ln(0) = - \infty$ it cannot be a minimum. So it must be a local maximum. Furthemore assuming that the score function has a unique maximum, we have the maximum likelihood estimate. Note: in general with multi-modal distributions this may not be true.
+\end{proof}
+
+\section*{Problem 5}%
+Let $\left\{ \bm{X}_i \right\}_0^{M-1}$ denote a sequence of i.i.d $\mathcal{N} \left( \bm{m}, \sigma^2 I \right)$ random vectors. Each $\bm{X}_i$ is a $2 \times 1$ vector whose mean is $\bm{m} = (m_1, m_2)^\top$. Think of $\bm{X}_i$ as the ith estimate of the caresian coordiantes $(m_1, m_2)$ in a surveying experiment. Find the ML estimates of $(m_1, m_2)$ and their CR bounds. Then compute the ML estimates of the range $r = (m_1^2 + m_2^2)^{1/2}$ and the angle $\theta = \arctan (m_2/m_1)$ to the coordinates $(m_1, m_2)$. Compute the CR bound for estimating $r$ and $\theta$.
+
+\begin{sol}
+  We have that $\hat{\bm{m}}_{ML} = \frac{1}{M}\sum_{i=0}^{M-1} \bm{x}_i$. It is shown in 6.135 that the fisher information matrix is 
+  \[
+    J(\bm{m}) = \frac{M}{\sigma^2} I
+  \]
+  so the CR bound is
+  \[
+    \frac{\sigma^2}{M} I
+  \]
+  It is also straightforward to note that if $\hat{m}_1$ and $\hat{m}_2$ are the ML estimates, that
+  \[
+    \begin{aligned}
+      \hat{r}_{ML} &= (\hat{m}_1^2 + \hat{m}_2^2)^{1/2} \\
+      \hat{\theta}_{ML} &= \arctan(\hat{m}_2/ \hat{m}_1)
+    \end{aligned}
+  \]
+  since any other combination of $m_1, m_2$ would yield an estimator with lower likelihood. So we have that for $\bm{\theta} = (r, \theta)$, 
+  \[
+    J(\bm{\theta}) = \pdv{\bm{m}}{\bm{\theta}} J(\bm{m}) \pdv{\bm{m}}{\bm{\theta}}
+  \]
+  it easily shown that $\bm{m}$ is a function of $\bm{\theta}$ by $\bm{m}(\bm{\theta}) = [r \cos \theta, r \sin \theta]^\top$, which gives us that
+  \[
+    \pdv{\bm{m}}{\bm{\theta}} = 
+    \begin{bmatrix}
+      \cos \theta & \sin \theta \\
+      -r \sin \theta & r \cos \theta
+    \end{bmatrix}
+  \]
+  We note that the rows are orthogonal, so we have that
+  \[
+    J(\bm{\theta}) = \frac{M}{\sigma^2} 
+    \begin{bmatrix}
+      1 & 0 \\
+      0 & r
+    \end{bmatrix}
+  \]
+  which gives us a CR bound of 
+  \[
+    \frac{\sigma^2}{M}
+    \begin{bmatrix}
+      1 & 0 \\
+      0 & 1/r
+    \end{bmatrix}
+  \]
+\end{sol}
+
+
+\end{document}
