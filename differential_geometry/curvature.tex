@@ -1,0 +1,240 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Curvature}%
+
+Recall that
+\[
+  R(X,Y)Z = \nabla_Y \nabla_X Z - \nabla_X \nabla_Y Z + \nabla_{[X,Y]} Z
+\]
+In coordinates, $(U, \varphi)= (U, (x^i))$ be local coordinates on $M$. Notice that in coordinates
+\[
+  \left[ \pdv{x^i}, \pdv{x^j} \right] = 0
+\]
+So we have that
+\[
+  R \left( \pdv{x^j}, \pdv{x^i} \right) \pdv{x^k} = \left(\nabla_{\pdv{x^i}} \nabla_{\pdv{x^j}} - \nabla_{\pdv{x^j}}\nabla_{\pdv{x^i}}\right) \pdv{x^k}
+\]
+
+\begin{prop}
+ Let $M$ be a Riemannian manifold.  Then $R(X,Y)Z$ is $C^{\infty}$ linear in $X,Y,Z$, i.e.
+     \[
+       R(fX_1 + gX_2, Y)Z = fR(X_1,Y)Z + gR(X_2, Y)Z
+     \]
+     \[
+       R(X, fY_1+gY_2)Z = fR(X,Y_1)Z + R(X, Y_2)Z
+     \]
+     \[
+       R(X, Y)(fZ_1 + gZ_2) = fR(X,Y)Z_1 + R(X, Y)Z_2
+     \]
+\end{prop}
+
+\begin{proof}
+ Linearity in $X,Y$ left as a HW problem. Check $C^\infty$ linearity in $Z$. Clearly we have 
+ \[
+   R(X,Y)(Z+W) = R(X,Y)Z + R(X,Y)W
+ \]
+ So it suffices to show that
+ \[
+   R(X,Y)(fZ) = fR(X,Y)Z
+ \]
+ So we have that
+ \[
+   \nabla_Y \nabla_X (fZ) = \nabla_Y(f\nabla_X Z + X(f)Z) = f\nabla_Y\nabla_X Z + X(f)\nabla_Y Z + Y(X(f))Z
+ \]
+ So therefore we have that
+ \[
+   \begin{aligned}
+     \nabla_Y \nabla_X (fZ) - \nabla_X \nabla_Y (fZ) &= f\nabla_Y\nabla_X Z + Y(X(f))Z - f\nabla_X\nabla_YZ - X(Y(f))Z \\
+                                                     &= f \left( \nabla_Y \nabla_X Z - \nabla_X \nabla_Y Z \right) + \left[ Y,X \right](f) Z
+   \end{aligned}
+ \]
+ Also we have that
+ \[
+   \nabla_{[X,Y]}(fZ) = f \nabla_{[X,Y]} Z + [X,Y](f) Z
+ \]
+ Therefore we have that
+ \[
+   \begin{aligned}
+     R(X,Y)(fZ) &= \nabla_Y \nabla_X fZ - \nabla_X \nabla_Y fZ + \nabla_{[X,Y]} fZ \\
+                &= f(\nabla_Y \nabla_X Z - \nabla_X \nabla_Y Z + \nabla_{[X,Y]} Z) \\
+                &= f R(X,Y)Z
+   \end{aligned}
+ \]
+\end{proof}
+
+ \begin{prop}[The Bianchi Identity]
+   $R(X,Y)Z + R(Y,Z)X + R(Z,X)Y = 0$
+ \end{prop}
+
+ \begin{proof}
+   By symmetry of the Levi-Civita connection. 
+   \[
+     \begin{aligned}
+       R(X,Y)Z + R(Y,X)Z + R(Z,X)Y =& \nabla_Y \nabla_X Z - \nabla_X \nabla_Y Z + \nabla_{[X,Y]} Z \\
+                                    &+ \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z + \nabla_{[Y,X]} Z\\
+                                    &+ \nabla_X \nabla_Z Y - \nabla_Z \nabla_X Y + \nabla_{[Z,X]} Z\\
+       =& \\
+                                    \vdots \\
+       =& \nabla_Y[X,Z] + \nabla_Z [Y,Z] + \nabla_X[Z,Y] - \nabla_{[Y,X]}Z  - \nabla_{[Z,Y]}X - \nabla_{[X,Z]}Y \\
+       =& [Y,[X,Z]] + [Z,[Y,X]] + [X,[Z,Y]] = 0
+     \end{aligned}
+   \]
+ \end{proof}
+ We will write $(X,Y,Z,T) = \inn*{R(X,Y)Z}{T}$, for all $X,Y,Z,T \in \Gamma^{\infty}(TM)$
+
+ \begin{prop}
+   \begin{enumerate}
+     \item $(X,Y,Z,T) + (Y,Z,X,T) + (Z,X,Y,T) = 0$ 
+     \item $(X,Y,Z,T) = -(Y,X,Z,T)$
+     \item $(X,Y,Z,T) = -(X,Y,T,Z)$
+     \item $(X,Y,Z,T) = (Z,T,X,Y)$
+   \end{enumerate}
+ \end{prop}
+
+ \begin{proof}
+   \begin{enumerate}
+     \item This is really just the Bianchi identity
+     \item This follows from the definition of $R$.
+     \item $(X,Y,Z,T) = -(X,Y,T,Z)$ is equivalent to sayin that that $(X,Y,Z,Z) = 0$. To prove this we just plug in $Z+T$ in the last two spots. Note that
+       \[
+         \begin{aligned}
+           (X,Y,Z,Z) &=  \inn*{\nabla_Y\nabla_X Z - \nabla_X \nabla_Y Z + \nabla_{[X,Y]}Z}{ Z}  \\
+         \end{aligned}
+       \]
+       By compatibility we have
+       \[
+         Y \inn*{\nabla_X Z}{Z} = \inn*{\nabla_Y \nabla_X}{Z} + \inn*{\nabla_X Z}{\nabla_Y Z}
+       \]
+       and
+       \[
+         \left[ X,Y \right] \inn*{Z}{Z} = 2 \inn*{\nabla_{[X,Y]}Z}{Z}
+       \]
+       So therefore we have
+       \[
+         \begin{aligned}
+           (X,Y,Z,Z) &= -\inn*{\nabla_X}{\nabla_Y Z} + \inn*{\nabla_X Z}{Z} - X \inn*{\nabla_Y Z}{Z} + \inn*{\nabla_Y Z}{\nabla_X Z} + \frac{1}{2} [X,Y] \inn*{Z}{Z} \\
+                     &= Y \left(\frac{1}{2} X \inn*{Z}{Z} \right) - X \left( \frac{1}{2} Y \inn*{Z}{Z} \right) + \frac{1}{2} \left[ X,Y \right] \inn*{Z}{Z} \\
+                     &= \frac{1}{2} [Y,X] \inn*{Z}{Z} + \frac{1}{2} [X,Y] \inn*{Z}{Z}
+                     &= 0
+         \end{aligned}
+       \]
+     \item You use the the Bianchi identity and cyclically permute it to get 4 equations.  Add these four equations and use anti symmetry in the first and last pairs to get
+       \[
+         2(Z,X,Y,T) + 2(T,Y,Z,X) = 0
+       \]
+       so we have
+       \[
+         (Z,X,Y,T) = -(T,Y,Z,X) = (Y,T,Z,X)
+       \]
+   \end{enumerate}
+  \end{proof}
+\subsection*{Coordinate Descriptions for $R$}%
+Let $(U, \varphi) = (U, (x^i))$ be local coordinates. Define 
+\[
+  R\left(\pdv{x^i},\pdv{x^j}\right) \pdv{x^k} = R_{ijk}^l \pdv{x^l}
+\]
+If $X = x^i \pdv{x^i}$, $Y = Y^j \pdv{x^j}$ and $Z = Z^k \pdv{x^k}$
+We get that
+\[
+  R(X,Y)Z = R_{ijk}^l X^iY^jZ^k \pdv{x^l}
+\]
+We can solve for $R_{ijk}^l$ (keeping in mind $\left[ \pdv{x^i}, \pdv{x^j} \right] = 0$). Let $\nabla_s = \pdv{x^s}$
+\[
+  \begin{aligned}
+    R_{ijk}^l \pdv{x^l} &= \nabla_j \nabla_i \pdv{x^k} - \nabla_i \nabla_j \pdv{x^k} \\
+                        &= \nabla_j \left( \Gamma_{ij}^l \pdv{x^l} \right) - \nabla_i \left( \Gamma_{jk}^l \pdv{x^l} \right) \\
+                        &= \Gamma_{ik}^l \nabla_j \pdv{x^j} + \pdv{x^j} \left( \Gamma_{ik}^l \right)\pdv{x^l} - \Gamma_{jk}^l \nabla_i \left( \pdv{x^l} \right) - \pdv{x^i} \left( \Gamma_{jk}^l \right) \pdv{x^l} \\
+                        &= \Gamma_{ik}^l \Gamma_{jl}^s \pdv{x^s} + \pdv{x^j} \left( \Gamma_{ik}^s \right) \pdv{x^s} - \Gamma_{jk}^l \Gamma_{il}^s \pdv{x^s} - \pdv{x^i} \left( \Gamma^s_{jk} \right) \pdv{x^s}
+  \end{aligned}
+\]
+So plugging in $f = x^s$, 
+\[
+  \begin{aligned}
+    R_{ijk}^s\pdv{x^s}{x^l} &= R_{ijk}^l \delta_l^s = R_{ijk}^s \\
+                            &= \Gamma_{ik}^l\Gamma_{jl}^s + \pdv{x^j} \Gamma_{ik}^s - \Gamma_{jk}^l \Gamma_{il}^s - \pdv{x^i} \left( \Gamma_{jk}^s \right)
+  \end{aligned}
+\]
+Now let
+\[
+  \begin{aligned}
+    R_{ijks} &= \inn*{R \left( \pdv{x^i}, \pdv{x^j} \right) \pdv{x^k}}{\pdv{x^s}} \\
+             &= \inn*{R_{ijk}^l \pdv{x^l}}{ \pdv{x^j}} \\
+             & R_{ijk}^l \inn*{\pdv{x^l}}{\pdv{x^s}} = R_{ijk}^l g_{ls}
+  \end{aligned}
+\]
+\begin{cor}
+ By a previous proposition we have
+ \begin{enumerate}
+   \item $R_{ijks} + R_{jkis} + R_{kijs} = 0$
+   \item $R_{ijks} = -R_{jiks}$
+   \item $R_{ijks} = -R_{ijsk}$ 
+   \item $R_{ijks} = R_{ksij}$
+ \end{enumerate} 
+\end{cor}
+
+\begin{rem}
+  The above compuations all depend of $R(X,Y)Z$ being linear in each component. So we have that $R(X,Y)Z$ at $p \in M$ only depends on values of $X,Y,Z$ at $p$. We call such an object a tensor.
+\end{rem}
+
+\subsection*{Curvature for curves and surfaces}%
+Let $\alpha: I \rightarrow \mathds{R}^3$ be a curve parameterized by arc length. We have
+\[
+  T(s) =  \dv{\alpha}{s} = \alpha'(s)
+\]
+is the unit tangent vector and
+\[
+  N(s) = \frac{T'(s)}{\norm{T'(s)}} = \frac{a''(s)}{\norm{\alpha''(s)}}
+\]
+There is some plane by the unit normal and unit tangent vector called the osculating plane. If we put a circle such that has the same tangent as the curve and whose center lies along the subspace spanned by $N(s)$. We call this circle the osculating circle. If we let $r(s)$ be the radius of the circle at the point $\alpha(s)$, we define $r(s) = 1/k(s)$ is the curvature of $\alpha(s)$. It can be shown that 
+\[
+  k(s) = \frac{\norm{\alpha' \times \alpha''}}{\norm{\alpha'}^3}
+\]
+For surfaces we let $r: A \rightarrow \mathds{R}$ be a local paramaterization of a regular surface $S \subset \mathds{R}^3$. Then the unit normal is given by 
+\[
+N(p) = \frac{r_u \times r_v}{\norm{r_u \times r_v}}
+\]
+This gives a map $N: S \rightarrow S^2$, from the surface to the 2-sphere. We can identity $T_pS \cong T_{N(p)}S^2$. This gives us that $dN_p: T_pS \rightarrow T_{N(p)}S^2 \cong T_pS$, which is an automorphism which allows us to talk about the determinant
+\begin{defn}
+  The determinant differential of our normal map $\tilde{k}(p) = \det (dN_p)$ is called the Gaussian curvature of $S$ at $p$.
+\end{defn}
+We can think of the curvature of a surface instead as curves living in planes contiaining $N(p)$. We call the max and min curvatures of these curves the principle curvatures of $S$ at $p$.
+
+
+
+\end{document}
