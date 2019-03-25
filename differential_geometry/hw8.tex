@@ -1,0 +1,163 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 8}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+
+\section*{Problem 1}%
+Prove the following proposition
+\begin{prop}
+ The curvature $R$ of a Riemannian manifold is bilinear in $X,Y$, i.e.
+ \[
+   \begin{aligned}
+     R(fX_1 + gX_2, Y_1) &= fR(X_1,Y_1) + gR(X_2, Y_1) \\
+     R(X_1, fY_1 + gY_2) &= fR(X_1,Y_1) + gR(X_1,Y_2)
+   \end{aligned}
+ \]
+ for $f,g \in C^{\infty}(M)$ and $X_1,X_2,Y_1,Y_2 \in \Gamma^{\infty}(TM)$.
+\end{prop}
+
+\begin{proof}
+  Note by the definition of the Riemannian curvature and properties of the Levi-Civita connection we have
+  \[
+    \begin{aligned}
+      R(fX_1 + gX_2, Y_1)Z &= \nabla_{Y_1} \nabla_{fX_1 + gX_2}Z - \nabla_{fX_1 + gX_2} \nabla_{Y_1} Z + \nabla_{[fX_1 + gX_2,Y]}Z \\
+                           &= \nabla_{Y_1} \left( f\nabla_{X_1}Z + g\nabla_{X_2}Z\right) - f \nabla_{X_1}\nabla_{Y_1} Z  - g\nabla_{X_2}\nabla_{Y_1} Z + \nabla_{[fX_1,Y_1] + [gX_2, Y_1]} Z \\
+                           &= f\nabla_{Y_1}\nabla_{X_1}Z + Y_1(f)\nabla_{X_1} Z + g\nabla_{Y_1}\nabla_{X_2}Z + Y_1(g)\nabla_{X_2}Z - f \nabla_{X_1}\nabla_{Y_1} Z  - g\nabla_{X_2}\nabla_{Y_1} Z \\
+                           &\quad +  \nabla_{f[X_1, Y_1] + g_[X_2, Y_1] - Y_1(f)X_1 - Y_1(g)X_2}Z \\
+                           &= f\nabla_{Y_1}\nabla_{X_1}Z + Y_1(f)\nabla_{X_1} Z + g\nabla_{Y_1}\nabla_{X_2}Z + Y_1(g)\nabla_{X_2}Z - f \nabla_{X_1}\nabla_{Y_1} Z  - g\nabla_{X_2}\nabla_{Y_1} Z \\
+                           &\quad +  f\nabla_{[X_1,Y_1]}Z + g\nabla_{[X_2, Y_2]}Z - Y_1(f) \nabla_{X_1}Z - Y_1(g) \nabla_{X_2}Z \\
+                           &= f \nabla_{Y_1}\nabla_{X_1} - f \nabla_{X_1} \nabla_{Y_1} Z + f \nabla_{[X_1,Y_1]} Z \\
+                           &\quad + g \nabla_{Y_1}\nabla_{X_2} - g \nabla_{X_2} \nabla_{Y_1} Z + g \nabla_{[X_2,Y_1]} Z \\
+                           &= f R(X_1, Y_1)Z + gR(X_2, Y_1)Z \\
+                           &= \left( f R(X_1, Y_1) + gR(X_2, Y_2) \right)Z
+    \end{aligned}
+  \]
+  At this point, we note that $R(X,Y)Z = -R(Y,X)Z$ and thus, we have
+  \[
+    R(X_1, fY_1 + gY_2) = -R(fY_1 + gY_2, X_1) = -fR(Y_1, X_1) - gR(Y_2, X_1) = fR(X_1, Y_1) + g R(X_1, Y_2)
+  \]
+\end{proof}
+
+\section*{Problem 2}%
+Let $S_r^2$ be the sphere of radius $r$ in $\mathds{R}^3$ centered at the origin. Equip $S_r^2$ with the metric induced by Euclidean space. Use spherical coordinates
+\begin{enumerate}[(a)]
+  \item  Compute the components of the Riemann curvature $R_{ijk}^s$ in these coordinates
+  \item Use this to compute the sectional curvature $K(\sigma)$ at a point $p \in S_r^2$.
+  \item Prove that $K(\sigma)$ is constant
+  \item Compute the Ricci curvature and scalar curvature of $S_r^2$.
+\end{enumerate}
+
+\begin{proof}[Solution]
+  \begin{enumerate}
+    \item In this case, it is easier to specify the inverse map $\varphi^{-1}: (0, 2\pi) \times (0, \pi) \rightarrow S_r^2$
+      \[
+        \varphi^{-1}(\theta, \phi) = (r \cos \theta \sin \phi, r \sin \theta \sin \phi, r \cos \phi)
+      \]
+  Now we can find the differential of the basis vectors $ \pdv{\theta}, \pdv{\phi}$ and compute the induce metric
+  \[
+    \begin{aligned}
+      d\varphi^{-1} \left( \pdv{\theta} \right) &= -r \sin \theta \sin \phi \pdv{x} + r \cos \theta \sin \phi \pdv{y} \\
+      d \varphi^{-1} \left( \pdv{\phi} \right) &= r \cos \theta \cos \phi \pdv{x} + r \sin \theta \cos \phi \pdv{y} - r \sin \phi \pdv{z}
+    \end{aligned}
+  \]
+  Which gives us the components of our riemannian metric as
+  \[
+    \begin{aligned}
+      g_{\theta \theta} &= r^2\sin^2 \phi \\
+      g_{\phi \phi} &= r^2  \\
+      g_{\theta \phi} &= 0
+    \end{aligned}
+  \]
+  Now we can calculate the christoffel symbols. Due to symmetry we only need to calculate $\Gamma_{\theta \theta}^\theta, \Gamma_{\theta \phi}^\theta, \Gamma_{\phi \phi}^\theta, \Gamma_{\theta \theta}^\phi, \Gamma_{\phi \theta}^{\phi}, \Gamma_{\phi, \phi}^\phi$. First, let us calculate all possible derivatives
+  \[
+    \begin{aligned}
+      \pdv{\theta} g_{\theta \theta} &= 0 \\
+      \pdv{\theta} g_{\theta \phi} &= 0 \\
+      \pdv{\theta} g_{\phi \phi} &= 0 \\
+      \pdv{\phi} g_{\theta \theta} &= 2r^2 \sin \phi \cos \phi \\
+      \pdv{\phi} g_{\theta \phi} &= 0 \\
+      \pdv{\phi} g_{\phi \phi} &= 0
+    \end{aligned}
+  \]
+  Furthermore we have
+  \[
+    \begin{aligned}
+      g^{\theta \theta} &= \frac{1}{r^2 \sin^2 \phi} \\
+      g^{\theta \phi} &= 0 \\
+      g^{\phi \phi} &= \frac{1}{r^2}
+    \end{aligned}
+  \]
+  Therefore, our Christoffel symbols are
+  \[
+    \begin{aligned}
+      \Gamma_{\theta \theta}^\theta &= \frac{1}{2}\frac{1}{r^2 \sin^2 \phi} \left(0 +  0 - 0\right) = 0 \\
+      \Gamma_{\theta \phi}^\theta &=  \frac{1}{2} \frac{1}{r^2 \sin^2 \phi} \left(2r^2 \sin \cos\phi + 0 - 0  \right) = \cot\phi \\
+      \Gamma_{\phi \phi}^\theta &= \frac{1}{2} \frac{1}{r^2 \sin^2 \phi} \left(0 + 0 - 0  \right) = 0 \\
+      \Gamma_{\theta \theta}^\phi &= \frac{1}{2} \frac{1}{r^2} \left(0 + 0 - 2r^2 \sin \phi \cos \phi \right) = -\sin \phi \cos \phi \\
+      \Gamma_{\theta \phi}^\phi &= \frac{1}{2} \frac{1}{r^2} \left(0 + 0 - 0\right) = 0 \\
+      \Gamma_{\phi \phi}^\phi &= \frac{1}{2} \frac{1}{r^2} \left( 0 + 0 - 0 \right) = 0
+    \end{aligned}
+  \]
+  From this we see that
+  \[
+    \begin{aligned}
+      \pdv{\phi} \Gamma_{\theta \theta}^\phi &= \sin^2 \phi - \cos^2 \phi \\
+      \pdv{\phi} \Gamma_{\theta \phi}^\theta &= - \frac{1}{\sin^2 \phi} 
+    \end{aligned}
+  \]
+  which are the only interesting derivatives. Now, we will calculate the components of the curvature tensor
+  \[
+    \begin{aligned}
+      R_{\theta \theta \theta}^\theta &= \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\theta + \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^{\theta} + \pdv{\theta} \Gamma_{\theta \theta}^\theta - \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\theta - \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\theta \theta}^\theta = 0\\
+      R_{\theta \theta \theta}^\phi &= \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\phi + \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^\phi + \pdv{\theta} \Gamma_{\theta \theta}^\phi - \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\theta \theta}^\phi = 0 \\
+      R_{\phi \theta \theta}^\theta &= \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\theta + \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\theta + \pdv{\theta} \Gamma_{\phi \theta}^\theta - \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\theta \theta}^\theta = 0 \\
+      R_{\phi \theta \theta}^\phi &= \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\phi + \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\phi + \pdv{\theta} \Gamma_{\phi \theta}^\phi - \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\phi  - \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\theta \theta}^\phi = -\sin^2 \phi \\
+      R_{\theta \phi \theta}^\theta &= \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\theta \theta}^\theta - \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\theta  - \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\phi \theta}^\theta = 0 \\
+      R_{\theta \phi \theta}^\phi &= \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\theta \theta}^\phi - \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\phi \theta}^\phi = \sin^2 \phi \\
+      R_{\phi \phi \theta}^\theta &= \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\phi \theta}^\theta - \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\phi \theta}^\theta = 0 \\
+      R_{\phi \phi \theta}^\phi &= \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\phi \theta}^\phi - \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\phi  + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\phi \theta}^\phi = 0 \\
+      R_{\theta \theta \phi}^\theta &= \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\theta} \Gamma_{\phi \theta}^\theta - \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\theta \phi}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\theta \phi}^\theta = -\frac{1}{\sin^2 \phi} \\
+      R_{\theta \theta \phi}^\phi &= \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\theta} \Gamma_{\phi \theta}^\phi - \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\phi  - \Gamma_{\theta \phi}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\theta \phi}^\phi =  0 \\
+      R_{\phi \theta \phi}^\theta &= \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\theta + \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\theta + \pdv{\theta} \Gamma_{\phi \phi}^\theta - \Gamma_{\theta \phi}^\theta \Gamma_{\theta \theta}^\theta  - \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\theta \phi}^\theta =  \frac{1}{\sin^2 \phi} \\
+      R_{\phi \theta \phi}^\phi &= \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\phi + \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\phi + \pdv{\theta} \Gamma_{\phi \phi}^\phi - \Gamma_{\theta \phi}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\theta \phi}^\phi =  \cos^2 \phi \\
+      R_{\theta \phi \phi}^\theta &= \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\theta \phi}^\theta - \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\theta  - \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\theta \phi}^\theta =  0 \\
+      R_{\theta \phi \phi}^\phi &= \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\theta \phi}^\phi - \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\theta \phi}^\phi =  0 \\
+      R_{\phi \phi \phi}^\theta &= \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\phi \phi}^\theta - \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\phi \phi}^\theta =  0 \\
+      R_{\phi \phi \phi}^\theta &= \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\phi \phi}^\phi - \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\phi  - \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\phi \phi}^\phi =  0 \\
+    \end{aligned}
+  \]
+  \end{enumerate}
+\end{proof}
+
+\end{document}
