@@ -320,7 +320,7 @@ Sectional curvature is a measure of the curvature of 2-dimensional embedded (geo
 \end{proof}
 
 \begin{defn}
-  Given $p \in M$, and $\sigma \subset T_pM$ a 2-dimensional subspace of $T_pM$ the value of $k(\sigma) = k(x,y)$ for any basis $\left\{ x,y \right\}$ of $\sigma$ is called the sectional curvature of $\sigma$ of $\sigma$ at $p$.
+  Given $p \in M$, and $\sigma \subset T_pM$ a 2-dimensional subspace of $T_pM$ the value of $k(\sigma) = k(x,y)$ for any basis $\left\{ x,y \right\}$ of $\sigma$ is called the sectional curvature of $\sigma$ at $p$.
 \end{defn}
 
 By knowing $k(\sigma)$ for all 2-dimensional subspaces of $\sigma \subset T_pM$ and all $p \in M$, we can recover the Riemannian curvature $R$. The crux of this theorem is that we know the riemannian metric.
@@ -363,5 +363,62 @@ By knowing $k(\sigma)$ for all 2-dimensional subspaces of $\sigma \subset T_pM$ 
   \]
   so we have that $(x,y,z,t) = (x,y,z,t)'$.
 \end{proof}
+
+\begin{lem}
+  Let $M$ be Riemannian, and $p \in M$ define $R': T_pM \times T_pM \rightarrow T_pM$ by
+  \[
+    \inn*{R'(x,y,w)}{z} = \inn*{x}{w}\inn*{y}{z} - \inn*{y}{w}\inn*{x}{z}
+  \]
+  for all $x,y,z \in T_pM$. Then $M$ has constant sectional curvature equal to $k_0$ if and only if the Riemann curvature tensor $R = k_0 R'$.
+\end{lem}
+
+\begin{proof}
+  Assume that $k(\sigma) = k_0$ for all $\sigma, p \in M$. Let 
+  \[
+    \inn*{R'(x,y,w)}{z} = (x,y,w,z)'
+  \]
+  Observe 
+  \begin{enumerate}
+    \item $(x,y,w,z)' + (y,w,x,z)' + (w,x,y,z)' = 0$
+    \item $(x,y,w,z)' = -(y,x,w,z)' = -(x,y,z,w) = (w,z,x,y)$ 
+  \end{enumerate}
+  Since we have constant sectional curvature we have $k_0 = \frac{\inn*{R(x,y)x}{y}}{\norm{x}^2\norm{y}^2 - \inn*{x}{y}}$, which implies
+  \[
+    \inn*{R(x,y)x}{y} = k_0 (x,y,x,y)'
+  \]
+  so by previous lemma we have $R = k_0R'$. The converse is immediate.
+\end{proof}
+
+\begin{cor}
+  Let $M$ be Riemannian and let $\left\{ e_1, \dots, e_n \right\}$ be an orthonormal basis for $T_pM$ and let $R_{ijkl} = \inn*{R(e_i,e_j) e_k}{e_l}$. Then $k(\sigma) = k_0$ for all planes $\sigma \subset T_pM$ if and only if $R_{ijkl} = k_0(\delta_{ik}\delta_{jl} - \delta_{il}\delta_{jk})$. 
+\end{cor}
+Thus we have
+\[
+  R_{ijij} = -R_{jiji} = k_0,
+\]
+for $i \neq j$ and $R_{ijkl} = 0$ for all other choices of indices. These statements characterize $R$ pointwise for manifolds on which $k(\sigma)$ does  not depend on $\sigma \subset T_pM$, i.e. $k(\sigma) = k_0(p)$. 
+
+\subsection*{Ricci and Scalar Curvature}%
+Let $x = z_n$ be a unit vector in $T_pM$, $(z_1, \dots, z_{n-1})$ and orthonoromal basis for the hyperplane orthogonal to $x$. Define the
+\[
+  \begin{aligned}
+    \text{Ric}_p(x) &= \frac{1}{n-1} \sum_{i=1}^{n-1} \inn*{R(x,z_i)x}{z_i}  \\
+                    &= \frac{1}{n-1} \sum_{i=1}^{n-1} k(x,z_i)
+  \end{aligned}
+\]
+we call this the Ricci curvature. Define
+\[
+  \begin{aligned} 
+    k(p) &= \frac{1}{n} \sum_{j=1}^n \text{Ric}_p (z_j) \\
+         &= \frac{1}{n(n-1)} \sum{i,j=1}^n  \sum_{i,j=1}^n \inn*{R(z_j,z_i)z_j}{z_i} \\
+         &= \frac{1}{n(n-1)} \sum_{i,j=1, i\neq j}^n k(z_i,z_j)
+  \end{aligned}
+\]
+We note that in in $\dim M =2$ then $\text{Ric}_p(x) = k(p) = k(T_pM)$. The interpretation is the following
+\[
+  \text{Vol}(B_r(p)) = \left(1 - k(p) \frac{r^2}{6(n+2)} + \mathcal{O}(r^4)\right) V_{\mathds{R}^n}(B_r(0))
+\]
+where $V_{\mathds{R}^n}(B_r(0))$ is the volume of the ball of radius $r$ in $\mathds{R}^n$. So we have that $k(p)$ measure the growth rate of the balls in $M$ of radius $r$ compared to balls in $\mathds{R}^n$ of the same radii. The Ricci curvature is similar but measure the volume of cones in the direction of $x$.
+
 
 \end{document}
