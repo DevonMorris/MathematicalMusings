@@ -282,7 +282,11 @@ Now let
 \end{cor}
 
 \begin{rem}
-  The above compuations all depend of $R(X,Y)Z$ being linear in each component. So we have that $R(X,Y)Z$ at $p \in M$ only depends on values of $X,Y,Z$ at $p$. We call such an object a tensor.
+  The above compuations all depend of $R(X,Y)Z$ being linear in each component. So we have that $R(X,Y)Z$ at $p \in M$ only depends on values of $X,Y,Z$ at $p$. We call such an object a tensor. Furthermore, the symmetry properties in the above corollary do not hold for the (1,3) metric, but only for its lowered (0,4) analog. In this wway, it's easier to do the computations on $R_{lijk}$ and raise the first index. The components are given by
+  \[
+    R_{iklm} = \frac{1}{2} \left( \pdv[2]{g_{im}}{x^k}{x^l} + \pdv[2]{g_{kl}}{x^i}{x^m} - \pdv[2]{g_{il}}{x^k}{x^m} - \pdv[2]{g_{km}}{x^i}{x^l} \right) + g_{np}\left( \Gamma^n_{kl}\Gamma^p_{im} - \Gamma^n_{km}\Gamma^p_{il} \right)
+  \]
+  This can be seen by lowering hte indices on on the computation above.
 \end{rem}
 
 \subsection*{Sectional Curvature}%
