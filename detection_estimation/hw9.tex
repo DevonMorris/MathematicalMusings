@@ -1,0 +1,118 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy} \lhead{Devon Morris}
+\chead{Detection \& Estimation Theory - Homework 6}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{sol}{Solution}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+\section*{Problem 1}%
+Let $X = (X_0, X_1, \dots, X_{N-1})$ denote a random sample of scalar random variables, each of which is uniformly distributed:
+\[
+  f(x_n|\theta) = 
+  \begin{cases}
+    1/\theta, & 0 \leq x_n \leq \theta, \theta > 0 \\
+    0, & \text{ otherwise }
+  \end{cases}
+\]
+The parameter $\theta$ is exponentially distributed:
+\[
+  f(\theta) = ae^{-a\theta}
+\]
+Find the Bayes estimator of $\theta$ that minimizes mean-squared error.
+
+\subsection*{Solution}%
+We note that the bayes estimator is given by
+\[
+  \hat{\theta}_B = \argmin_{\hat{\theta}} \int (\theta - \hat{\theta})^2 f(X|\theta) f(\theta) d \theta
+\]
+taking the derivative and setting it equal to zero tells us that
+\[
+  \begin{aligned}
+    \hat{\theta} \int f(X|\theta) f(\theta) d \theta &= \int \theta f(X|\theta) f(\theta) d \theta \\
+    \hat{\theta} \int_{\max x_i}^{\infty} \frac{a}{\theta^N} e^{-a \theta} &=  \int_{\max x_i}^{\infty} \frac{a}{\theta^{N-1}} e^{-a \theta}
+  \end{aligned}
+\]
+This implies that
+\[
+  \hat{\theta} = \frac{ a e^{-a(N-1)} (\max x_i)^{2-N}/N-2}{a e^{-aN} (\max x_i)^{1-N}/N-1} = \frac{N-1}{N-2}e \max x_i
+\]
+
+\section*{Problem 2}%
+Let $X = (X_0, X_1, \dots, X_{N-1})$, denote a random sample of scalar random variables each of which is normally distributed
+\[
+  f(x_n | \theta) = \frac{1}{(2 \pi \sigma^2)^{1/2}} \exp \left( - \frac{1}{2 \sigma^2} (x_n - \theta)^2 \right)
+\]
+The parameter $\theta$ is also normally distributed
+\[
+  f(\theta) = \frac{1}{(2 \pi \sigma^2_\theta)^{1/2}} \exp \left( - \frac{1}{2 \sigma^2_\theta}(\theta - m)^2 \right)
+\]
+\begin{enumerate}[a.]
+  \item Find the conditional density of $\theta$, given $x$.
+  \item Find the conditional mean and variance of $\theta$ given $x$.
+  \item Explain how this problem relates tot he problem of estimating a Gaussian signal $S$ when $X_n = S + N_n$ is measured and $N_n$ is a Gaussian noise.
+  \item Compare $E[\theta | x]$ to $\hat{\theta}_{ML}$
+\end{enumerate}
+
+\subsection*{Solution}%
+\begin{enumerate}[a.]
+  \item We know that $f(\theta | x)  \propto f(x | \theta)f(\theta)$ so we have
+    \[
+      \begin{aligned}
+        f(x | \theta)f(\theta) &\propto \exp \left(- \frac{1}{2 \sigma^2} (x_n^2 - 2x_n\theta + \theta^2)  - \frac{1}{2 \sigma_\theta^2} (\theta^2 - 2m\theta)  \right) \\
+                               &= \exp \left( -\frac{1}{2} \left(\frac{1}{\sigma_\theta^2} + \frac{1}{\sigma^2} \right) \left( \theta - \left(\frac{1}{\sigma_0^2} + \frac{1}{\sigma^2}  \right)^{-1}\left(\frac{m}{\sigma_\theta^2} + \frac{ x_n}{\sigma^2} \right)\right)^2 \right)
+      \end{aligned}
+    \]
+    as we can see this takes the form of a normal distribution. So we have that
+    \[
+      \begin{aligned}
+        m' &= \left(\frac{1}{\sigma_\theta^2} + \frac{1}{\sigma^2} \right)^{-1}\left(\frac{m}{\sigma_\theta^2} + \frac{x_n}{\sigma^2} \right) \\
+        \sigma'^2 &= \left(\frac{1}{\sigma_\theta^2} + \frac{1}{\sigma^2} \right)^{-1} \\ 
+        f(\theta | x) &= \frac{1}{(2 \pi \sigma'^2_\theta)^{1/2}} \exp \left( - \frac{1}{2 \sigma'^2_\theta}(\theta - m')^2 \right)
+      \end{aligned}
+    \]
+  \item The mean and variance can been seen by inspection of the pdf in part a. They are simply $m'$ and $\sigma'^2$ as defined above
+  \item It allows you to recursively update your estimate of $S$ given the next measurement. It is essentially the most basic form of the Kalman filter.
+  \item The mean will be biased toward the initial mean instead of like $\hat{\theta}_{ML}$ it will also have higher variance and it's variance will be higher.
+\end{enumerate}
+
+
+\end{document}
