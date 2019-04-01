@@ -1,0 +1,162 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Exam 2}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+Consider the sphere $S_R = \left\{ (x,y,z) \in \mathds{R}^3\ |\ x^2 + y^2 + z^2 = R^2 \right\}$ of radius R, and let $g$ be the induced metric on $S_R$ from the standard metric on $\mathds{R}^3$. 
+\begin{enumerate}[(a)]
+  \item Compute the components $g_{ij}$ of the metric $g$ in spherical coordinates.
+  \item Compute the the components $R_{ijk}^l$ of the Riemann curvature tensor in these coordinates.
+  \item Compute the sectional curvature $K(\sigma)$ on $S_R$, where $\sigma = T_pS_R$.
+  \item Compute the Ricci curvature $\text{Ric}_p(x)$ where $x \in T_pS_R$ is a unit vector, and compute the scalar curvature $K(p)$ of $S_R$.
+  \item Recall from class that we can interpret the scalar curvature $K(p)$ in the following way
+    \[
+      \text{Vol}_M(B_r(p)) = \left( 1 - K(p) \frac{r^2}{6(n+2)} + \mathcal{O}(r^4) \right)\text{Vol}_{\mathds{R}^n}(B_r(0))
+    \]
+\end{enumerate}
+
+\begin{proof}[Solution]
+  \begin{enumerate}[(a)]
+    \item In this case, it is easier to specify the inverse chart $\varphi^{-1}: (0, 2\pi) \times (0, \pi) \rightarrow S_R^2$
+      \[
+        \varphi^{-1}(\theta, \phi) = (R \cos \theta \sin \phi, R \sin \theta \sin \phi, R \cos \phi)
+      \]
+  Now we can find the differential of the basis vectors $ \pdv{\theta}, \pdv{\phi}$ and compute the induce metric
+  \[
+    \begin{aligned}
+      d\varphi^{-1} \left( \pdv{\theta} \right) &= -R \sin \theta \sin \phi \pdv{x} + R \cos \theta \sin \phi \pdv{y} \\
+      d \varphi^{-1} \left( \pdv{\phi} \right) &= R \cos \theta \cos \phi \pdv{x} + R \sin \theta \cos \phi \pdv{y} - R \sin \phi \pdv{z}
+    \end{aligned}
+  \]
+  Which gives us the components of our riemannian metric as
+  \[
+    \begin{aligned}
+      g_{\theta \theta} &= R^2\sin^2 \phi \\
+      g_{\phi \phi} &= R^2  \\
+      g_{\theta \phi} &= 0
+    \end{aligned}
+  \]
+\item  
+  Now we can calculate the christoffel symbols. Due to symmetry we only need to calculate 
+  \[
+    \Gamma_{\theta \theta}^\theta, \Gamma_{\theta \phi}^\theta, \Gamma_{\phi \phi}^\theta, \Gamma_{\theta \theta}^\phi, \Gamma_{\phi \theta}^{\phi}, \Gamma_{\phi, \phi}^\phi.
+  \] First, let us calculate all possible derivatives
+  \[
+    \begin{aligned}
+      \pdv{\theta} g_{\theta \theta} &= 0 \\
+      \pdv{\theta} g_{\theta \phi} &= 0 \\
+      \pdv{\theta} g_{\phi \phi} &= 0 \\
+      \pdv{\phi} g_{\theta \theta} &= 2R^2 \sin \phi \cos \phi \\
+      \pdv{\phi} g_{\theta \phi} &= 0 \\
+      \pdv{\phi} g_{\phi \phi} &= 0
+    \end{aligned}
+  \]
+  Furthermore we have
+  \[
+    \begin{aligned}
+      g^{\theta \theta} &= \frac{1}{R^2 \sin^2 \phi} \\
+      g^{\theta \phi} &= 0 \\
+      g^{\phi \phi} &= \frac{1}{R^2}
+    \end{aligned}
+  \]
+  Therefore, our Christoffel symbols are
+  \[
+    \begin{aligned}
+      \Gamma_{\theta \theta}^\theta &= \frac{1}{2}\frac{1}{R^2 \sin^2 \phi} \left(0 +  0 - 0\right) = 0 \\
+      \Gamma_{\theta \phi}^\theta &=  \frac{1}{2} \frac{1}{R^2 \sin^2 \phi} \left(2R^2 \sin \cos\phi + 0 - 0  \right) = \cot\phi \\
+      \Gamma_{\phi \phi}^\theta &= \frac{1}{2} \frac{1}{R^2 \sin^2 \phi} \left(0 + 0 - 0  \right) = 0 \\
+      \Gamma_{\theta \theta}^\phi &= \frac{1}{2} \frac{1}{R^2} \left(0 + 0 - 2R^2 \sin \phi \cos \phi \right) = -\sin \phi \cos \phi \\
+      \Gamma_{\theta \phi}^\phi &= \frac{1}{2} \frac{1}{R^2} \left(0 + 0 - 0\right) = 0 \\
+      \Gamma_{\phi \phi}^\phi &= \frac{1}{2} \frac{1}{R^2} \left( 0 + 0 - 0 \right) = 0
+    \end{aligned}
+  \]
+  From this we see that
+  \[
+    \begin{aligned}
+      \pdv{\phi} \Gamma_{\theta \theta}^\phi &= \sin^2 \phi - \cos^2 \phi \\
+      \pdv{\phi} \Gamma_{\theta \phi}^\theta &= - \frac{1}{\sin^2 \phi} 
+    \end{aligned}
+  \]
+  which are the only interesting derivatives. Now, we will calculate the components of the curvature tensor
+  \[
+    \begin{aligned}
+      R_{\theta \theta \theta}^\theta &= \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\theta + \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^{\theta} + \pdv{\theta} \Gamma_{\theta \theta}^\theta - \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\theta - \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\theta \theta}^\theta = 0\\
+      R_{\theta \theta \theta}^\phi &= \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\phi + \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^\phi + \pdv{\theta} \Gamma_{\theta \theta}^\phi - \Gamma_{\theta \theta}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\theta \theta}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\theta \theta}^\phi = 0 \\
+      R_{\phi \theta \theta}^\theta &= \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\theta + \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\theta + \pdv{\theta} \Gamma_{\phi \theta}^\theta - \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\theta \theta}^\theta = 0 \\
+      R_{\phi \theta \theta}^\phi &= \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\phi + \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\phi + \pdv{\theta} \Gamma_{\phi \theta}^\phi - \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\phi  - \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\theta \theta}^\phi = -\sin^2 \phi \\
+      R_{\theta \phi \theta}^\theta &= \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\theta \theta}^\theta - \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\theta  - \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\phi \theta}^\theta = 0 \\
+      R_{\theta \phi \theta}^\phi &= \Gamma_{\theta \theta}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\theta \theta}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\theta \theta}^\phi - \Gamma_{\phi \theta}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\phi \theta}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\phi \theta}^\phi = \sin^2 \phi \\
+      R_{\phi \phi \theta}^\theta &= \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\phi \theta}^\theta - \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\phi \theta}^\theta = 0 \\
+      R_{\phi \phi \theta}^\phi &= \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\phi \theta}^\phi - \Gamma_{\phi \theta}^\theta \Gamma_{\phi \theta}^\phi  + \Gamma_{\phi \theta}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\phi \theta}^\phi = 0 \\
+      R_{\theta \theta \phi}^\theta &= \Gamma_{\theta \phi}^\theta \Gamma_{\theta \theta}^\theta + \Gamma_{\theta \phi}^\phi \Gamma_{\theta \phi}^\theta + \pdv{\theta} \Gamma_{\theta \phi}^\theta - \Gamma_{\theta \phi}^\theta \Gamma_{\theta \theta}^\theta  - \Gamma_{\theta \phi}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\theta \phi}^\theta = 0 \\
+      R_{\theta \theta \phi}^\phi &= \Gamma_{\theta \phi}^\theta \Gamma_{\theta \theta}^\phi + \Gamma_{\theta \phi}^\phi \Gamma_{\theta \phi}^\phi + \pdv{\theta} \Gamma_{\theta \phi}^\phi - \Gamma_{\theta \phi}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\theta \phi}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\theta \phi}^\phi = 0 \\
+      R_{\phi \theta \phi}^\theta &= \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\theta + \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\theta + \pdv{\theta} \Gamma_{\phi \phi}^\theta - \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\theta \phi}^\theta =  -1 \\
+      R_{\phi \theta \phi}^\phi &= \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\phi + \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\phi + \pdv{\theta} \Gamma_{\phi \phi}^\phi - \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\phi  - \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\theta \phi}^\phi =  0 \\
+      R_{\theta \phi \phi}^\theta &= \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\theta \phi}^\theta - \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\theta  - \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\theta - \pdv{\theta} \Gamma_{\phi \phi}^\theta =  1 \\
+      R_{\theta \phi \phi}^\phi &= \Gamma_{\theta \phi}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\theta \phi}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\theta \phi}^\phi - \Gamma_{\phi \phi}^\theta \Gamma_{\theta \theta}^\phi  - \Gamma_{\phi \phi}^\phi \Gamma_{\theta \phi}^\phi - \pdv{\theta} \Gamma_{\theta \phi}^\phi =  0 \\
+      R_{\phi \phi \phi}^\theta &= \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\theta + \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\theta + \pdv{\phi} \Gamma_{\phi \phi}^\theta - \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\theta  - \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\theta - \pdv{\phi} \Gamma_{\phi \phi}^\theta =  0 \\
+      R_{\phi \phi \phi}^\phi &= \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\phi + \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\phi + \pdv{\phi} \Gamma_{\phi \phi}^\phi - \Gamma_{\phi \phi}^\theta \Gamma_{\phi \theta}^\phi  - \Gamma_{\phi \phi}^\phi \Gamma_{\phi \phi}^\phi - \pdv{\phi} \Gamma_{\phi \phi}^\phi =  0 \\
+    \end{aligned}
+  \]
+  There are undoubtedly more efficient ways to do this calculation, but what's done is done.
+  \item Let $p \in S_r^2$. We note that by definition $\pdv{\theta}, \pdv{\phi}$ are linearly independent vectors at this point. First let us calculate $R \left(\pdv{\theta}, \pdv{\phi} \right)\pdv{\theta}$ so we have
+  \[
+    \begin{aligned}
+      R \left(\pdv{\theta}, \pdv{\phi} \right)\pdv{\theta} &= R_{ijk}^l \delta^{i}_\theta \delta^j_\phi \delta^k_\theta \pdv{x^l}\\
+                                                           &= R_{\theta \phi \theta}^\theta \pdv{\theta} + R_{\theta \phi \theta}^\phi \pdv{\phi} \\
+                                                           &= \sin^2 \phi \pdv{\phi}
+    \end{aligned}
+  \]
+  and so we have
+  \[
+    \left( \pdv{\theta}, \pdv{\phi}, \pdv{\theta}, \pdv{\phi} \right) = \sin^2 \phi \inn*{\pdv{\phi}}{\pdv{\phi}} = r^2 \sin^2 \phi
+  \]
+  likewise
+  \[
+    \norm{\pdv{\theta}}^2 \norm{\pdv{\phi}}^2 - \inn*{\pdv{\theta}}{\pdv{\phi}} = R^4 \sin^2 \phi
+  \]
+  implying that
+  \[
+    K(\sigma) = \frac{1}{R^2}
+  \]
+\item We note that when $\dim M = 2$ that $\text{Ric}_p(x) = K(p) = K(\sigma)$. So we have
+  \[
+    \text{Ric}_p(x) = K(p) = K(\sigma) = \frac{1}{R^2}
+  \]
+\item The easiest way to do this is as a surface of revolution. First we create an arc $\gamma$ parameterized by $\theta$, where $\gamma(0)$ is the center of the ball and and $\gamma(r/R)$ touches the edge of the ball. In other words $\theta \in [0, r/R]$. Furthermore, the distance of $\gamma$ to the axis of rotation must be given by $R\sin(\theta)$. So we have
+  \[
+    \text{Vol}_{S_R}(B_r(p)) = \int_0^{r/R} 2\pi R \sin(\theta) \ d\theta = 2\pi R \left( 1 - \cos(r/R) \right) = \text{Vol}_{\mathds{R}^2}(B_r(0)) \left( 1 - \cos(r/R) \right)
+  \]
+  \end{enumerate}
+\end{proof}
+\end{document}
