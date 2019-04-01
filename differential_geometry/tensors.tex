@@ -137,7 +137,7 @@ Let $V$ be a finite dimensional real vector space
   \]
   where there are $l$ copies of $V^*$ and $k$ copies of $V$.
 \end{defn}
-If $l = 0$ we call it a $k$ - covariant tensor, and if $k$ - covariant tensor. The rank of $F$ is $k + l$. The space of all tesnors of type $(k,l)$ is $T^k_l(V)$ if $k=0$ or $l=0$ we sometimes write$T^k(V) = T^k_0(V)$ or $T_l(V) = T_l^0(V)$.
+If $l = 0$ we call it a $k$ - covariant tensor, and if $k$ - covariant tensor. The rank of $F$ is $k + l$. The space of all tesnors of type $(k,l)$ is $T^k_l(V)$ if $k=0$ or $l=0$ we sometimes write $T^k(V) = T^k_0(V)$ or $T_l(V) = T_l^0(V)$.
 
 \begin{defn}
   If $F \in T_k^l(v)$ and $G \in T_s^r(V)$, then the tensor product of $F$ and $G$ is $F \otimes G \in T_{l + s}^{k+r}(V)$.
@@ -170,11 +170,85 @@ as before and $\pi:T_k^lM \rightarrow M$ be the projection.
 
 We check if this vector field is smooth if the function $f = T(\omega^1, \dots, \omega^l, X_1, \dots, X_k)$ for smooth covector and vector fields. We say $T \in \Gamma^{\infty}(T_l^kM)$ is the smooth tensor fields of type $(k,l)$. So any $T \in \Gamma^{\infty}(T_l^kM)$ can be written locally as
 \[
-  T = T_{i_1 dots i_k}^{j_1 \dots j_l} \pdv{x^{j_1}} \otimes \dots \otimes \pdv{x^{j_l}} \otimes dx^{i_1} \otimes \dots \otimes dx^{i_k} 
+  T = T_{i_1 \dots i_k}^{j_1 \dots j_l} \pdv{x^{j_1} } \otimes \dots \otimes \pdv{x^{j_l}} \otimes dx^{i_1} \otimes \dots \otimes dx^{i_k} 
 \]
 for some $T_{i_1 dots i_k}^{j_1 \dots j_l} \in C^{\infty}(U)$. So we have
 \[
   T(\omega^1, \dots, \omega^l, X_{1}, \dots, X_k) = T_{i_1 \dots i_k}^{j_1 \dots j_l} X_1^{i_1} \dots X_k^{i_k} \omega_{j_1}^1 \dots \omega_{j_l}^l
 \]
+So we talk about $T_k^l(M) = T_l^k(TM)$ as pointwise things. So $T_0^0 M \cong \mathds{R}$ and $\Gamma^{\infty}(T_0^0M) = C^{\infty}(M)$. Another example is the curvature $R$ of a connection $\nabla$, $R \in \Gamma^{\infty}(T_1^3M)$
+\[
+  R(X,Y,Z,\omega) = \omega(R(X,Y)Z)
+\]
+
+\subsection*{Covariant Derivative of Tensor Fields}%
+Given a connection $\nabla: \Gamma^{\infty}(TM) \times \Gamma^{\infty} \rightarrow \Gamma^{\infty}(TM)$, we can extend $\nabla$ to a map
+\[
+  \nabla: \Gamma^{\infty} \times \Gamma^\infty(T_l^k M) \rightarrow \Gamma^\infty (T_l^k M)
+\]
+by the following rules
+\begin{enumerate}
+  \item $\nabla_Y f = df(Y) = Y(f)$ for all $Y \in \Gamma^\infty (TM)$, $f \in C^\infty(M)$
+  \item 
+    \[
+      \begin{aligned}
+        \nabla_Y(T(\omega^1, \dots, \omega^l, X_1, \dots, X_k)) =& \nabla_Y T(\omega, \dots, \omega^l, X_1, \dots, X_k) \\
+      &+ T(\nabla_Y \omega^1, \omega^2, \dots, \omega^l, X_1, \dots, X_k) \\ 
+      &+ \cdots \\
+      &+ T(\omega^1, \dots, \omega^l, X_1, \dots, \nabla_Y X_k)
+      \end{aligned}
+  \]
+  for all $T \in \Gamma^\infty(T_l^k M)$
+\end{enumerate}
+So for the special case when we are looking at covector fields we have
+\[
+  \nabla_Y \omega(X) = Y(\omega(X)) - \omega(\nabla_Y X)
+\]
+for all $X \in \Gamma^\infty(TM)$. We can also think of $Y$ in $\nabla_Y T$ as being an extra argument to be filled making $\nabla T$ a $(k+1, l)$ tensor field which is defined by
+\[
+  \nabla T(\omega^1, \dots, \omega^p, X_1, \dots, X_k, Y) = \nabla_Y T(\omega^1, \dots, \omega^l, X_1, \dots, X_k)
+\]
+\subsection*{Differential forms}%
+\begin{defn}
+  A tensor $\omega \in \Gamma^\infty(T^kM)$ is alternating if 
+\[
+  \omega(X_1, \dots X_i, \dots, X_j, \dots, X_k) = -\omega(X_1, \dots, X_j, \dots, X_i, \dots, X_k) 
+\]
+\end{defn}
+We note that $\omega$ alternating is equivalent to saying $\omega$ vanishes when two indices are repeated. Let $\Omega^kM$ denote the space of alternating $(k,0)$ smooth tensor fields. We call elements of $\Omega^kM$ differential $k$ forms.
+
+Let $\Sigma_k$ be the symmetric group on $\left\{ 1, \dots, k \right\}$, so if $ \omega \in \Gamma^\infty T^kM$, define $^\sigma \omega \in \Gamma^{\infty} (T^kM)$ by
+\[
+  ^\sigma \omega(X_1, \dots, X_k) = \omega (X_{\sigma(1)}, \dots, X_{\sigma(k)})
+\]
+this is the same as setting
+\[
+  ^\sigma \left( dx^{i_1} \otimes \cdots \otimes dx^{i_k} \right) = dx^{i_{\sigma(1)}} \otimes \dots \otimes dx^{i_{\sigma(k)}}
+\]
+then extending linearly to all of $\Gamma^\infty (T^kM)$
+
+\begin{defn}
+  The alternating map 
+  \[
+    \begin{aligned}
+      \text{Alt}_k&: T^k M \rightarrow \Omega^k M \\
+                  &\omega \mapsto \frac{1}{k!} \sum_{\sigma \in \Sigma_k} \text{sgn}(\sigma)\ ^\sigma\omega
+    \end{aligned}
+  \]
+\end{defn}
+
+\begin{prop}
+  $\text{Alt}_k$ is surjective
+\end{prop}
+\begin{proof}
+  If $\omega \in \Omega^k M$ then $\text{Alt}_k (\omega) = \omega$.
+\end{proof}
+
+\begin{defn}[Wedge Product]
+  If $\omega \in \Omega^kM$, $\rho \in \Omega^lM$, then the wedge product of $\omega, \rho$ is defined by
+  \[
+    \omega \wedge \rho = \frac{(k+l)!}{k!l!} \text{Alt}(\omega \otimes \rho) \in \Omega^{k+l}M
+  \]
+\end{defn}
 
 \end{document}
