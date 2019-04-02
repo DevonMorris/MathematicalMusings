@@ -139,7 +139,7 @@ Consider the sphere $S_R = \left\{ (x,y,z) \in \mathds{R}^3\ |\ x^2 + y^2 + z^2 
   \]
   and so we have
   \[
-    \left( \pdv{\theta}, \pdv{\phi}, \pdv{\theta}, \pdv{\phi} \right) = \sin^2 \phi \inn*{\pdv{\phi}}{\pdv{\phi}} = r^2 \sin^2 \phi
+    \left( \pdv{\theta}, \pdv{\phi}, \pdv{\theta}, \pdv{\phi} \right) = \sin^2 \phi \inn*{\pdv{\phi}}{\pdv{\phi}} = R^2 \sin^2 \phi
   \]
   likewise
   \[
@@ -149,13 +149,23 @@ Consider the sphere $S_R = \left\{ (x,y,z) \in \mathds{R}^3\ |\ x^2 + y^2 + z^2 
   \[
     K(\sigma) = \frac{1}{R^2}
   \]
-\item We note that when $\dim M = 2$ that $\text{Ric}_p(x) = K(p) = K(\sigma)$. So we have
+\item We note that when $\dim M = 2$ that $\text{Ric}_p(x) = K(\sigma) = K(p)$. So we have
   \[
-    \text{Ric}_p(x) = K(p) = K(\sigma) = \frac{1}{R^2}
+    \text{Ric}_p \left( \pdv{\theta} \right) = K(\sigma) = K(p) = \frac{1}{R^2}
   \]
-\item The easiest way to do this is as a surface of revolution. First we create an arc $\gamma$ parameterized by $\theta$, where $\gamma(0)$ is the center of the ball and and $\gamma(r/R)$ touches the edge of the ball. In other words $\theta \in [0, r/R]$. Furthermore, the distance of $\gamma$ to the axis of rotation must be given by $R\sin(\theta)$. So we have
+\item The easiest way to do this is as a surface of revolution. First we create an arc $\gamma$ parameterized by arclength, where $\gamma(0)$ is the center of the ball and and $\gamma(r)$ touches the edge of the ball. For these types of curves we know that the magnitude of $\gamma'$ is 1. Furthermore, the distance of $\gamma(t)$ to the axis of rotation must be given by $R\sin(t/R)$. So we have
   \[
-    \text{Vol}_{S_R}(B_r(p)) = \int_0^{r/R} 2\pi R \sin(\theta) \ d\theta = 2\pi R \left( 1 - \cos(r/R) \right) = \text{Vol}_{\mathds{R}^2}(B_r(0)) \left( 1 - \cos(r/R) \right)
+    \begin{aligned}
+      \text{Vol}_{S_R}(B_r(p)) &= \int_0^{r} 2\pi R \sin(t/R) \ d\theta = 2\pi R^2 \left( 1 - \cos(r/R) \right) \\
+    &= \text{Vol}_{\mathds{R}^2}(B_r(0)) \left( 2R^2/r^2 - 2R^2\cos(r/R)/r^2 \right) \\
+    &= \text{Vol}_{\mathds{R}^2}(B_r(0)) \left( 2R^2/r^2 - 2\frac{R^2}{r^2}\sum_{n=0}^{\infty} (-1)^n \frac{r^{2n}}{R^{2n} (2n)!} \right) \\
+    &= \text{Vol}_{\mathds{R}^2}(B_r(0)) \left( 1 - 2\frac{r^2}{R^2 4!} - 2\frac{R^2}{r^2}\sum_{n=3}^{\infty} (-1)^n \frac{r^{2n}}{R^{2n} (2n)!} \right) \\
+    &= \text{Vol}_{\mathds{R}^2}(B_r(0)) \left( 1 - 2K(p)\frac{r^2}{6(2 + 2)} - 2\frac{R^2}{r^2}\sum_{n=3}^{\infty} (-1)^n \frac{r^{2n}}{R^{2n} (2n)!} \right) \\
+    \end{aligned}
+  \]
+  So our $\mathcal{O}(r^4)$ term is given by
+  \[
+    -2 \sum_{n=3}^{\infty} (-1)^n \frac{r^{2(n-1)}}{R^{2n}(2n)!}
   \]
   \end{enumerate}
 \end{proof}
