@@ -33,6 +33,9 @@
 \DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
 
 \begin{document}
+
+\section*{Problem 1}%
+
 Consider the sphere $S_R = \left\{ (x,y,z) \in \mathds{R}^3\ |\ x^2 + y^2 + z^2 = R^2 \right\}$ of radius R, and let $g$ be the induced metric on $S_R$ from the standard metric on $\mathds{R}^3$. 
 \begin{enumerate}[(a)]
   \item Compute the components $g_{ij}$ of the metric $g$ in spherical coordinates.
@@ -169,4 +172,289 @@ Consider the sphere $S_R = \left\{ (x,y,z) \in \mathds{R}^3\ |\ x^2 + y^2 + z^2 
   \]
   \end{enumerate}
 \end{proof}
+
+\section*{Problem 2}%
+Let $S \subset \mathds{R}^3$ be a paramaterized surface, i.e. $S$ is the image of an embedding $r: A \rightarrow \mathds{R}^3$ for some open, connected region $A \subset \mathds{R}^2$. A unit normal vector to $S$ at the point $p$ can be obtained by
+\[
+  N(p) = \frac{r_u(p) \times r_v(p)}{\norm{r_u(p) \times r_v(p)}}
+\]
+where $r_u(p)$ and $r_v(p)$ denote the partial derivatives of $r(u,v)$ with respect to $u$ and $v$, evaluated at the point $(u_0, v_0)$ with $r(u_0, v_0) = p$. The normal vector $N(p)$ defines a map $N: S \rightarrow S^2$, called the gauss map.
+
+As the tangent planes $T_pS$ and $T_{N(p)}S^2$ are parallel, we can think of the differential of the Gauss map as giving a map
+\[
+  dN_p: T_pS \rightarrow T_{N(p)}S^2 \cong T_pS
+\]
+The eigenvalues $\kappa_1$ and $\kappa_2$ are called the principal curvatures of $S$ at $p$, while the determinant $\det(dN_p)$ is called the Gaussian curvature of $S$ at $p$.
+
+Compute the principal curvatures and the Gaussian curvatures of the following surfaces in $\mathds{R}^3$:
+\begin{enumerate}[(a)]
+  \item The plane $ax + by + cz = d$, where $a,b,c,d \in \mathds{R}$.
+  \item The sphere $S_R$ of radius $R$.
+  \item The cylinder with $r(u,v) = (\cos u, \sin u, v)$.
+  \item The hyperbolic paraboloid with $r(u,v) = (u, v, v^2 - u^2)$, at the point $p = (0,0,0)$.
+\end{enumerate}
+
+A point $p \in S$ is called elliptic if $\det(dN_p) > 0$, hyperbolic if $\det(dN_p) < 0$, parabolic if $\det(dN_p) = 0$ but $dN_p \neq 0$, and planar if $dN_p = 0$.
+
+\begin{proof}[Solution]
+  The computations are as follows  
+  \begin{enumerate}[(a)]
+    \item If we let $u = x$ and $v = y$, and assuming $c \neq 0$ then we have that $z = \frac{d - au - bv}{c}$. We get the parametrization
+      \[
+        r(u,v) = (u, v, (d - au - bv)/c)
+      \]
+      Taking our partials, we get
+      \[
+        \begin{aligned}
+          r_u(u,v) &= (1, 0, -a/c) \\
+          r_v(u,v) &= (0, 1, -b/c)
+        \end{aligned}
+      \]
+      computing the cross product gives
+      \[
+        r_u(u,v) \times r_v(u,v) = (a/c, b/c, 1)
+      \]
+      and normalizing gives
+      \[
+        N(p) = \frac{1}{\sqrt{a^2 + b^2 + c^2}} (a, b, c)
+      \]
+      It is easy to see that the differential is given by
+      \[
+        dN_p = 0
+      \]
+      since there is no dependence on $u,v$. So this point is planar (makes sense).
+    \item Under the map
+      \[
+        r(u,v) = (R \cos u \sin v, R \sin u \sin v, R \cos v)
+      \]
+      The normal vector is
+      \[
+        N(p) = (\cos u \sin v, \sin u \sin v, \cos v)
+      \]
+      since the normal vector is always in the direction of the vector that points to the point on the manifold. Taking the differential yields
+      \[
+        \begin{aligned}
+          dN_p \left( \pdv{u} \right) &= -\sin u \sin v \pdv{x} +  \cos u \sin v \pdv{y} \\
+          dN_p \left( \pdv{v} \right) &= \cos u \cos v \pdv{x} + \sin u \cos v \pdv{y} - \sin v \pdv{z}  \\
+        \end{aligned}
+      \]
+      we also note that 
+      \[
+        \begin{aligned}
+          dr \left( \pdv{u} \right) &= -R\sin u \sin v \pdv{x} +  R\cos u \sin v \pdv{y} \\
+          dr \left( \pdv{v} \right) &= R\cos u \cos v \pdv{x} + R\sin u \cos v \pdv{y} - R\sin v \pdv{z}  \\
+        \end{aligned}
+      \]
+      So we can naturally associate $T_{N(p)}S^2$ with $T_pS_R$ and say that
+      \[
+        \begin{aligned}
+          dN_p \left( \pdv{u} \right) &= \frac{1}{R} \pdv{u} \\
+          dN_p \left( \pdv{v} \right) &= \frac{1}{R} \pdv{v}
+        \end{aligned}
+      \]
+      and we can write it in matrix form as
+      \[
+        dN_p =
+        \begin{bmatrix}
+          \frac{1}{R} & 0 \\
+          0 & \frac{1}{R}
+        \end{bmatrix}
+      \]
+      So the principal curvatures are $\kappa_1 = \frac{1}{R}$ and $\kappa_2 = \frac{1}{R}$, and the gaussian curvature is given by
+      \[
+        \det \left( dN_p \right) = \frac{1}{R^2}
+      \]
+    \item Let us first analyze $r_u$ and $r_v$.
+      \[
+        \begin{aligned}
+          r_u &= (-\sin u, \cos u, 0) \\
+          r_v &= (0, 0, 1)
+        \end{aligned}
+      \]
+      And we have that
+      \[
+        r_u \times r_v = (\cos u, \sin u, 0)
+      \]
+      which is already normalized. So we have
+      \[
+        N(p) = (\cos(u), \sin(u), 0)
+      \]
+      taking the differential, we have
+      \[
+        \begin{aligned}
+          dN_p \left( \pdv{u} \right) &= -\sin u  \pdv{x} + \cos u \pdv{y} \\
+          dN_p \left( \pdv{v} \right) &= 0
+        \end{aligned}
+      \]
+      however we also have
+      \[
+        dr \left( \pdv{u} \right) = -\sin u \pdv{x} + \cos u \pdv{y}
+      \]
+      so we can associate $T_{N(p)}S^2$ with $T_pS$
+      \[
+        \begin{aligned}
+        dN_p \left( \pdv{u}  \right) = \pdv{u} \\
+        dN_p \left( \pdv{v} \right) = 0
+        \end{aligned}
+      \]
+      which gives us the matrix in components as
+      \[
+        dN_p = 
+        \begin{bmatrix}
+          1 & 0 \\
+          0 & 0
+        \end{bmatrix}
+      \]
+      which has principal curvature of $\kappa_1 = 1$ and $\kappa_2 = 0$ and gaussian curvature of 
+      \[
+        \det \left(dN_p\right) =  0
+      \]
+      which implies that a cylinder is parabolic.
+    \item We will first analyze $r_u$ and $r_v$
+      \[
+        \begin{aligned}
+          r_u &= (1, 0, -2u) \\
+          r_v &= (0, 1, 2v)
+        \end{aligned}
+      \]
+      And we have that
+      \[
+        r_u \times r_v = (2u, -2v, 1)
+      \]
+      which gives us the normalized vector as
+      \[
+        N(p) = \frac{1}{\sqrt{4u^2 + 4v^2 + 1}} (2u, -2v, 1)
+      \]
+      so the differential tells us that
+      \[
+        \begin{aligned}
+          dN_p \left( \pdv{u} \right) &= \frac{8v^2 + 2}{(4u^2 + 4y^2 + 1)^{3/2}} \pdv{x} + \frac{8uv}{(4u^2 + 4v^2 + 1)^{3/2}}\pdv{y} \\
+          dN_p \left( \pdv{v}  \right) &= - \frac{8uv}{(4u^2 + 4v^2 + 1)^{3/2}} \pdv{x} - \frac{8u^2 + 2}{(4u^2 + 4v^2 + 1)^{3/2}} \pdv{y}
+        \end{aligned}
+      \]
+      Specifically at the point $r(0,0) = (0,0,0)$ we have
+      \[
+        \begin{aligned}
+          dN_0 \left( \pdv{u} \right) = 2 \pdv{x} \\
+          dN_0 \left( \pdv{v} \right) = -2 \pdv{y}
+        \end{aligned}
+      \]
+      and at this same point
+      \[
+        \begin{aligned}
+          dr \left( \pdv{u} \right) &=  \pdv{x} \\
+          dr \left( \pdv{v} \right) &= \pdv{y}
+        \end{aligned}
+      \]
+      so we can associate $T_{N(p)}S^2$ with $T_pS$
+      \[
+        \begin{aligned}
+          dN_0 \left(\pdv{u}\right) &= 2 \pdv{u} \\
+          dN_0 \left(\pdv{v}  \right) &= -2 \pdv{v}
+        \end{aligned}
+      \]
+      which gives us the matrix in components as
+      \[
+        dN_0 =
+        \begin{bmatrix}
+          2 & 0 \\
+          0 & -2
+        \end{bmatrix}
+      \]
+      giving us the principal curvatures $\kappa_1 = 2$, $\kappa_2 = -2$ and the gaussian curvature
+      \[
+        \det(dN_0) = -4
+      \]
+      Thus, this point is hyperbolic.
+  \end{enumerate}
+\end{proof}
+
+\section*{Problem 3}%
+Prove the 2nd Bianchi Identity:
+\[
+  \nabla R(X,Y,Z,W,T) + \nabla R(X,Y,W,T,Z) + \nabla R(X,Y,T,Z,W) = 0
+\]
+for all $X,Y,Z,W,T \in \Gamma^{\infty}(TM)$.
+
+\begin{proof}
+  We note that in this case
+  \[
+    \nabla: \Gamma^{\infty}(TM) \times \Gamma^{\infty}(T_4M) \rightarrow \Gamma^{\infty}(T_4M)
+  \]
+  Or in other words
+  \[
+  \nabla R(X,Y,Z,W,T) + \nabla R(X,Y,W,T,Z) + \nabla R(X,Y,T,Z,W)
+  \]
+  is a $(0,4)$ tensor field. Therefore, we can prove the equality at an arbitrary point $p \in M$ and it will hold on the entire manifold. At this point we note that there exists a geodesic frame $\left\{ e_i \right\}$ (local basis) at $p$, such that
+  \[
+    \nabla_{e_i} e_j(p) = 0
+  \]
+  Therefore, let us examine
+  \[
+    \begin{aligned}
+      \nabla R(e_i, e_j, e_k, e_l, e_h) =& e_h( R(e_i, e_j, e_k, e_l))   \\
+                                         &- R(\nabla_{e_h}e_i, e_j, e_k, e_l) \\
+                                         &- R(e_i, \nabla_{e_h}e_j, e_k, e_l) \\
+                                         &- R(e_i, e_j, \nabla_{e_h}e_k, e_l) \\
+                                         &- R(e_i, e_j, e_k, \nabla_{e_h}e_l)
+    \end{aligned}
+  \]
+  Now we note that since we are using the geodesic frame that $\nabla_{e_i}e_j = 0$
+  \[
+    \begin{aligned}
+      \nabla R(e_i, e_j, e_k, e_l, e_h) &= e_h( R(e_i, e_j, e_k, e_l)) \\ 
+                                        &= e_h \left( \inn*{R(e_i, e_j)e_k}{e_l} \right) \\
+                                        &= e_h \left( \inn*{R(e_k, e_l)e_i}{e_j} \right) \\
+                                        &= e_h \left( \inn*{\nabla_{e_l}\nabla_{e_k}e_i - \nabla_{e_k}\nabla_{e_l}e_i + \nabla_{[e_k,e_l]}e_i}{e_j}\right)
+    \end{aligned}
+  \]
+  Furthermore, since $\nabla$ is compatible with the metric, we have
+  \[
+    \begin{aligned}
+    \nabla R(e_i,e_j,e_k,e_l,e_h) =& \inn*{\nabla_{e_h}\nabla_{e_l}\nabla_{e_k}e_i - \nabla_{e_h}\nabla_{e_k}\nabla_{e_l}e_i + \nabla_{e_h}\nabla_{[e_k,e_l]}e_i}{e_j} \\
+                                   &+ \inn*{\nabla_{e_l}\nabla_{e_k}e_i - \nabla_{e_k}\nabla_{e_l}e_i + \nabla_{[e_k,e_l]}e_i}{\nabla_{e_h}e_j} \\
+                                    =& \inn*{\nabla_{e_h}\nabla_{e_l}\nabla_{e_k}e_i - \nabla_{e_h}\nabla_{e_k}\nabla_{e_l}e_i + \nabla_{e_h}\nabla_{[e_k,e_l]}e_i}{e_j} \\
+    \end{aligned}
+  \]
+  So now let us consider $\nabla R(e_i, e_j, e_k, e_l, e_h) + \nabla R(e_i,e_j, e_l, e_h, e_k) + \nabla  R(e_i, e_j, e_h, e_k, e_l)$, by the definition of curvature, we have
+  \[
+    \begin{aligned}
+      \nabla R(e_i, e_j, e_k, e_l, e_h) &+ \nabla R(e_i,e_j, e_l, e_h, e_k) + \nabla  R(e_i, e_j, e_h, e_k, e_l)  \\ 
+      =& \langle \nabla_{e_h}\nabla_{e_l}\nabla_{e_k}e_i - \nabla_{e_l}\nabla_{e_h}\nabla_{e_k}e_i \\ 
+      &+ \nabla_{e_l}\nabla_{e_k}\nabla_{e_h}e_i - \nabla_{e_k}\nabla_{e_l}\nabla_{e_h}e_i \\
+      &+ \nabla_{e_k}\nabla_{e_h}\nabla_{e_l}e_i - \nabla_{e_h}\nabla_{e_k}\nabla_{e_l}e_i \\
+      &+ \nabla_{e_h} \nabla_{[e_k, e_l]} e_i + \nabla_{e_k}\nabla_{[e_l,e_h]}e_i + \nabla_{e_l} \nabla_{[e_h,e_k]}e_i, e_j\rangle \\
+      =& \langle R(e_l, e_h)\nabla_{e_k}e_i - \nabla_{[e_l,e_h]}\nabla_{e_k}e_i \\
+       &+ R(e_k, e_l) \nabla_{e_h}e_i - \nabla_{[e_k,e_l]}\nabla_{e_h}e_i \\
+       &+ R(e_h, e_k) \nabla_{e_l}e_i - \nabla_{[e_h,e_k]}\nabla_{e_l}e_i \\
+       &+\nabla_{e_h} \nabla_{[e_k, e_l]} e_i + \nabla_{e_k}\nabla_{[e_l,e_h]}e_i + \nabla_{e_l} \nabla_{[e_h,e_k]}e_i, e_j\rangle \\
+      =& \langle R(e_l, e_h) \nabla_{e_k}e_i + R(e_k, e_l) \nabla_{e_h}e_i + R(e_h, e_k)\nabla_{e_l}e_i \\
+       &+ R([e_k,e_l], e_h)e_i + R([e_l,e_h],e_k)e_i + R([e_h,e_l],e_k)e_i\\
+       &- \nabla_{[[e_k,e_l],e_h]}e_i - \nabla_{[[e_l, e_h],e_k]}e_i - \nabla_{[[e_h,e_k],e_l]}e_i, e_j \rangle \\
+      =& \langle R(e_l, e_h) \nabla_{e_k}e_i + R(e_k, e_l) \nabla_{e_h}e_i + R(e_h, e_k)\nabla_{e_l}e_i \\
+       &+ R([e_k,e_l], e_h)e_i + R([e_l,e_h],e_k)e_i + R([e_h,e_l],e_k)e_i\\
+       &- \nabla_{[[e_k,e_l],e_h] + [[e_l,e_h],e_k] + [[e_h,e_k]e_l]}e_i, e_j \rangle
+    \end{aligned}
+  \]
+  Now we note that since $R$ is a tensor it only depends on its arguments at the point. Which implies that the terms $R(e_l, e_h)\nabla_{e_k}e_i$ are zero since $\nabla_{e_k}e_i =0$ at $p$. Furthermore we can use the jacobi identity on the last term leaving us with
+  \[
+    \begin{aligned}
+      \nabla R(e_i, e_j, e_k, e_l, e_h) &+ \nabla R(e_i,e_j, e_l, e_h, e_k) + \nabla  R(e_i, e_j, e_h, e_k, e_l)  \\ 
+      =& \inn*{R([e_k,e_l],e_h)e_i + R([e_l,e_h]e_k)e_i + R([e_h,e_l],e_k)e_i}{e_j} \\
+      =& \inn*{R(\nabla_{e_l}e_k - \nabla_{e_k}e_l, e_h)e_i + R(\nabla_{e_h}e_l - \nabla_{e_l}e_h,e_k)e_i + R(\nabla_{e_l}e_h - \nabla_{e_h}e_l,e_k)e_i}{e_j} \\
+      =& 0
+    \end{aligned}
+  \]
+  Since $R$ is a tensor and $\nabla_{e_l}e_k = 0$ at p. Now let $X = X^i e_i$, $Y = Y^j e_j$, $Z = Z^k e_k$, $W = W^l e_l$, $T = T^k e_k$. We have that
+  \[
+    \begin{aligned}
+      \nabla R(X,Y,Z,W,T) + \nabla R(X,Y,W,T,Z) + \nabla R(X,Y,T,Z,W) &= \\
+      \nabla R(X^i e_i,Y^j e_j,Z^k e_k,W^l e_l,T^h e_h) + \nabla R(X^i e_i,Y^j e_j,W^l e_l,T^h e_h,Z^k e_k) + \nabla R(X^i e_i,&Y^j e_j,T^h e_h,Z^k e_k,W^l e_l) = \\
+      X^i Y^j Z^k W^l T^h \left( \nabla R(e_i, e_j, e_k, e_l, e_h) + \nabla R(e_i,e_j, e_l, e_h, e_k) + \nabla  R(e_i, e_j, e_h, e_k, e_l) \right)  \\
+      X^i Y^j Z^k W^l T^h(0) = 0 &
+    \end{aligned}
+  \]
+\end{proof}
+
+
 \end{document}
