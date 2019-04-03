@@ -456,5 +456,73 @@ for all $X,Y,Z,W,T \in \Gamma^{\infty}(TM)$.
   \]
 \end{proof}
 
+\section*{Problem 4}%
+Let $M$ be a connected Rimannian manfiold with $n \geq 3$. Suppose that $M$ is isotropic, that is, for each $p \in M$, the sectional curvature $K(p,\sigma)$ does not depend on $\sigma \subset T_pM$. Prove that $M$ has constant sectional curvature, that is, $K(p, \sigma)$ also does not depend on $p$.
+
+\begin{proof}
+  Let us consider the tensor field given by
+  \[
+    R'(W,Z,X,Y) = \inn*{W}{X}\inn*{Z}{Y} - \inn*{Z}{X}\inn*{W}{Y}
+  \]
+  Then we can invoke lemma 5.4.3 and say that $R = KR'$ pointwise ($R(p) = K(p,\sigma)R'(p)$).  Now let $T \in \Gamma^\infty(TM)$. We will take the covariant derivative of each side of this equality with respect to $T$. So we get
+  \[
+    \begin{aligned}
+      \nabla_T R = \nabla_T \left(KR'\right) =&  T(KR'(W,Z,X,Y)) \\
+                                             &- KR'(\nabla_T W, Z,X,Y) \\
+                                             &- KR'(W, \nabla_T Z,X,Y) \\
+                                             &- KR'(T W, Z,\nabla_T X,Y) \\
+                                             &- KR'(W, Z,X,\nabla_T Y) \\
+      =& T(KR'(W,Z,X,Y)) \\
+       &- K\inn*{\nabla_T W}{X}\inn*{Z}{Y} - K\inn*{Z}{X}\inn*{\nabla_T W}{Y} \\
+       &- K\inn*{W}{X}\inn*{\nabla_T Z}{Y} - K\inn*{\nabla_T Z}{X}\inn*{W}{Y} \\
+       &- K\inn*{W}{\nabla_T X}\inn*{Z}{Y} - K\inn*{Z}{X}\inn*{W}{Y} \\
+       &- K\inn*{W}{X}\inn*{Z}{\nabla_T Y} - K\inn*{Z}{X}\inn*{W}{\nabla_T Y}
+    \end{aligned}
+  \]
+  Since $\nabla_T$ is Levi-Civita we have compatibility with the metric and we get
+  \[
+    \begin{aligned}
+      \nabla_T R = \nabla_T \left(KR'\right) =&  T(KR'(W,Z,X,Y)) \\
+                                              &- KT \left( \inn*{W}{Z} \right)\inn*{Z}{Y} \\
+                                              &- K\inn*{Z}{X} T \left( \inn*{W}{Y} \right) \\
+                                              &- K\inn*{W}{X} T \left( \inn*{Z}{Y} \right) \\
+                                              &- KT \left( \inn*{Z}{X} \right) \inn*{W}{Y}
+    \end{aligned}
+  \]
+  Now treating T like a derivation and expanding the first term gives us
+  \[
+    \begin{aligned}
+      \nabla_T R = \nabla_T \left(KR'\right) =&  T(K)R'(W,Z,X,Y) \\
+                                              &+ KT(\inn*{W}{X})\inn*{Z}{Y} \\
+                                              &+ K\inn*{W}{X}T(\inn*{Z}{Y}) \\
+                                              &+ KT(\inn*{Z}{X})\inn*{W}{Y} \\
+                                              &+ K\inn*{Z}{X}T(\inn*{W}{Y}) \\ 
+                                              &- KT \left( \inn*{W}{Z} \right)\inn*{Z}{Y} \\
+                                              &- K\inn*{Z}{X} T \left( \inn*{W}{Y} \right) \\
+                                              &- K\inn*{W}{X} T \left( \inn*{Z}{Y} \right) \\
+                                              &- KT \left( \inn*{Z}{X} \right) \inn*{W}{Y}\\
+      =& (TK)(R'(W,Z,X,Y))
+    \end{aligned}
+  \]
+  We can write this in abbreviated form as $\nabla_T R = T(K)R'$. Now applying the second bianchi identity we just proved, we have
+  \[
+    \begin{aligned}
+      0 =& T(K) \left( \inn*{W}{X}\inn*{Z}{Y} - \inn*{Z}{X}\inn*{W}{Y} \right) \\
+         &+ X(K) \left( \inn*{W}{Y}\inn*{Z}{T} - \inn*{Z}{Y}\inn*{W}{T} \right) \\
+         &+ Y(K) \left( \inn*{W}{T}\inn*{Z}{X} - \inn*{Z}{T}\inn*{W}{X} \right) \\
+    \end{aligned}
+  \]
+  which inherently holds for all $X,Y,Z,W,T \in \Gamma^\infty (TM)$. Now let $p \in M$ be a fixed arbitrary point. Given the metric and since $n \geq 3$, we can choose $Y \neq 0$ and $Z$ at $p$ such that$ \inn*{X}{Y} = \inn*{Y}{Z} = \inn*{Z}{X} = 0$  and  $\inn*{Z}{Z} = 1$ (gram schmidt). Furthermore let $T = Z$ at $p$. Now we have that the above expression is
+  \[
+    \begin{aligned}
+      0 &= T(K)\left( \inn*{W}{X}0 - 0\inn*{W}{Y} \right) + X(K) \left(\inn*{W}{Y}1 - 0\inn*{W}{Z} \right) + Y(K)\left(\inn*{W}{Z}0 - 1\inn*{W}{X} \right) \\
+        &= X(K) (\inn*{W}{Y}) - Y(K)(\inn*{W}{X}) \\
+        &= \inn*{W}{X(K)Y - Y(K)X}
+    \end{aligned}
+  \]
+  Since this relation holds for arbitrary $W$, we have $X(K)Y - Y(K)X$, since $X \perp Y$ and $Y \neq 0$ we also have that $X,Y$ are linearly independent. This implies that $X(K)Y = 0$. However, since $Y \neq 0$, we have $X(K) = 0$ for all $X \in \Gamma^{\infty}(TM)$. Thinking of $X$ as a derivative, it follows that $K(p) $ is constant.
+\end{proof}
+
+
 
 \end{document}
