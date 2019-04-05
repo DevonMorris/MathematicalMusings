@@ -1,0 +1,99 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy} \lhead{Devon Morris}
+\chead{Detection \& Estimation Theory - Homework 6}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem{prop}{Proposition}
+\newtheorem*{sol}{Solution}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+\section*{Problem 1}
+Let $N[0,t)$ denote the number of particles emitted from a radioactive source on the time interval $[0,t)$. This is a Poisson random variable
+\[
+  P[N[0,t) = n] = e^{-\lambda t}\frac{(\lambda t)^n}{n!}
+\]
+\[
+  EN[0,t) = \lambda t; \quad \text{var}N[0,t) = \lambda t
+\]
+Let $(t_1, t_2, \dots, t_n)$ denote a sequence of times at which $N[0,t)$ is measured.
+\begin{enumerate}
+  \item Find the MMSE estimator of $N[0,t_n)$, given $N[0,t_i)$, $i=1,2, \dots, n-1$
+  \item Find mean of the MMSE estimator.
+  \item Find the mean-squared error the MMSE estimator.
+\end{enumerate}
+
+\begin{proof}[Solution]
+  \begin{enumerate}
+    \item To avoid cumbersome notation, I'm going to use $t_i$ and $N[0,t_i)$ synonomously. Since we want the MMSE estimator we can simply calculate
+      \[
+        t_{nB} = E[t_n|t_1, \dots, t_{n-1}]
+      \]
+      To find this, we first need $P[N[0,t) = k | t_1, \dots, t_{n-1}]$. It should be straightforward to see that
+      \[
+        P[t_1 = k_1, \dots, t_n = k_n] = \prod_{i=0}^n e^{-\lambda (t_i - t_{i-1})} \frac{(\lambda(t_i - t_{i-1}))^{k_i - k_{i-1}}}{(k_i - k_{i-1})!}
+      \]
+      i.e. these random variables are still independent over the intervals between $t_i - t_{i-1}$. This implies that $t_0 = 0$ and $k_0 = 0$.
+      \[
+        \begin{aligned}
+          P[t_1 = k_1, \dots, t_n = k_n] &= e^{-\lambda t_n}\lambda^{k_n} \prod_{i=0}^n  \frac{(t_i - t_{i-1})^{k_i-k_{i-1}}}{(k_i - k_{i-1})!} \\
+        \end{aligned}
+      \]
+      However this implies that,
+      \[
+        P[t_1 = k_1, \dots, t_{n-1} = k_{n-1}] = e^{-\lambda t_{n-1}} \lambda^{k_{n-1}} \prod_{i=0}^{n-1}  \frac{(t_i - t_{i-1})^{k_i-k_{i-1}}}{(k_i - k_{i-1})!} \\
+      \]
+      So we have that 
+      \[
+        P[t_n = k_n| t_1 = k_1, \dots, t_{n-1} = k_{n-1}] =  e^{-\lambda(t_n - t_{n-1})} \frac{(\lambda(t_n - t_{n-1}))^{k_n - k_{n-1}}}{(k_n - k_{n-1})!}
+      \]
+      Which makes sense because $t_1, \dots, t_{n-2}$ contain redundant information. So now consider the random variable $t_n' = t_n - k_{n-1}$, which gives us
+      \[
+        P[t_n' = k_n] = P[t_n - k_{n-1} = k_n] = P[t_n = k_n + k_{n-1}] = e^{-\lambda (t_n - t_{n-1})} \frac{(\lambda(t_n - t_{n-1}))^{k_n}}{k_n!}
+      \]
+      which is poisson distributed and has mean $E t_n' = \lambda(t_n - t_{n-1})$, so we have that
+      \[
+        t_nB = \lambda(t_n - t_{n-1}) + k_{n-1}
+      \]
+      which totally makes sense.
+
+  \end{enumerate}
+\end{proof}
+
+\end{document}

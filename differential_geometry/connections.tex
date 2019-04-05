@@ -90,10 +90,16 @@ In coordinates: $X = X^j \pdv{x^j}$, $Y= Y^j \pdv{x^i}$.
     \nabla_X Y &= \nabla_{X^j \pdv{x^j}} \left(Y^i \pdv{x^i} \right) = X^j \nabla_{\pdv{x^j}} \left(Y^i \pdv{x^i}  \right) \\
                &= X^j Y^i \nabla_{\pdv{x^j}} \pdv{x^i} + X(Y^i) \pdv{x^i} \\
                &= X^j Y^i \nabla_{\pdv{x^j}} \pdv{x^i} + X^j \pdv{Y^i}{x^j} \pdv{x^i} \\
-               &= X^jY^i\Gamma^{k}_{ij} \pdv{x^k} + X^j \pdv{Y^i}{x^j}\pdv{x^i}
+               &= X^jY^i\Gamma^{k}_{ij} \pdv{x^k} + X^j \pdv{Y^i}{x^j}\pdv{x^i} \\
+               &=\left( X^j \pdv{Y^k}{x^j} + X^j Y^i \Gamma_{ij}^k \right) \pdv{x^k}
   \end{aligned}
 \]
-Where we define $\nabla_{\pdv{x^j}}\pdv{x^i} = \Gamma^{k}_{ij} \pdv{x^k}$  and call them the christoffel symbols of the affine connection $\nabla$. The first term makes everything transform correctly and the second term is what we intuitevly think of as the derivative. We see in coordinates that $\nabla_X Y$ depends on $X^i, Y^j$ and on $X(Y^j)$ (which is why we need to know $Y$ in some neighborhood. Connections allow us to take derivatives of $X(f)$ along curves.
+Where we define $\nabla_{\pdv{x^j}}\pdv{x^i} = \Gamma^{k}_{ij} \pdv{x^k}$  and call them the christoffel symbols of the affine connection $\nabla$. The second term makes everything transform correctly and the first term is what we intuitevly think of as the derivative. We see in coordinates that $\nabla_X Y$ depends on $X^i, Y^j$ and on $X(Y^j)$ (which is why we need to know $Y$ in some neighborhood. Connections allow us to take derivatives of $X(f)$ along curves. If we think of $ \pdv{Y}{x}$ as the jacobian of this vector field in terms of its components, we have that the components of $\nabla_X Y$ are given by
+\[
+  \pdv{Y}{x} X - PX = \left(\pdv{Y}{x} - P \right) X
+\]
+
+where $P_{ij} = Y^k \Gamma_{jk}^i$. If we think of $M$ as an embedded manifold, it can be shown that $PX$ lives in $T_pM ^\perp$ and is such that $ \nabla_X Y \in T_pM$. This gives a convenient way to calculate the Levi-Civita connection for an embedded manifold. You simply take directional derivative and project it down onto the tangent space.
 
 \begin{defn}
   If $\gamma: I \rightarrow M$ is smooth a vector field $X$ along $\gamma$ is a smooth map $X: I \rightarrow TM$ such that $X(t) \in T_{\gamma(t)}M$ for all $t \in I$.
@@ -234,11 +240,12 @@ We recall that
 \]
 If we compute $g \left( \pdv{x^i}, \nabla_Y X \right)$ by plugging it into the above, we get
 \[
-  \Gamma_{lj}^k = g^{im} \frac{1}{2} \left( \pdv{x^j}g_{li} + \pdv{x^l}g_{ij} - \pdv{x^i}g_{jl} \right)
+  \Gamma_{kl}^i = g^{im} \frac{1}{2} \left( \pdv{x^l}g_{mk} + \pdv{x^k}g_{ml} - \pdv{x^m}g_{kl} \right)
 \]
 where $g^{ik}$ is the inverse of $g_{ik}$, on $\mathds{R}^n$ we have that
 \[
   \Gamma_{ij}^k = 0
 \]
+
 
 \end{document}
