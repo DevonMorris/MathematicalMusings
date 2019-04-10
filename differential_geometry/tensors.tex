@@ -534,17 +534,60 @@ This shows that the shape object mirrors the gauss map for embedded surfaces.
                           &= -\inn*{\bar{\nabla}_{\bar{X}} N}{Y}_p
     \end{aligned}
   \]
-  As shown in the proof of the weingarten equation. Since this holds for arbitrary $x,y$ then we have $S_\eta(x) = -(\bar{\nabla}_{\nabla{X}}N)^T$
+  As shown in the proof of the weingarten equation. Since this holds for arbitrary $x,y$ then we have $S_\eta(x) = -(\bar{\nabla}_{\bar{X}}N)^T$
 \end{proof}
 
 Now we can do an example. Suppose $f:M^n \rightarrow \bar{M}^{n+1}$ (a hypersurface, possibly with self-intersections). Now let $p \in M$ with $\eta \in (T_pM)^\perp$, $|\eta| = 1$. Then $S_\eta: T_pM \rightarrow T_pM$ is self-adjoint. This implies that there is an orthonormal eigenbasis $\left\{ b_1, \dots, b_n \right\}$ of $T_pM$ such that $S_\eta(b_i) = \lambda_i b_i$ and $\lambda_i \in \mathds{R}$. If both $M, \bar{M}$ are oriented, then we have a unique choice for $\eta$ by saying $\left\{ b_1, \dots, b_n, \eta \right\}$ to a positive orientation for $T_p\bar{M}$ whenever $\left\{ b_1, \dots, b_n \right\}$ positively oriented bases for $T_pM$. We call the eigenvectors $b_j$ for $S_\eta$ the principal directions of $f$ and $\lambda_j$ the principle curvatures for $f$. and we call
 \[
   \det (S_\eta) = \lambda_1 \cdots \lambda_n
 \]
-and we call 
+the gauss-kronecker or gaussian curvature and we call 
 \[
   \frac{1}{n}\left( \lambda_1 + \cdots + \lambda_n \right)
 \]
-the mean curvature.
+the mean curvature. 
+Now consider the a more specific example $f: M^n \rightarrow \mathds{R}^{n+1}$. Let $N$ be a unit normal field which extends $\eta$ locally. So consdier $S^n = \left\{ x \in \mathds{R}^{n+1} | \norm{x} = 1 \right\}$. So we can define the gauss map as
+\[
+  \begin{aligned}
+    G:& M^n \rightarrow S^n \\
+      & p \mapsto N(p)
+  \end{aligned}
+\]
+where we identify $T_p\mathds{R}^{n+1} \cong \mathds{R}^{n+1}$ in the usual way. So we think of $S^n \subset T_p\mathds{R}^{n+1}$. Furthermore we $T_pM$ and $T_{G(p)}S^n$ are parallel so we can identify them. Then 
+\[
+  dG_p:T_pM \rightarrow T_{G(p)}S^n \cong T_pM
+\]
+is given by
+\[
+  dG_p(x) = \dv{t} \eval{\left( G \circ \alpha(t) \right)}_{t=0} = \dv{t} \eval{N \circ \alpha(t)}_{t=0} = \bar{\nabla}_{\bar{X}} N
+\]
+where $\alpha:I \rightarrow M$, $\alpha(0) = p$, $\alpha'(0) = X$, since $\mathds{R}^{n+1}$ is flat, so we can ignore the christoffel symbols. Since $\inn*{N}{N} = 1$ we have
+\[
+  \begin{aligned}
+    0 &= X(\inn*{N}{N}) \\
+      &= 2 \inn*{\bar{\nabla}_{\bar{X}}N}{N}
+  \end{aligned}
+\]
+Hence we have that $(\bar{\nabla}_{\bar{X}}N)^N = 0$ and 
+\[
+  \bar{\nabla}_{\bar{X}}N = \left( \bar{\nabla}_{\bar{X}} N \right)^T
+\]
+giving us
+\[
+  dG_p(x) = \left( \bar{\nabla}_{\bar{X}}N \right)^T = -S_\eta (x)
+\]
+A topological application of Gauss-Kronecker curvature is
+\begin{thm}
+  Suppose $M^n$ is a compact, connected, orientable manifold, and suppose there exists an immersion $f: M^n \rightarrow \mathds{R}^{n+1}$ with nonvanishing gauss-kronecker curvature at each point of $M$. Then $M^n \cong S^n$.
+\end{thm}
+Recall that if $X,Y$ are smooth manifolds, then $X$ is a covering space of $Y$ if there exists a local diffeomorphism $F: X \rightarrow Y$, such that for every $q \in Y$, there exists a $U_q$, $q \in U_q$ such that $F^{-1}(U_q) = V_1 \coprod V_2 \coprod \cdots \coprod V_k \cdots$ such that 
+\[
+  \eval{F}_{V_j}: V_j \rightarrow U_q
+\]
+is a diffeomorphism. If $F: X \rightarrow Y$ is a local diffeomorphism, $X$ compact then $F$ is a covering map. Also we have that the only covering map of $S^n$ are diffeomorphisms $F: S^n \rightarrow S^n$, $n \geq 2$. Now we can prove the theorem.
+
+\begin{thm}
+  If $f:M \rightarrow \mathds{R}^{n+1}$ has nonvanishing GK curvature. Then we have $dG_p \neq 0$ for all $p \in M$. Furthermore $dG_p$ is nonsingular at all $p$. Then by invertible mapping theorem then $G:M \rightarrow S^n$ is a local diffeomorphism. Then $G$ is a covering map, and thus $G$ is a diffeomorphism.
+\end{thm}
 
 \end{document}
