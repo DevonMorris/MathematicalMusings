@@ -1,0 +1,81 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage[shortlabels]{enumitem}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Dynamics}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Final Project: Apollo Spacecraft Attitude Dynamics}%
+
+\subsection*{Task A:}%
+Let $\hat{i}$, $\hat{j}$, $\hat{k}$ be the unit vectors of the $A$ frame.
+\begin{enumerate}[a.]
+  \item General Case:
+    The location of the center of mass is
+    \[
+      r_{G/A} = 23.6177 \hat{i} + 0.0961 \hat{j} + -0.0087 \hat{k}\ m
+    \]
+    which gives us the inertia matrix of
+    \[
+      \begin{aligned}
+        [I_{G/A}] &= [I_{SM/A}] + [I_{CM/A}] + [I_{PROP/A}] \\
+            &=
+            \begin{bmatrix}
+              40823.073 &  1537.807 & -3179.297 \\
+              1537.807 & 90593.489 & 128.577 \\
+              -3179.297 & 128.577 & 98742.852
+            \end{bmatrix}
+      \end{aligned}
+    \]
+  \item Simplified Case:
+    The location of the center of mass is
+    \[
+      r_{G/A} = 23.6177 \hat{i}\ m
+    \]
+    which gives us the inertia matrix of
+    \[
+      [I_{G/A}] = 
+      \begin{bmatrix}
+        40481.983 & 0 & 0 \\
+        0 & 90358.316 & 0 \\
+        0 & 0 & 98636.935
+      \end{bmatrix}
+    \]
+\end{enumerate}
+\subsection*{Task B:}%
+
+
+
+\end{document}
