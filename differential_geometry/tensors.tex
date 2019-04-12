@@ -280,7 +280,7 @@ If $M$ has local coordinates $(U,(x^i))$, then locally we can write $\Omega^kU$ 
 \[
   \left\{ dx^{i_1} \wedge \cdots \wedge dx^{i_k} | 1 \leq i_1 < \dots < i_k \leq n\right\}
 \]
-rank $\Omega^k U = {n\choose k}$. Locally then we write
+rank $\Omega^k U = \binom{n}{k}$. Locally then we write
 \[
   \omega = \omega_{i_1 \dots i_k} dx^{i_1} \wedge \cdots \wedge dx^{i_k} = \omega_I dx^I
 \]
@@ -357,5 +357,237 @@ An example is $\omega = (x^2 + y) dx \wedge dy$. so we have that
 \[
   d\omega = (2x dx + dy) \wedge dx \wedge dy + (x^2 + y) \wedge ddx \wedge dy - (x^2 + y) \wedge dx \wedge ddy = (2x dx + dy) \wedge dx \wedge dy
 \]
+
+\subsection*{First and Second Fundamental Forms for surfaces}%
+Let $S \subset \mathds{R}^3$ be a regular, parametrized surface
+\[
+  r(u,v) \rightarrow S
+\]
+The first fundamental form is given by
+\[
+  \begin{aligned}
+    I&: T_pS \times T_pS \rightarrow \mathds{R}\\
+     &(x,y) \mapsto \inn*{x}{y}_{\mathds{R}^3}
+  \end{aligned}
+\]
+If we take the basis $r_u = \pdv{r}{u}$, $r_v = \pdv{r}{v}$ gives us a basis for $T_pS$, In this basis $I$ is represented by
+\[
+  \begin{bmatrix}
+    r_u r_u & r_u r_v \\
+    r_v r_u & r_v r_v
+  \end{bmatrix}
+\]
+If you just think of this as a weighted inner product. The second fundamental form is given by
+\[
+  \mathds{I}: T_pS \times T_pS \rightarrow \mathds{R}
+\]
+We pick coordinates $(x,y,z)$ about $p \in S$ such that $p = (0,0,0)$ and $T_pS = \left\{ z = 0 \right\}$, the $z$-plane tagent to $S$ and $p$. So that $S$ is locally given by $z = f(x,y)$ for some smooth $f$. So this tells us that $f(0,0) = 0$ and $f_u(0,0) = 0$,$f_y(0,0) = 0$. So we take the maclaurin series and get
+\[
+  f \rightarrow \frac{Lx^2}{2} + Mxy + \frac{Ny^2}{2} + \mathcal{O}(\text{cubic terms})
+\]
+so in the basis $\left\{ \pdv{x}, \pdv{y} \right\}$, for $T_{(0,0,0)}S$ the second fundamental form is given by
+\[
+  \begin{bmatrix}
+    L & M \\
+    M & N
+  \end{bmatrix}
+  = 
+  \begin{bmatrix}
+    f_{xx}(0,0) & f_{xy}(0,0) \\
+    f_{yx}(0,0) & f_{yy}(0,0)
+  \end{bmatrix}
+\]
+in this basis $\mathds{I}$ is represented by
+\[
+  \begin{bmatrix}
+    r_{uu} \cdot n & r_{uv} \cdot n \\
+    r_{vu} \cdot n & r_{vv} \cdot n
+  \end{bmatrix}
+\]
+where $n = r_u \times r_v / |r_u \times r_v|$.  This implies that 
+\[
+  \mathds{I} = (r_{uu} \cdot n) du^2 + 2(r_{uu} \cdot n) dudv + (r_{vv} \cdot n) dv^2
+\]
+Where $dudv = du \otimes dv$. 
+
+\subsection*{Second Fundamental form Riemannnian Manifolds}%
+In these sections we will let $f: M^n \rightarrow \bar{M}^{m+n}$ be an immersion and let $\bar{M}$ be riemannian with metric $g$. Equip $M$ witht he metric induced by $g$. For every $p \in M$ there exists an open $U$ containing $p$ and $\bar{U}$ containing $f(p)$ so that $(f(U), \bar{U})$ is mapped diffeomorphically on $(B^n, B^{n+m})$ (think of it like a slice chart). Identify $U$ with $f(U)$ and $v \in T_pM$ with their image under $df_p(v) \in T_{f(p)}\bar{M}$. 
+
+For each $p \in M$, using $g$ we can split the tangent space at $T_p\bar{M} = T_pM \oplus (T_pM)^\perp$. For $v \in T_p\bar{M}$ write $v = v^T + v^N$ (this splitting is smooth) meaning that
+\[
+  \begin{aligned}
+    T\bar{M} &\rightarrow T\bar{M} \\
+    (p,v) &\mapsto (p, v^T) \\
+    (p,v) &\mapsto (p,v^N) 
+  \end{aligned}
+\]
+now let $\bar{\nabla}$ be the levi civita connection on $\bar{M}$. Let $X,Y \in \Gamma^{\infty}(TU)$ and let $\bar{X},\bar{Y} \in \Gamma^\infty(T\bar{U})$ be local extensions. So $\nabla_X Y = (\bar{\nabla}_{\bar{X}}\bar{Y})^T$. Is the levi-civita connection on $U$. 
+\begin{defn}
+  Let $X,Y$ be local vector fields on $M$, with local extensions $\bar{X}, \bar{Y}$ to $\bar{M}$. Define
+  \[
+    \begin{aligned}
+      B(X,Y) &= \bar{\nabla}_{\bar{X}}\bar{Y} - \nabla_X Y \\
+             &= (\bar{\nabla}_{\bar{X}}\bar{Y})^N
+    \end{aligned}
+  \]
+  Is a local vectorfield on $\bar{M}$, defined locally on $M$.
+\end{defn}
+
+\begin{lem}
+  $B(X,Y)$ doesn't depend on $\bar{X}, \bar{Y}$
+\end{lem}
+\begin{proof}
+  $\bar{X}_1$ and $\bar{X}_2$ are local extension of $X$. Consider
+  \[
+    (\bar{\nabla}_{\bar{X}_1}\bar{Y} - \nabla_X Y) - (\bar{\nabla}_{\bar{X}_2}\bar{Y} - \nabla_X Y) = \bar{\nabla}_{\bar{X}_1 - \bar{X}_2} \bar{Y} = 0
+  \]
+  on $M$. By what was proved it also doesn't depend on $\bar{Y}$.
+\end{proof}
+
+\begin{prop}
+  The map $B: \Gamma^\infty(TU) \times \Gamma^\infty(TU) \rightarrow \Gamma^\infty(TU)^\perp$ is symmetric and $C^\infty(U)$-bilinear
+\end{prop}
+
+\begin{proof}
+  Clearly $B(X,Y)$ is additive in both arguments by definition of the Levi-Civita connection. Also $B(fX,Y) = fB(X,Y)$ because $\nabla$ and $\bar{\nabla}$ are $C^\infty$ linear in $X$. Show $B(X,fY) = fB(X,Y)$ so let $\bar{f} \in C^\infty(\bar{U})$ be a local extension of $f$. 
+  \[
+    \begin{aligned}
+      B(X,fY) &= \bar{\nabla}_{\bar{X}} (\bar{f}\bar{Y}) - \nabla_X(fY) \\
+              &= \bar{X} (\bar{f}) + \bar{f}\nabla_{\bar{X}}\bar{Y} - X(f) Y - f \nabla_X Y
+    \end{aligned}
+  \]
+  since $X \in \Gamma^\infty(TU)$ so $\bar{X}(\bar{f}) = X(\bar{f}) = X(f)$. So along $U$, $\bar{Y} = Y$ we have that
+  \[
+    B(X,fY) = fB(X,Y)
+  \]
+  Note by the symmetry of the connection we have
+  \[
+    \left[ \bar{X}, \bar{Y} \right] = \bar{\nabla}_{\bar{X}}\bar{Y} - \bar{\nabla}{\bar{Y}}\bar{X}
+  \]
+  So we have that
+  \[
+    B(X,Y) = \bar{\nabla}_{\bar{X}}\bar{Y} - \nabla_X Y = \left[ \bar{X}, \bar{Y} \right] + \bar{\nabla}_{\bar{Y}}\bar{X} - [X,Y] - \nabla_Y X = \bar{\nabla}_{\bar{Y}}\bar{X} - \nabla_Y \nabla_X = B(Y,X)
+  \]
+  We further note that $B$ is a tensor.
+\end{proof}
+
+\begin{defn}
+  Let $p \in M$, $\eta \in (T_pM)^\perp$. Define $H_\eta : T_pM \times T_pM \rightarrow \mathds{R}$ by
+  \[
+    H_\eta(X,Y) = \inn*{B(X,Y)}{\eta}
+  \]
+\end{defn}
+
+\begin{defn}
+  Let $p \in M$, $\eta \in (T_pM)^\perp$. Then the second fundamental form of an immersion $f:M \rightarrow \bar{M}$ at $p$ along the normal vector $\eta$ is
+  \[
+    \mathds{I}_\eta(X) = H_\eta(X,X) = \inn*{B(X,X)}{\eta}
+  \]
+\end{defn}
+Note: Other books define the 2nd fundamental form to be $B(X,Y)$ and call $H(X,Y)$ the scalar second fundamental form.
+
+As $H_\eta(X,Y)$ is bilinear and symmetric, there exists a self-adjoint operator $S_\eta: T_pM \rightarrow T_pM$, such that
+\[
+  \inn*{S_\eta(X)}{Y} = \inn*{X}{S_\eta(Y)} = H_\eta(X,Y) = \inn*{B(X,Y)}{\eta}
+\]
+$S_\eta$ is called the shape operator.
+
+\begin{lem}[Weingarten equation]
+  Let $X,Y \in \Gamma^\infty(TM)$ and $N \in \Gamma^\infty(TM)^\perp$. Then 
+  \[
+    \inn*{\bar{\nabla}_X N}{Y} = - \inn*{N}{B(X,Y)}
+  \]
+\end{lem}
+
+\begin{proof}
+  So we have that $X \left( \inn*{N}{Y} \right) = 0$ since $\inn*{N}{Y}$. Due to compatilibity  with the metric we have
+  \[
+    \begin{aligned}
+      0 &= \inn*{\bar{\nabla}_{\bar{X}} N}{Y} + \inn*{N}{\bar{\nabla}_{\bar{X}}\bar{Y}} \\
+        &= \inn*{\bar{\nabla}_{\bar{X}} N}{Y} + \inn*{N}{B(X,Y) + \nabla_X Y} \\
+        &= \inn*{\bar{\nabla}_{\bar{X}} N}{Y} + \inn*{N}{B(X,Y)}
+                                                                                 &
+    \end{aligned}
+  \]
+  which gives us that $\inn*{\bar{\nabla}_{\bar{X}} N}{Y} = - \inn*{N}{B(X,Y)}$
+\end{proof}
+
+\begin{prop}
+  Let $p \in M$, $\eta \in (T_pM)^\perp$, $x \in T_pM$. Let $N$ be a local extension of $\eta$ to a normal vector field along $M$,  then 
+  \[
+    S_\eta(X) = - (\bar{\nabla}_{\bar{X}} N)^T
+  \]
+\end{prop}
+This shows that the shape object mirrors the gauss map for embedded surfaces.
+\begin{proof}
+  Let $y  \in T_pM$ and let $X,Y \in \Gamma^\infty(TM)$ be local extensions of $x,y$ then
+  \[
+    \inn*{N}{Y} = 0
+  \]
+  and hence
+  \[
+    \begin{aligned}
+      \inn*{S_\eta(x)}{y} &= \inn*{B(X,Y)(p)}{N(p)} \\
+                          &= \inn*{\bar{\nabla}_{\bar{X}}\bar{Y} - \nabla_X Y}{N}_p \\
+                          &= \inn*{\bar{\nabla}_{\bar{X}}\bar{Y}}{N}_p \\
+                          &= -\inn*{Y}{\bar{\nabla}_{\bar{X}} N}_p \\
+                          &= -\inn*{\bar{\nabla}_{\bar{X}} N}{Y}_p
+    \end{aligned}
+  \]
+  As shown in the proof of the weingarten equation. Since this holds for arbitrary $x,y$ then we have $S_\eta(x) = -(\bar{\nabla}_{\bar{X}}N)^T$
+\end{proof}
+
+Now we can do an example. Suppose $f:M^n \rightarrow \bar{M}^{n+1}$ (a hypersurface, possibly with self-intersections). Now let $p \in M$ with $\eta \in (T_pM)^\perp$, $|\eta| = 1$. Then $S_\eta: T_pM \rightarrow T_pM$ is self-adjoint. This implies that there is an orthonormal eigenbasis $\left\{ b_1, \dots, b_n \right\}$ of $T_pM$ such that $S_\eta(b_i) = \lambda_i b_i$ and $\lambda_i \in \mathds{R}$. If both $M, \bar{M}$ are oriented, then we have a unique choice for $\eta$ by saying $\left\{ b_1, \dots, b_n, \eta \right\}$ to a positive orientation for $T_p\bar{M}$ whenever $\left\{ b_1, \dots, b_n \right\}$ positively oriented bases for $T_pM$. We call the eigenvectors $b_j$ for $S_\eta$ the principal directions of $f$ and $\lambda_j$ the principle curvatures for $f$. and we call
+\[
+  \det (S_\eta) = \lambda_1 \cdots \lambda_n
+\]
+the gauss-kronecker or gaussian curvature and we call 
+\[
+  \frac{1}{n}\left( \lambda_1 + \cdots + \lambda_n \right)
+\]
+the mean curvature. 
+Now consider the a more specific example $f: M^n \rightarrow \mathds{R}^{n+1}$. Let $N$ be a unit normal field which extends $\eta$ locally. So consdier $S^n = \left\{ x \in \mathds{R}^{n+1} | \norm{x} = 1 \right\}$. So we can define the gauss map as
+\[
+  \begin{aligned}
+    G:& M^n \rightarrow S^n \\
+      & p \mapsto N(p)
+  \end{aligned}
+\]
+where we identify $T_p\mathds{R}^{n+1} \cong \mathds{R}^{n+1}$ in the usual way. So we think of $S^n \subset T_p\mathds{R}^{n+1}$. Furthermore we $T_pM$ and $T_{G(p)}S^n$ are parallel so we can identify them. Then 
+\[
+  dG_p:T_pM \rightarrow T_{G(p)}S^n \cong T_pM
+\]
+is given by
+\[
+  dG_p(x) = \dv{t} \eval{\left( G \circ \alpha(t) \right)}_{t=0} = \dv{t} \eval{N \circ \alpha(t)}_{t=0} = \bar{\nabla}_{\bar{X}} N
+\]
+where $\alpha:I \rightarrow M$, $\alpha(0) = p$, $\alpha'(0) = X$, since $\mathds{R}^{n+1}$ is flat, so we can ignore the christoffel symbols. Since $\inn*{N}{N} = 1$ we have
+\[
+  \begin{aligned}
+    0 &= X(\inn*{N}{N}) \\
+      &= 2 \inn*{\bar{\nabla}_{\bar{X}}N}{N}
+  \end{aligned}
+\]
+Hence we have that $(\bar{\nabla}_{\bar{X}}N)^N = 0$ and 
+\[
+  \bar{\nabla}_{\bar{X}}N = \left( \bar{\nabla}_{\bar{X}} N \right)^T
+\]
+giving us
+\[
+  dG_p(x) = \left( \bar{\nabla}_{\bar{X}}N \right)^T = -S_\eta (x)
+\]
+A topological application of Gauss-Kronecker curvature is
+\begin{thm}
+  Suppose $M^n$ is a compact, connected, orientable manifold, and suppose there exists an immersion $f: M^n \rightarrow \mathds{R}^{n+1}$ with nonvanishing gauss-kronecker curvature at each point of $M$. Then $M^n \cong S^n$.
+\end{thm}
+Recall that if $X,Y$ are smooth manifolds, then $X$ is a covering space of $Y$ if there exists a local diffeomorphism $F: X \rightarrow Y$, such that for every $q \in Y$, there exists a $U_q$, $q \in U_q$ such that $F^{-1}(U_q) = V_1 \coprod V_2 \coprod \cdots \coprod V_k \cdots$ such that 
+\[
+  \eval{F}_{V_j}: V_j \rightarrow U_q
+\]
+is a diffeomorphism. If $F: X \rightarrow Y$ is a local diffeomorphism, $X$ compact then $F$ is a covering map. Also we have that the only covering map of $S^n$ are diffeomorphisms $F: S^n \rightarrow S^n$, $n \geq 2$. Now we can prove the theorem.
+
+\begin{thm}
+  If $f:M \rightarrow \mathds{R}^{n+1}$ has nonvanishing GK curvature. Then we have $dG_p \neq 0$ for all $p \in M$. Furthermore $dG_p$ is nonsingular at all $p$. Then by invertible mapping theorem then $G:M \rightarrow S^n$ is a local diffeomorphism. Then $G$ is a covering map, and thus $G$ is a diffeomorphism.
+\end{thm}
 
 \end{document}
