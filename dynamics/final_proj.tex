@@ -91,7 +91,23 @@ First we have that the euler angle rates and angular velocities are related by
     \omega_z &= \dot{\psi}c_{\theta}c_{\phi} - \dot{\theta}s_{\phi}
   \end{aligned}
 \]
-Using these in the general rotational equations (and using Matlab's symbolic toolbox) gives the six equations of motion
+and inversely
+\[
+  \begin{aligned}
+    \dot{\psi} &= \frac{1}{c_{\theta}} \left( \omega_y s_{\phi} + \omega_z c_{\phi} \right) \\
+    \dot{\theta} &= \omega_y c_{\phi} - \omega_z s_{\phi} \\
+    \dot{\phi} &= \frac{1}{c_{\theta}} \left( \omega_y s_{\theta} s_{\phi} + \omega_z s_{\theta}c_{\phi} \right) + \omega_x
+  \end{aligned}
+\]
+These can be coupled with the standard rotational equations of motion
+\[
+  \begin{aligned}
+  I_{xx} \dot{\omega}_x - I_{xy} \left( \dot{\omega}_y - \omega_x \omega_z\right) - I_{xz}(\dot{\omega}_z + \omega_x \omega_y) - (I_{yy} - I_{zz})\omega_y \omega_z - I_{yz} (\omega_y^2 - \omega_z^2) = M_x \\
+  I_{yy} \dot{\omega}_y - I_{yz} \left( \dot{\omega}_x - \omega_y \omega_z\right) - I_{xy}(\dot{\omega}_x + \omega_y \omega_z) - (I_{zz} - I_{xx})\omega_x \omega_z - I_{xz} (\omega_z^2 - \omega_x^2) = M_y \\
+  I_{zz} \dot{\omega}_z - I_{xz} \left( \dot{\omega}_x - \omega_y \omega_z\right) - I_{yz}(\dot{\omega}_y + \omega_x \omega_z) - (I_{xx} - I_{yy})\omega_x \omega_y - I_{xy} (\omega_x^2 - \omega_y^2) = M_z \\
+  \end{aligned}
+\]
+Additionally, we can write these rotational equations in terms of euler angles and their derivatives as
 \[
   \begin{aligned}
     \dv{t} \left( \phi \right) =& \dot{\phi} \\ 
@@ -182,8 +198,22 @@ Using these in the general rotational equations (and using Matlab's symbolic too
     \caption{Simulation of CSM attitude with no applied torques}
     \label{fig:task_c_no_torques}
     \end{figure}
+\end{enumerate}
 
-
+\subsection*{Task D:}%
+\begin{enumerate}[a.]
+  \item  The moments induced by the CMGs on the aircraft are
+    \[
+      \begin{aligned}
+        M_x &= -I_R \Omega(-s_{\theta_1} \dot{\theta}_1 + c_{\theta_3} \dot{\theta}_3)\\
+        M_y &= -I_R \Omega(c_{\theta_1} \dot{\theta}_1 - s_{\theta_2} \dot{\theta}_2) \\
+        M_z &= -I_R \Omega(c_{\theta_2} \dot{\theta}_2 - s_{\theta_3} \dot{\theta}_3)
+      \end{aligned}
+    \]
+  \item In order to ensure the desired angular accelerations, 
+    \[
+      I_R \geq 11.9056
+    \]
 \end{enumerate}
 
 \end{document}
