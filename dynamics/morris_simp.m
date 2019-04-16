@@ -1,4 +1,4 @@
-function [wx, wy, wz, psi, theta, phi] = euler(wx0, wy0, wz0, psi0, theta0, phi0,t,Mx,My,Mz)
+function [wx, wy, wz, psi, theta, phi] = morris_simp(wx0, wy0, wz0, psi0, theta0, phi0,t,Mx,My,Mz)
   % Allocate memory
   wx = zeros(size(t));
   wy = zeros(size(t));

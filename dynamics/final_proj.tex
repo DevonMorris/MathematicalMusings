@@ -216,4 +216,126 @@ Additionally, we can write these rotational equations in terms of euler angles a
     \]
 \end{enumerate}
 
+\subsection*{Task E:}%
+\begin{enumerate}[a.]
+  \item See attached \texttt{morris\_cmg.m}
+  \item The simulation results in the following motion
+    \begin{figure}[H]
+    \begin{center}
+      \includegraphics[scale=0.7]{task_e_b.eps}
+    \end{center}
+    \caption{Simulation of CSM attitude}
+    \end{figure}
+    Here is a table of maximum and minimum values
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{lcccccc}
+        & $\omega_x$ & $\omega_y$ & $\omega_z$ & $\psi$ & $\theta$ & $\phi$ \\
+        $\max$ &  23.3552 & 6.7834 & 2.5437 & 4.3394 & 0.0000 & 374.8002 \\
+        $\min$ & -0.0590 & -5.5671 & -2.5836 & -67.8018 & -26.2249 & 0.0000 \\
+      \end{tabular}
+      \caption{Table of max and min values shown in degrees and degrees per second}
+    \end{table}
+At first glance, these results look totally incorrect and nonsensical, however, they are correct due to the weirdness of 3D rotations. We note that
+\[
+  \left\{ \dot{\omega} \right\} = [I]^{-1} \left( \left\{ M \right\} - \left\{ \omega \right\} \times [I] \left\{ \omega \right\} \right)
+\]
+As expected at time zero, the quantities that immediately change are $\omega_y$ and $\theta$, since $\dot{H}_y \approx M_y \approx -I_R\Omega \dot{\theta_1}$. However as $\theta_1$ moves away from 0, we begin to get a positive $M_x$, due to the $s_{\theta_1}$ term. This induces a positive $\omega_x$. Now with rotation about two axes, the cross product $-\left\{\omega\right\} \times [I] \left\{ \omega \right\}$, has entries in the $z$ component, inducing a nonzero $\dot{\omega}_z$.
+  \item With more complex inputs, we get the following motion
+    \begin{figure}[H]
+    \begin{center}
+      \includegraphics[scale=0.7]{task_e_c.eps}
+    \end{center}
+    \caption{Simulation of CSM attitude}
+    \end{figure}
+    Here is a table of maximum and minimum values
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{lcccccc}
+        & $\omega_x$ & $\omega_y$ & $\omega_z$ & $\psi$ & $\theta$ & $\phi$ \\
+        $\max$ &  29.4430 & 16.2940 & 10.2539 & 129.6771 & 0.0000 & 163.1452 \\
+        $\min$ & -11.9925 & -8.2201 & -3.9913 & -1.5894 & -15.9662 & 0.0000 \\
+      \end{tabular}
+      \caption{Table of max and min values shown in degrees and degrees per second}
+    \end{table}
+\end{enumerate}
+
+\section*{Task F:}%
+It is well known that attitude evolves on the manifold $SO(3)$ and that all euler-angle combinations have singularities associated with certain attitudes. In such cases, it is more computationally efficient and safer to parameterize the attitude as a unit quaternion. It is well known that quaternions exhibit the following dynamics
+\[
+  \begin{aligned}
+    \dot{q}_B^I &= \frac{1}{2} q_B^I \otimes  
+  \begin{bmatrix}
+    0 \\
+    \omega
+  \end{bmatrix} \\
+    \dot{\omega} &= I^{-1} \left(M  - \omega \times I \omega\right)
+  \end{aligned}
+\]
+Where $\otimes$ is the Hamilton quaternion product. Great care must be taken when integrating these equations, since we want the quaternion to stay on the manifold $SO(3)$. To do this, we can use the quaternion exponential
+\[
+  q^+ = q \otimes \exp \left( \begin{bmatrix}
+    0 \\
+    \omega \Delta t
+  \end{bmatrix} \right)
+\]
+Where I have dropped the frames for brevity. Now we will design a PID-like controller with this new structure. Given a reference attitude quaternion $q_c$, we can define error in the following way
+\[
+  \delta q = \log \left( q_r \otimes q^* \right)
+\]
+where $*$ denotes the quaternion conjugate (inverse quaternion), and $\log$ is the inverse of the quaternion exponential. Now we can use successive loop closure ideas and say that the reference angular velocity is
+\[
+  \omega_r = K_{pq} \delta q + K_{dq} \dot{\delta q} + K_{iq} \int \delta q dt
+\]
+Now we need to design a control law based on $\theta_1, \theta_2, \theta_3$ and their derivatives to drive $\omega$ toward this reference. $M$ can be rewritten as  
+\[
+  M = -I_R \Omega 
+  \begin{bmatrix}
+    -s_{\theta_1} & 0 & c_{\theta_3} \\
+    c_{\theta_1} & -s_{\theta_2} & 0\\
+    0 & c_{\theta_2} & -s_{\theta_3}
+  \end{bmatrix}
+  \begin{bmatrix}
+    \dot{\theta}_1 \\
+    \dot{\theta}_2 \\
+    \dot{\theta}_3
+  \end{bmatrix}
+\]
+which is an invertible relationship whenever any two CMGs aren't aligned. In this way we have that
+\[
+  \begin{bmatrix}
+    \dot{\theta}_1 \\
+    \dot{\theta}_2 \\
+    \dot{\theta}_3
+  \end{bmatrix} =
+  -\frac{1}{I_R \Omega} 
+  \begin{bmatrix}
+    -s_{\theta_1} & 0 & c_{\theta_3} \\
+    c_{\theta_1} & -s_{\theta_2} & 0\\
+    0 & c_{\theta_2} & -s_{\theta_3}
+  \end{bmatrix}^{-1} M
+\]
+
+So given any $M$, we can choose CMG rates to command that $M$. Now we must decide how to choose $M$. Ideally we want something along the lines of
+\[
+  \dot{\omega} = K_{p\omega} \delta \omega + K_{d\omega} \dot{\delta \omega} + K_{i\omega} \int \delta \omega dt
+\]
+where $\delta \omega = \omega_r - \omega$, working from this base, we see that
+\[
+  M = \omega \times I \omega + I \left( K_p \delta \omega + K_d \dot{\delta \omega} + K_I \int \delta \omega dt \right)
+\]
+we note that the feedforward term $\omega \times I \omega$ is necessary in order to compensate for the change of momentum due to the rotation of the body frame.
+
+This controller is implemented in \texttt{morris\_quat\_control.m} and the driver is given in \texttt{test\_driver\_quat\_control.m}. To avoid having to write my own quaternion library, I am using Peter Corke's robotics toolbox, so if you want to run my code, his toolbox will first need to be installed. Since quaternions are hard to visualize, I converted my plots back into euler angles. The test driver picks a random initial quaternion and a random commanded quaternion. It then calculates the control needed to move between those attitudes and performs the simulation. Some plots are shown below
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[scale=0.7]{task_f.eps}
+\end{center}
+\caption{Attitude Control of CSM (General)}
+\label{fig:task_f}
+\end{figure}
+
+Some limitations of this simulation are that I did not model velocity constraints, joint contraints, or torque saturation limits on the CMGs. Looking at the $\theta$ plots, it's obvious that this is not a realistic scenario. Furthermore, there are moments when $\theta$ jumps. This is due to two CMGs being almost aligned and the matrix becomes almost singular. I did not explore strategies to prevent the CMGs from aligning their axes of rotation.
+
 \end{document}

@@ -18,9 +18,13 @@ phi0 = 0;
 % validate your model and try out the different cases required in
 % the project. When you send me your function, I will try out some
 % angle vectors to see if your model accurately predicts the response.
+% th1 = 15*sin(2*pi/30*t);
+% th2 = 0*t;
+% th3 = 0*t;
+
 th1 = 15*(1./(1+exp(-0.3*t))-0.5);
 th2 = 5*sin(2*pi/30*t);
-th3 = -5*sin(2*pi/30*t)
+th3 = -5*sin(2*pi/30*t);
 
 % Call the project function. Note that the initial values are passed in
 % units of degrees and degrees/s, and the function returns solution
@@ -31,7 +35,7 @@ th3 = -5*sin(2*pi/30*t)
 % SHOULD BE lastname1_lastname2_cmg() ** Your function must return
 % values of wx, wy, wz, psi, theta, and phi at each time step defined
 % in the vector t.
-[wx,wy,wz,psi,theta,phi]=colton_cmg(wx0,wy0,wz0,psi0,theta0,phi0,t,th1,th2,th3);
+[wx,wy,wz,psi,theta,phi]=morris_cmg(wx0,wy0,wz0,psi0,theta0,phi0,t,th1,th2,th3);
 
 % Plot results
 subplot(2,1,1);

@@ -1,14 +1,14 @@
-function [wx, wy, wz, psi, theta, phi] = morris(wx0, wy0, wz0, psi0, theta0, phi0,t,Mx,My,Mz)
+function [wx, wy, wz, psi, theta, phi] = morris_cmg_simp(wx0, wy0, wz0, psi0, theta0, phi0,t,th1,th2,th3)
   % Allocate memory
-  wx = zeros(size(t));
-  wy = zeros(size(t));
-  wz = zeros(size(t));
   psi = zeros(size(t));
   theta = zeros(size(t));
   phi = zeros(size(t));
   dpsi = zeros(size(t));
   dtheta = zeros(size(t));
   dphi = zeros(size(t));
+
+  I_R = 11.9056;
+  Om = 6600*2*pi/60;
 
   % convert to radians
   psi0 = psi0*pi/180;
@@ -30,9 +30,20 @@ function [wx, wy, wz, psi, theta, phi] = morris(wx0, wy0, wz0, psi0, theta0, phi
   for i = 2:length(t)
     % Do simple RK4 integration
     dt = t(i) - t(i-1);
+    dth1 = (th1(i) - th1(i-1))/dt;
+    dth2 = (th2(i) - th2(i-1))/dt;
+    dth3 = (th3(i) - th3(i-1))/dt;
+
     q = [phi(i-1); theta(i-1); psi(i-1); dphi(i-1); dtheta(i-1); dpsi(i-1)];
-    u = [Mx(i-1); My(i-1); Mz(i-1)];
-    u1 = [Mx(i); My(i); Mz(i)];
+
+    u = [-I_R*Om*(-sin(th1(i-1))*dth1 + cos(th3(i-1))*dth3);...
+         -I_R*Om*(cos(th1(i-1))*dth1 - sin(th2(i-1))*dth2);...
+         -I_R*Om*(cos(th2(i-1))*dth2 - sin(th3(i-1))*dth3)] 
+
+    u1 = [-I_R*Om*(-sin(th1(i))*dth1 + cos(th3(i))*dth3);...
+         -I_R*Om*(cos(th1(i))*dth1 - sin(th2(i))*dth2);...
+         -I_R*Om*(cos(th2(i))*dth2 - sin(th3(i))*dth3)]; 
+
     u12 = (u + u1)/2;
 
     k1 = dt*odefcn(t(i), q, u);
@@ -67,12 +78,12 @@ end
 
 function dqdt = odefcn(t,q,u)
   % Parameters
-  I_xx = 40823.073;
-  I_xy = -1537.807;
-  I_xz = 3179.297;
-  I_yy = 90593.489;
-  I_yz = -128.577;
-  I_zz = 98742.852;
+  I_xx = 40481.983;
+  I_xy = 0;
+  I_xz = 0;
+  I_yy = 90353.316;
+  I_yz = 0;
+  I_zz = 98636.935;
 
   % Unpack state
   phi = q(1);
