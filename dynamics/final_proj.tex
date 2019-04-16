@@ -231,12 +231,12 @@ Additionally, we can write these rotational equations in terms of euler angles a
       \centering
       \begin{tabular}{lcccccc}
         & $\omega_x$ & $\omega_y$ & $\omega_z$ & $\psi$ & $\theta$ & $\phi$ \\
-        $\max$ &  23.3552 & 6.7834 & 2.5437 & 4.3394 & 0.0000 & 374.8002 \\
-        $\min$ & -0.0590 & -5.5671 & -2.5836 & -67.8018 & -26.2249 & 0.0000 \\
+        $\max$ &  0.4447 & 1.3419 & 0.0447 & 1.5270 & 0.0000 & 5.7141 \\
+        $\min$ & -0.0034 & -1.3545 & 0 & -0.0259 & -12.9773 & 0.0000 \\
       \end{tabular}
       \caption{Table of max and min values shown in degrees and degrees per second}
     \end{table}
-At first glance, these results look totally incorrect and nonsensical, however, they are correct due to the weirdness of 3D rotations. We note that
+At first glance, these results look incorrect and nonsensical, however, they are correct due to the weirdness of 3D rotations. We note that
 \[
   \left\{ \dot{\omega} \right\} = [I]^{-1} \left( \left\{ M \right\} - \left\{ \omega \right\} \times [I] \left\{ \omega \right\} \right)
 \]
@@ -253,8 +253,8 @@ As expected at time zero, the quantities that immediately change are $\omega_y$ 
       \centering
       \begin{tabular}{lcccccc}
         & $\omega_x$ & $\omega_y$ & $\omega_z$ & $\psi$ & $\theta$ & $\phi$ \\
-        $\max$ &  29.4430 & 16.2940 & 10.2539 & 129.6771 & 0.0000 & 163.1452 \\
-        $\min$ & -11.9925 & -8.2201 & -3.9913 & -1.5894 & -15.9662 & 0.0000 \\
+        $\max$ &  1.0603 & 0 & 0.4329 & 0.0000 & 0.0000 & 10.6138 \\
+        $\min$ & -0.8556 & -0.7485 & -0.3473 & -4.0726& -18.1336 & 0.0000 \\
       \end{tabular}
       \caption{Table of max and min values shown in degrees and degrees per second}
     \end{table}

@@ -18,9 +18,9 @@ phi0 = 0;
 % validate your model and try out the different cases required in
 % the project. When you send me your function, I will try out some
 % angle vectors to see if your model accurately predicts the response.
-% th1 = 15*sin(2*pi/30*t);
-% th2 = 0*t;
-% th3 = 0*t;
+%th1 = 15*sin(2*pi/30*t);
+%th2 = 0*t;
+%th3 = 0*t;
 
 th1 = 15*(1./(1+exp(-0.3*t))-0.5);
 th2 = 5*sin(2*pi/30*t);

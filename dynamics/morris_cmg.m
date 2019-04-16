@@ -17,6 +17,9 @@ function [wx, wy, wz, psi, theta, phi] = morris_cmg(wx0, wy0, wz0, psi0, theta0,
   wx0 = wx0*pi/180;
   wy0 = wy0*pi/180;
   wz0 = wz0*pi/180;
+  th1 = th1*pi/180;
+  th2 = th2*pi/180;
+  th3 = th3*pi/180;
 
   % Prime the integrator
   psi(1) = psi0;
