@@ -1,0 +1,142 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Homework 8}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+
+\section*{Problem 1}%
+Prove that for all $k \geq 0$ there exists a unique operator
+\[
+  d: \Omega^k(M) \rightarrow \Omega^{k+1}(M)
+\]
+which satisfies the following properties
+\begin{enumerate}[I.]
+  \item $d$ is linear over $\mathds{R}$
+  \item If $\omega \in \Omega^k(M)$ and $\eta \in \Omega^k(M)$ then
+    \[
+      d(\omega \wedge \eta) = d\omega \wedge \eta + (-1)^k \omega \wedge d\eta
+    \]
+  \item $d \circ d = 0$.
+  \item For $f \in \Omega^0(M) = C^\infty(M)$, then $d(f)$ is the differential of $f$ defined by $df(X) = X(f)$ for all $X \in X(f)$.
+\end{enumerate}
+
+\begin{proof}
+  First let's look at the canonical basis for $T^kM$, $\{dx^i\}_{i=1}^N$, induced by some coordinates $(U,(x^j))$. So given $\omega \in \Omega^k(M)$, we can express this form in components as
+  \[
+    \omega = \omega_{i_1, \dots, i_N} dx^{i_1} \wedge \cdots \wedge dx^{i_N}
+  \]
+  However we can think of $\omega_{i_1, \dots, i_k}$ as a smooth function over $M$ and thus as a $\Omega^0M$ form, giving the representation of 
+  \[
+    \omega = \omega_{i_1, \dots, i_k} \wedge dx^{i_1} \wedge \cdots \wedge dx^{i_k}
+  \]
+  So now we can explore some properties of $d$ using this representation. So we have 
+  \[
+    \begin{aligned}
+      d\omega &= d \left( \omega_{i_1, \dots, i_k} \wedge dx^{i_1} \wedge \cdots \wedge dx^{i_k} \right) \\
+                &=(d\omega_{i_1, \dots, i_k} \left(dx^{i_1} \wedge \cdots \wedge dx^{i_k} \right) \\
+                &= d\omega_{i_1, \dots, i_k} \wedge dx^{i_1} \wedge \cdots \wedge dx^{i_k} + (-1)^k \omega_{i_1, \dots, i_k} \wedge d(dx^{i_1} \wedge \cdots \wedge dx^{i_k}) \\
+                &= d\omega_{i_1, \dots, i_k} \wedge dx^{i_1} \wedge \cdots \wedge dx^{i_k}
+    \end{aligned}
+  \]
+  Where we remember $d\omega_{i_1, \dots, i_k}(X) = X(\omega_{i_1, \dots, i_k})$. Now let $F:M \rightarrow N$ consider the pullback $F^*(d\omega)$ 
+  \[
+    F^*(d\omega)= d(\omega_{i_1, \dots, i_k} \circ F) \wedge d(x^{i_1} \circ F) \wedge \cdots \wedge d(x^{i_k} \circ F)
+  \]
+  Consider on the other hand $d(F^*(\omega))$
+  \[
+    \begin{aligned}
+      d(F^*(\omega)) &= d \left((\omega_{i_1 \dots i_k} \circ F) \wedge d(x^{i_1} \circ F) \wedge \cdots \wedge d(x^{i_k} \circ F\right) \\
+                     &= d(\omega_{i_1, \dots, i_k} \circ F) \wedge d(x^{i_1} \circ F) \wedge \cdots \wedge d(x^{i_k} \circ F) + (-1)^k \omega_{i_1, \dots, i_k} \wedge d(dx^{i_1} \wedge \cdots \wedge dx^{i_k}) \\
+                     &=d(\omega_{i_1, \dots, i_k} \circ F) \wedge d(x^{i_1} \circ F) \wedge \cdots \wedge d(x^{i_k} \circ F) 
+    \end{aligned}
+  \]
+  So we see that $d$ commutes with $F^*$. Specifically, we think of $F$ as being the transition map and we realize that since the pullback of the transition map commutes with $d$, we have defined $d$ is coordinate independent. Therefore, we have uniqueness.
+\end{proof}
+
+\section*{Problem 2}%
+Let $\omega \in \Omega^2(\mathds{R}^3)$ be given by
+\[
+  \omega = e^{xz} dx \wedge dy - \sin(y)z^2 dy \wedge dz
+\]
+and let $F: \mathds{R}^3 \rightarrow \mathds{R}^3$ be defined by $F(x,y,z) = (y^2, x - 2, zy)$.
+\begin{enumerate}[(a)]
+  \item Compute $d\omega$
+  \item Compute $F^*\omega$.
+\end{enumerate}
+
+\begin{proof}[Solution]
+  \begin{enumerate}
+    \item We note that treating $e^{xz}$ and $-\sin(y)z^2$ as one forms, we have that
+      \[
+        \begin{aligned}
+          d\omega &= (ze^{zx}dx +  xe^{xz}dz)\wedge dx \wedge dy - (\cos(y)z^2dy + 2\sin(y)zdz) \wedge  dy \wedge dz \\
+                  &= ze^{zx} dx \wedge dy \wedge dz
+        \end{aligned}
+      \]
+    \item First, let us calculate $d(x \circ F)$, $d(y \circ F)$ and $d(z \circ F)$.
+      \[
+        \begin{aligned}
+          d(x \circ F) &= d(y^2) = 2y dy \\
+          d(y \circ F) &= d(x-2) = dx \\
+          d(z \circ F) &= d(zy) = zdy + ydz
+        \end{aligned}
+      \]
+      So we have that
+      \[
+        \begin{aligned}
+        F^*\omega &= e^{y^3z}(2ydy \wedge dx) -\sin(x-2)z^2y^2(dx \wedge (zdz + ydz)) \\
+                  &= e^{y^3z}(2y \wedge dy \wedge dx) - \sin(x-2)z^2y^2(dx \wedge z \wedge dy + dx \wedge y \wedge dz)  \\
+                  &= (-2y e^{y^3z} - y^2z^3 \sin(x-2))dx \wedge dy - y^3z^3 dx \wedge dz
+        \end{aligned}
+      \]
+  \end{enumerate}
+\end{proof}
+
+\section*{Problem 3}%
+Let $M$ be a smooth, closed, compact manifold, and suppose that $\omega \in \Omega^1(M)$ is a  nonvanishing smooth 1-form. Prove that $\omega$ is not in the image of the map $d: \Omega^0(M) \rightarrow \Omega^1(M)$. Provide an example of such an $M$ and $\omega$ with $\dim M = 2$.
+
+\begin{proof}
+  Assume by contradiction that there is an $f \in C^\infty(M) = \Omega^0M$ such that $df = \omega$. Since $f$ is continuous then we must have that its image is compact in $\mathds{R}$. Since the image is compact, it has some maximum value. Let the point where $f$ attains a maximum be $p$. Consider $df$ at this point. Given any $X \in T_pM$, we have that $\omega(X) = df(X) = X(f)$. However since $f$ is a maximum at $X(f) = 0$. Therefore $\omega$ vanishes at this point causing a contradiction. Thus there is not such $f$.
+\end{proof}
+
+\section*{Problem 4}%
+Let $T \in \Gamma^\infty(T_l^kM)$ be a smooth tensor field of type $(k,l)$ and let $\nabla T \in \Gamma^\infty(T_l^{k+1}M$ denote the covariant differential of $T$. In other words, $\nabla T$ is the $(k+1,l)$ tensor defined by
+\[
+  \nabla T(\omega^1, \dots, \omega^l, X_1, \dots, X_k, Y) = \nabla_Y T(\omega^1, \dots, \omega^l, X_1, \dots, X_k)
+\]
+where $\nabla_Y T$ is the covariant derivative of $T$ in the direction of $Y$. Let $(U,(x^i))$ be a local coordinate chart, and define the component functions $T_{j_1, \dots, j_k}^{i_i, \dots, i_l} \in C^\infty(U)$ by
+\[
+  T_{j_1, \dots, j_k} 
+\]
+
+\end{document}
