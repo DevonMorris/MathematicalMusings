@@ -1,9 +1,19 @@
 % Size of the random variable
 M = 10;
 % Number of time samples
-N = 1000;
+N = 80;
 % Number of monte carlo trials
-T = 10000;
+T = 1000;
+
+% Make jacobian matrix
+jac = [];
+I10 = eye(10);
+
+for i = 1:M
+  e_i = I10(:,i);
+  A_i = toeplitz(e_i);
+  jac = [jac A_i(:)];
+end
 
 % sample random vector to make matrix
 z = randn(M,1);
@@ -23,33 +33,45 @@ end
 
 % Construct correlation matrix
 R = toeplitz(th);
+options = optimset('Display', 'off');
 
 e = zeros(T,M, M);
+eS = zeros(T,M, M);
 for t = 1:T
   % Generate random samples
   sqrtR = sqrtm(R);
-  Y = rand(M,N);
+  Y = randn(M,N);
   X = sqrtR*Y;
 
-  Rhat = X*X'/N;
-  thhat = Rhat(:,1);
-  e(t, :, :) = (th - thhat)*(th - thhat)';
+  S = X*X'/N;
+  f = @(theta) regression(theta,S,jac);
+  th0 = zeros(M,1);
+  thhat = fsolve(f, th, options);
+  thhatS = S(:,1);
+  e(t,:,:) = (th - thhat)*(th - thhat)';
+  eS(t,:,:) = (th - thhatS)*(th - thhatS)';
 end
 
-sigma2e = sum(e)/T;
-sigma2e = reshape(sigma2e, M, M);
+C = sum(e)/T;
+C = reshape(C, M, M);
+CS = sum(eS)/T;
+CS = reshape(CS, M, M);
 
 % compute CRB
 
 KR = kron(R,R);
-jac = [];
-I10 = eye(10);
-
-for i = 1:M
-  e_i = I10(:,i);
-  A_i = toeplitz(e_i);
-  jac = [jac A_i(:)];
-end
 
 J = (N/2)*jac'*KR*jac;
-C = inv(J);
+CRB = inv(J);
+idx = 0:M-1;
+plot(idx,diag(CRB),'g', idx, diag(C), 'b', idx, diag(CS), 'r');
+xlabel('Element Number');
+ylabel('Error Variance');
+legend('CRB', 'C', 'C_S');
+
+function F = regression(theta,S,jac)
+  R = toeplitz(theta);
+  Rinv = inv(R);
+  A = Rinv*(R-S)*Rinv;
+  F = jac'*A(:);
+end
