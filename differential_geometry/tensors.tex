@@ -172,7 +172,7 @@ We check if this vector field is smooth if the function $f = T(\omega^1, \dots, 
 \[
   T = T_{i_1 \dots i_k}^{j_1 \dots j_l} \pdv{x^{j_1} } \otimes \dots \otimes \pdv{x^{j_l}} \otimes dx^{i_1} \otimes \dots \otimes dx^{i_k} 
 \]
-for some $T_{i_1 dots i_k}^{j_1 \dots j_l} \in C^{\infty}(U)$. So we have
+for some $T_{i_1 \dots i_k}^{j_1 \dots j_l} \in C^{\infty}(U)$. So we have
 \[
   T(\omega^1, \dots, \omega^l, X_{1}, \dots, X_k) = T_{i_1 \dots i_k}^{j_1 \dots j_l} X_1^{i_1} \dots X_k^{i_k} \omega_{j_1}^1 \dots \omega_{j_l}^l
 \]
@@ -237,7 +237,7 @@ then extending linearly to all of $\Gamma^\infty (T^kM)$
   \]
 \end{defn}
 
-\begin{prop}j
+\begin{prop}
   $\text{Alt}_k$ is surjective
 \end{prop}
 \begin{proof}
@@ -267,7 +267,7 @@ another example is
   \begin{enumerate}
     \item Bilinearity $(a \omega + b \rho) \wedge \eta = a(\omega \wedge \eta) + b (\rho \wedge \eta)$
     \item Associative $(\omega \wedge \rho) \wedge \eta = \omega \wedge (\rho \wedge \eta)$
-    \item Anticommutative $\omega \wedge \rho = (-1)^{kl} \rho \wedge \eta$
+    \item Anticommutative $\omega \wedge \rho = (-1)^{kl} \rho \wedge \omega$
     \item For $\omega^1, \dots, \omega^k \in \Omega^1M = \Gamma^\infty (T^*M)$ and $v_1,\dots,v_k \in \Gamma^\infty(TM)$ then
       \[
         \omega^1 \wedge \cdots \wedge \omega^k(v_1, \dots, v_k) = \det(w^j(v_i))
@@ -301,7 +301,7 @@ and then we get
 \]
 
 \begin{defn}
-  Suppose $F: M \rightarrow M$ smooth. If $T \in \Gamma^\infty(T^kN)$ the pull-back, $F^* T \in \Gamma^\infty(T^kM)$ defined by 
+  Suppose $F: M \rightarrow N$ smooth. If $T \in \Gamma^\infty(T^kN)$ the pull-back, $F^* T \in \Gamma^\infty(T^kM)$ defined by 
   \[
     F^*T(X_1, \dots, X_k) = T(dF(X_1), \dots, dF(X_k))
   \]
@@ -309,17 +309,17 @@ and then we get
 \end{defn}
 
 \begin{defn}
-\end{defn}
-  Suppose $F: M \rightarrow M$ smooth. If $T \in \Gamma^\infty(T_lM)$ the push-forward, $F_* T \in \Gamma^\infty(T^lN)$ defined by 
+  Suppose $F: M \rightarrow N$ smooth. If $T \in \Gamma^\infty(T_lM)$ the push-forward, $F_* T \in \Gamma^\infty(T^lN)$ defined by 
   \[
-    F_*T(\omega^1, \dots, \omega^l) = T(F^*\omega^1, \omega, F^*\omega^l)
+    F_*T(\omega^1, \dots, \omega^l) = T(F^*\omega^1, \dots, F^*\omega^l)
   \]
   for all $\omega^1, \dots, \omega^l \in \Gamma^\infty(T^*N)$.
+\end{defn}
 Example is $\omega \in \Omega^kN$ in local coordinates
 \[
   \begin{aligned}
-    F^*\omega &= F^*(\Omega_{i_1\dotsi_k} dx^{i_1} \wedge \cdots \dots dx^{i_k} \\
-              &= \omega_{i_1 \dots i_k} \circ F d(x^{i_1} \circ F) \wedge \cdots \wedge d(x^{i_k} \circ F) \\
+    F^*\omega &= F^*(\Omega_{i_1\dotsi_k} dx^{i_1} \wedge \cdots \wedge dx^{i_k}) \\
+              &= (\omega_{i_1 \dots i_k} \circ F) d(x^{i_1} \circ F) \wedge \cdots \wedge d(x^{i_k} \circ F) \\
   \end{aligned}
 \]
 Another fact is that
