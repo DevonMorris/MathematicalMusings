@@ -589,5 +589,119 @@ is a diffeomorphism. If $F: X \rightarrow Y$ is a local diffeomorphism, $X$ comp
 \begin{thm}
   If $f:M \rightarrow \mathds{R}^{n+1}$ has nonvanishing GK curvature. Then we have $dG_p \neq 0$ for all $p \in M$. Furthermore $dG_p$ is nonsingular at all $p$. Then by invertible mapping theorem then $G:M \rightarrow S^n$ is a local diffeomorphism. Then $G$ is a covering map, and thus $G$ is a diffeomorphism.
 \end{thm}
+Let $x,y \in T_pM$ be linearly independent and let $K(x,y)$ be the sectional curvature of $M$ along $\sigma = \text{span} \left\{ x,y \right\}$ and $\bar{k}(x,y)$ be the sectional curvature of $\bar{M}$ along $\sigma$.
+
+\begin{thm}
+  Let $p \in M$ and $x,y \in T_pM$ orthonormal. Then 
+  \[
+    k(x,y) - \bar{k}(x,y) = \inn*{B(x,x)}{B(y,y)} - \inn*{B(x,y)}{B(x,y)}
+  \]
+\end{thm}
+
+\begin{proof}
+  Let $X,Y$ orthonormal extensions of $x,y$ to  $M$, $\bar{X}, \bar{Y}$ are local extensions to $\bar{M}$. 
+  \[
+    \begin{aligned}
+      k(x,y) - \bar{k}(x,y) &= \frac{\inn*{R(x,y)x}{y}}{\norm{x}^2\norm{y}^2 - \inn*{x}{y}^2} - \frac{\inn*{\bar{R}(x,y)x}{y}}{\norm{x}^2 \norm{y}^2 - \inn*{x}{y}^2} \\
+                            &= \inn*{\nabla_Y \nabla_X X - \nabla_X \nabla_Y X + \nabla_{[X,Y]}X - \left(\bar{\nabla}_{\bar{Y}} \bar{\nabla}_{\bar{X}} \bar{X} - \bar{\nabla}_{\bar{X}}\bar{\nabla}_{\bar{Y}}\bar{X} + \bar{\nabla}_{[\bar{X},\bar{Y}]} \bar{X} \right)}{Y} \\
+                            &= \inn*{\nabla_Y \nabla_X X - \nabla_X \nabla_Y X - \left(\bar{\nabla}_{\bar{Y}} \bar{\nabla}_{\bar{X}} \bar{X} - \bar{\nabla}_{\bar{X}}\bar{\nabla}_{\bar{Y}}\bar{X}\right)}{Y} \\
+    \end{aligned}
+  \]
+  Now let $E^1, \dots, E^m \in \Gamma^{\infty}(TM)^\perp$ be an orthonormal vector field normal to $M$ where $m$ is the codimension of $M$. So we can say
+  \[
+    B(X,Y) = H_{E^i}  \left( X,Y \right) E^i
+  \]
+  Thus we have that
+  \[
+    \begin{aligned}
+      \bar{\nabla}_{\bar{Y}} \bar{\nabla}_{\bar{X}} \bar{X} &= \bar{\nabla}_{\bar{Y}} \left( B(x,x) + \nabla_X X\right) = \bar{\nabla}_{\bar{Y}} \left( H_{E^i}(X,X)E^i + \nabla_X X \right)  \\
+                                                            &= \bar{Y} \left( H_{E^i}(x,x) \right) E^i + H_{E^i}(x,x) \bar{\nabla}_{\bar{Y}} E^i + \bar{\nabla}_{\bar{Y}} \nabla_X X
+    \end{aligned}
+  \]
+  So 
+  \[
+    \begin{aligned}
+      \inn*{\bar{\nabla}_{\bar{Y}} \bar{\nabla}_{\bar{X}} \bar{X}}{Y} &= \inn*{H_{E^i}(x,x) \bar{\nabla}_{\bar{Y}} E^i + \nabla_Y \nabla_X X}{Y} \\
+                                                                      &= H_{E^i}(x,x) \inn*{\bar{\nabla}_{\bar{Y}}E^i}{Y} + \inn*{\nabla_Y \nabla_X X}{Y} \\
+                                                                      &= -H_{E^i}(x,x) \inn*{E^i}{\bar{\nabla}_{\bar{Y}} \bar{Y}} + \inn*{\nabla_Y \nabla_X X}{Y} \\
+                                                                      &= -H_{E^i}(x,x) \inn*{\bar{\nabla}_{\bar{Y}} \bar{Y} - \nabla_Y Y}{E^i} + \inn*{\nabla_Y \nabla_X}{Y} \\
+                                                                      &= -H_{E^i}(x,x) \inn*{B(Y,Y)}{E^i} + \inn*{\nabla_Y \nabla_X X}{Y} \\
+                                                                      &= \sum_i -H_{E^i}(x,x) H_{E^i}(Y,Y) + \inn*{\nabla_y \nabla_X X}{Y} \\
+    \end{aligned}
+  \]
+  So we have
+  \[
+    k(x,y) - \bar{k}(x,y) = \sum_i H_{E^i}(x,x) H_{E^i}(y,y) - \sum_i H_{E^i}(x,y)^2
+  \]
+\end{proof}
+So what does this tell us about gaussian curvature? Let $f: M^n \rightarrow \bar{M}^{n+1}$ and let $\eta \in T_pM^\perp$. Let $\left\{ e_1, \dots, e_n \right\}$ be an orthonormal basis for $T_pM$ consisting of eigenvectors of $S_\eta$ so that $S(e_i) = \lambda_i e_i$ so we have
+\[
+  H_\eta (e_i, e_i) = \lambda_i
+\]
+\[
+  H_\eta (e_i, e_j) = 0
+\]
+So this tells us that
+\[
+  k(e_i, e_j) - \bar{k}(e_i,e_j) = \lambda_i \lambda_j
+\]
+when $n =2$ and $\bar{M} = \mathds{R}^3$ so
+\[
+  \lambda_1 \lambda_2 = k(e_i, e_2) - \bar{k}(e_1, e_2) = k(e_1, e_2)
+\]
+
+\begin{defn}
+  $f: M^n \rightarrow \bar{M}^{n+m}$ immersion, is geodesic at $p \in M$ if for all $\eta \in T_pM^\perp$,
+  \[
+    H_\eta = 0
+  \]
+  at $p$ and $f$ is totally geodesic if $f$ is geodesic at all $p \in M$.
+\end{defn}
+
+\begin{prop}
+  An immersion $f:M \rightarrow \bar{M}$ is geodesic at $p$ if and only if every geodesic $\gamma$ of $M$ starting from $p$ is also a geodesic of $\bar{M}$ starting at $p$.
+\end{prop}
+
+\begin{proof}
+  Let $\gamma(0) = p$, $\gamma'(0) = x \in T_pM$ and let $\eta \in \left( T_pM \right)^\perp$, and $N \in \Gamma^\infty(TM)^\perp$ which is a local extension of $\eta$. Let $X \in \Gamma^\infty(TM)$ be a local extension of the vector $x$ to $M$. So we know that $\inn*{X}{N}$, which tells us $\inn*{\bar{\nabla}_{\bar{X}} \bar{X}}{\bar{N}} + \inn*{X}{\bar{\nabla}_{\bar{X}} \bar{N}}$ so we have that
+  \[
+    H_\eta(x,x) = \inn*{S_\eta (x)}{x} = \inn*{-(\bar{\nabla}_{\bar{X}} N)^T}{X}_p = - \inn*{\bar{\nabla}_{\bar{X}}N}{X}_p = \inn*{N}{\bar{\nabla}_{\bar{X}} \bar{X}}_p
+  \]
+  So $f$ is geodesic at $p \in M$ if and only if $H_\eta$ vanishes at all $\eta \in T_pM^\perp$ if and only if $\bar{\nabla}_{\bar{X}} \bar{X}$ has no normal component if and only if every geodesic of $M$ starting at $p$ is also a geodesic of $\bar{M}$ from $p$.
+\end{proof}
+A nonexample of this is $S^2$ embedded in $\mathds{R}^3$ is not geodesic at any $p$. Some examples are: Affine subspaces of $\mathds{R}^n$ and $S^n \cap \left\{ \text{linear subspaces} \right\}$ totally geodesic inside $S^n$. 
+
+Using this new information, we can make a geometric interpretation of sectional curvature. Let $p \in M$, $B \subset T_pM$ a small ball on which $\exp_p$ is a diffeomorpism and $\sigma \subset T_pM$ a 2 dimensional subspace. Let $S = \exp+p(\sigma \cap B)$. So $S$ is a is a surface on $M$ formed by short arcs through $p$ tangent to $\sigma$. $S$ is geodesic at $p$ by construction and therefore $H_\eta = 0$ for all $\eta \in T_pM^\perp$ and therefore $H_\eta(x,y) = \inn*{B(x,y)}{\eta}$ and thus $B(x,y) = 0$, $S_\eta = 0$ and by guass's formula we have
+\[
+  k_s(x,y) = \bar{k}_{\bar{M}}(x,y)
+\]
+in other words, geodesic submanifolds have the same sectional curvature as their ambient space.
+\begin{thm}[Cartan]
+  If for every $p \in M$,  and for every $\sigma \in T_pM$, there is a a totally geodesic submanifold to $\sigma$, then $M$ has constant sectional curvature.
+\end{thm}
+
+\begin{defn}
+  $f: M \rightarrow \bar{M}$ immersion is minimal if for every $p \in M$ and every $\eta \in (T_pM)^\perp$ $\tr \left( S_\eta \right)=0$.
+\end{defn}
+
+A consequence of this is that mininmal submanifolds minimize volume. If $E^1, \dots, E^n$ is a local orthonormal frame along $M$, we can define.
+\[
+  H = \frac{1}{n} \tr(S_{E^i})E^i
+\]
+this is called the mean curvature. Clearly $f$ is minimal, meaning that $\tr(S_\eta) = 0$ for all $\eta$ if and only if $H = 0$ for all $p$.
+
+Questions: How does geometric data constrain topology?
+
+\begin{thm}[Sphere]
+  If $M^n$ compact, simply connect and sectional curvature $k$ with max value $k_{\max}$, and if
+  \[
+    0 < k_{\max}/4 < k \leq k_{\max}
+  \]
+  $M^n$ is homoemorphic to $S^n$.
+\end{thm}
+
+\begin{thm}[Hadamard]
+  $M$ is complete, simply connected, with nonpositive sectional curvature. Then $M$ is diffeomorphic to $\mathds{R}^n$ and $\exp_p:T_pM \rightarrow M$ is the diffeomorphism.
+\end{thm}
 
 \end{document}
