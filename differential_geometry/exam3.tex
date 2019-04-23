@@ -1,0 +1,110 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Differential Geometry - Exam 3}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Problem 1}%
+Consider the immersion $f: \mathds{R}^2 \rightarrow \mathds{R}^3$ defined by 
+\[
+  f(u,v) = ((\cos v + 4)\cos u, (\cos v + 4) \sin u, \sin v)
+\]
+(The image of which is a torus $N$).
+\begin{enumerate}[(a)]
+  \item Compute the shape operator $S_\eta : T_pN \rightarrow T_pN$ for the outward pointing unit normal vector $\eta$ at the points $p = (5,0,0)$, $p = (3,0,0)$, and $p = (4,0,1)$. Express your answer as a matrix in the basis $\left\{ \pdv{u}, \pdv{v} \right\}$.
+\end{enumerate}
+
+\begin{proof}[Solution]
+  \begin{enumerate}[(a)]
+    \item We note that the shape operator can be defined as
+      \[
+        S_\eta (X) = - \left( \bar{\nabla}_{\bar{X}} N \right)^T
+      \]
+      Since $\mathds{R}^3$ is flat we have that
+      \[
+        \dv{t} N \circ \eval{\alpha(t)}_{t=0} = \bar{\nabla}_{\bar{X}} N
+      \]
+      It is straightforward to see that the unit normal vector is given by
+      \[
+        N(u,v) = (\cos v \cos u, \cos v \sin u, \sin v)^\top
+      \]
+      in the basis $\left\{ \pdv{x}, \pdv{y}, \pdv{z} \right\}$.
+      So we have
+      \[
+        \begin{aligned}
+          \bar{\nabla}_{\bar{\pdv{u}}}N &= \eval{\pdv{u} N(u,v)}_{f(u,v) = p} = (-\cos v \sin u, \cos v \cos u, 0)^\top\\
+          \bar{\nabla}_{\bar{\pdv{v}}}N &= \eval{\pdv{v} N(u,v)}_{f(u,v) = p} = (-\sin v \cos u, -\sin v \sin u, \cos v)^\top\\
+        \end{aligned}
+      \]
+      Now consider the vectors $\pdv{u}$ and $\pdv{v}$ embedded in $\mathds{R}^3$. They are given by
+      \[
+        \begin{aligned}
+          \pdv{u} &= \left( -(\cos v + 4)\sin u, (\cos v + 4) \cos u, 0 \right) \\
+          \pdv{v}  &= \left( -\sin v \cos u, -\sin v \sin u, \cos v)\right)
+        \end{aligned}
+      \]
+      We see that the inner product of these two vectors is always 0. So we can simply project the derivatives of the normal vectors onto the subspace formed by $\pdv{u}, \pdv{v}$. Doing this yields
+      \[
+        S_\eta = 
+        \begin{bmatrix}
+          - \frac{\cos v}{\cos v + 4} & 0 \\
+          0 & -1
+        \end{bmatrix}
+      \]
+      Now when $p = (5,0,0)$ we have $u = 0$, $v = 0$, and
+      \[
+        S_\eta = 
+        \begin{bmatrix}
+          -\frac{1}{5} & 0 \\
+          0 & -1
+        \end{bmatrix}
+      \]
+      when $p = (3,0,0)$, we have $u = \pi$, $v = 0$ and
+      \[
+        S_\eta = 
+        \begin{bmatrix}
+          - \frac{1}{5} & 0 \\
+          0 & -1
+        \end{bmatrix}
+      \]
+      and when $p = (4, 0, 1)$, $u = 0$, $v = \pi/2$
+      \[
+        S_\eta = 
+        \begin{bmatrix}
+          0 & 0 \\
+          0 & -1
+        \end{bmatrix}
+      \]
+  \end{enumerate}
+\end{proof}
+
+\end{document}
