@@ -1,0 +1,125 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Summer Studies 2019}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Bases and Components}%
+Since we are primarily focused on the applicable aspects of differential geometry, we will require computation to achieve our goals. Such computations can only be done by imposing a bases on the suitable vector spaces and extracting the components of the geometric objects in that basis. Before muddying the waters with layers of differential geometry, let's analyze components of objects we already understand.
+
+\subsection*{Vectors}%
+Let $V$ be a vector space with $v \in V$ and a basis $\mathcal{B} = \left\{ e_i\right\} \subset V$. It is important to note that $v$ is a geometric object and thus exists independent of any numbers we may choose to assign it. In order to distinguish between the geometric object $v$ and its components stored as a tuple, we will introduce the useful (albeit clunky) notation
+\[
+  \left[ v \right]_{\mathcal{B}} = 
+  \begin{bmatrix}
+    v^1 \\
+    v^2  \\
+    \vdots \\
+    v^n
+  \end{bmatrix}
+\]
+Where the $v^i$ on the right are the components in the basis $\mathcal{B}$. The statement
+\[
+  v = v^i e_i
+\]
+is a sensical geometric assertion, but statements such as
+\[
+  v = 
+  \begin{bmatrix}
+    v^1 \\
+    v^2  \\
+    \vdots \\
+    v^n
+  \end{bmatrix}\text{;}
+  \quad
+  v = v^i
+\]
+carry an implication of a basis $\mathcal{B}$ which is not explicitly stated and therefore is lacking important geometric information. Therefore, we will either refer to components as $v^i$ when using summation convention or $ \left[ v \right]_{\mathcal{B}}$ when using matrix tools. 
+
+Now let us consider two distinct bases $\mathcal{B} = \left\{ e_i \right\}$, $\widetilde{\mathcal{B}} = \left\{ \tilde{e}_i \right\}$. For each vector $e_i$ There exist components $P_i^j$, such that
+\[
+  \tilde{e}_i = P_i^j e_j
+\]
+We can call $P_i^j$, the components of $\tilde{e}_i$ in the basis $\left\{e_j\right\}$. Now consider $v = \tilde{v}^i \tilde{e}_i$. The following relation must hold
+\[
+  v = \tilde{v}^i \tilde{e}_i = \tilde{v}^i P_i^j e_j = v^j e_j
+\]
+Therefore, the components of $v$ in the basis $ \left\{ e_j \right\}$ must be
+\[
+  v^j = \tilde{v}^i P_i^j = P_i^j \tilde{v}^i
+\]
+If we look at this hard we will realize that this is really just matrix multiplication. Let
+\[
+  \bm{P} = 
+  \begin{bmatrix}
+    P_1^1 & P_2^1 & \dots & P_n^1 \\
+    P_1^2 & P_2^2 & \dots & P_n^2 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    P_1^n & P_2^n & \dots & P_n^n
+  \end{bmatrix}
+\]
+We thus have the following relation
+\[
+  \left[ v \right]_{\mathcal{B}} = \bm{P} \left[ v \right]_{\widetilde{\mathcal{B}}}
+\]
+And since $\bm{P}^{-1}$ exists, we have
+\[
+  \left[ v \right]_{\widetilde{\mathcal{B}}} = \bm{P}^{-1} \left[ v \right]_{\mathcal{B}}
+\]
+Unfortunately, the summation convention has no method of expressing a matrix inverse, so we have to stick with this notation. Furthermore, note that just by looking at the components of the relation $\tilde{e}_i = P_i^j e_j$, we can write
+\[
+  \left[ \tilde{e}_i \right]_{\mathcal{B}} = \bm{P} \left[ e_i \right]_{\mathcal{B}}
+\]
+and similarly
+\[
+  \left[ e_i \right]_{\widetilde{\mathcal{B}}} = \bm{P}^{-1} \left[ \tilde{e}_i \right]_{\widetilde{\mathcal{B}}} 
+\]
+These last two equations represent two distinct vectors expressed in the same basis. This is what we commonly call an active (vector) transformation. The other relationships represent passive (frame or change of basis) transformations. Looking at 
+\[
+\begin{aligned}
+  \left[ \tilde{e}_i \right]_{\mathcal{B}} &= \bm{P} \left[ e_i \right]_{\mathcal{B}} \\
+  \left[ v \right]_{\widetilde{\mathcal{B}}} &= \bm{P}^{-1} \left[ v \right]_{\mathcal{B}} \\
+\end{aligned}
+\]
+we can summarize this duality by saying ``components of vectors transform inversely when compared to the basis''. A common way to say this is that components of basis vectors transform \textit{contravariantly}. Saying the \textit{contravariant components} of a vector or calling the object a \textit{contravariant vector} is also common (although this last statement is misleading because it really means the components are contravariant and not the vector itself).
+
+\section*{Linear Transformations}%
+
+\section*{Covector Spaces (Dual Spaces)}%
+
+
+
+\end{document}
