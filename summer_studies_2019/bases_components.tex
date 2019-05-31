@@ -116,10 +116,191 @@ These last two equations represent two distinct vectors expressed in the same ba
 \]
 we can summarize this duality by saying ``components of vectors transform inversely when compared to the basis''. A common way to say this is that components of basis vectors transform \textit{contravariantly}. Saying the \textit{contravariant components} of a vector or calling the object a \textit{contravariant vector} is also common (although this last statement is misleading because it really means the components are contravariant and not the vector itself).
 
+It is, however, important to recognize contravariance of vector components without using the crutch of matrix mathematics. So stare at the following two equations until you are convinced you can recognize that vector components transform contravariantly as compared to basis vectors.
+\[
+  \begin{aligned}
+    \tilde{e_i} &= P_i^j e_j \\
+    v^j &= P_i^j \tilde{v}^i
+  \end{aligned}
+\]
+
+We note that we can in a way \textit{hack} summation convention by using $(P^{-1})^j_i$, to mean make the matrix $\bm{P}$, invert it to get $\bm{P}^{-1}$ and then extract the components $(P^{-1})^j_i$. This notation is also clunky but generalizes better than the pure matrix notation. Using this notation, we have
+\[
+  \begin{aligned}
+    e_i &= (P^{-1})_i^j \tilde{e}_j \\
+    \tilde{v}^j &= (P^{-1})_i^j v^i \\
+  \end{aligned}
+\]
+
 \section*{Linear Transformations}%
+Now consider a linear transformation $A: U \rightarrow V$, where $U$ and $V$ are vector spaces with $\dim(U) = m$ and $\dim(V) = n$. Furthermore, let $ \mathcal{A} = \left\{ e_i \right\}$, be a basis for $U$ and $\mathcal{B} = \left\{ f_j \right\}$ be a basis for $V$. 
 
-\section*{Covector Spaces (Dual Spaces)}%
+The common technique to find the components of higher order objects is to see how they operate on the basis. So let us consider $A(e_i)$. We know that for each $i$, there exits a $v_i \in V$, such that $A(e_i) = v_i$. Furthermore, $v_i$ must have a decomposition in terms of the basis $\mathcal{B}$, thus we can write
+\[
+  A(e_i) = v_i = A_i^j f_j
+\]
+where $A_i^j$ are the components of $v_i$ in the basis $\mathcal{B}$. Since $A$ is linear, we have that for any $u = u^i e_i$, 
+\[
+  A(u) = A(u^ie_i) = u^iA(e_i) = u^i A_i^j f_j = A_i^j u^i f_j
+\]
+Or in other words, $A^j_iu^i$ are the components of $A(u)$ in the basis $\mathcal{B}$. This can be compactified in the familiar matrix form as
+\[
+  \left[ A(u) \right]_{\mathcal{B}} = \left[ A \right]_{\mathcal{B}\mathcal{A}} \left[ u \right]_{\mathcal{A}}
+\]
+The bases are different because the linear tranformation takes us from one vector space to a different space. Where 
+\[
+  \left[ A \right]_{\mathcal{B}\mathcal{A}} = 
+  \begin{bmatrix}
+    A_1^1 & A_2^1 & \dots & A_m^1 \\
+    A_1^2 & A_2^2 & \dots & A_m^2 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    A_1^n & A_2^n & \dots & A_m^n
+  \end{bmatrix}.
+\]
+Now consider alternative bases $\widetilde{\mathcal{A}}$, and $\widetilde{\mathcal{B}}$ for $U$, and $V$ respectively. As show in the previous section, there exist matrices $\bm{Q}$, $\bm{P}$, describing these change of bases. Using those results we have the following
+\[
+  \begin{aligned}
+    [A(u)]_{\widetilde{\mathcal{B}}} &= \bm{P}^{-1} \left[ A(u) \right]_{\mathcal{B}}  \\
+                                     &= \bm{P}^{-1} \left[ A \right]_{\mathcal{B}\mathcal{A}} \left[ u \right]_{\mathcal{A}} \\
+                                     &= \bm{P}^{-1} \left[ A \right]_{\mathcal{B}\mathcal{A}} \bm{Q} \bm{Q}^{-1} \left[ u \right]_{\mathcal{A}} \\
+                                     &= \bm{P}^{-1} \left[ A \right]_{\mathcal{B}\mathcal{A}} \bm{Q} \left[ u \right]_{\widetilde{\mathcal{A}}} \\
+  \end{aligned}
+\]
+By simple inspection (pattern matching), we quicly realize that 
+\[
+  \left[ A  \right]_{\widetilde{\mathcal{B}} \widetilde{\mathcal{A}}} = \bm{P}^{-1}  \left[ A \right]_{\mathcal{B}\mathcal{A}} \bm{Q}
+\]
+This result make look unfamiliar, but when we restrict ourselves to a linear mapping $A: V \rightarrow V$, and the bases $\mathcal{B}$, $\widetilde{\mathcal{B}}$, related by $\bm{P}$. We realize that
+\[
+  \left[ A \right]_{\widetilde{\mathcal{B}}} = \bm{P}^{-1}\left[ A \right]_{\mathcal{B}}\bm{P}
+\]
+(where we can drop the redundant basis subscript for brevity). We can also write this using summation convention as
+\[
+  \tilde{A}_i^j = A_l^k P_i^l (P^{-1})_k^j
+\] 
+This is the common similarity transform! This implies that any similarity transform encodes a change of basis of some linear operator. Note that if we would have just looked at three generic matrices $\bm{A}, \bm{B}, \bm{C}$, related by
+\[
+  \bm{C} = \bm{B}^{-1} \bm{A} \bm{B}
+\]
+many of the nuances surrounding linear operators and their components in different bases would have been lost. Thus, when presented with a matrix, it is important to ask the question: ``where did these $nm$ numbers come from?'' Although $\bm{P}$ and $[A]_{\mathcal{B}}$ both have $n^2$ numbers, they have quite different interpretations and encode different geometric ideas, despite having the same algebraic properties! We will soon see other objects that can be represented as matrices that do not transform like linear transformations.
 
+\section*{Covectors}%
+Now we will introduce covectors in the light of linear operators. We will eventually explore more deeply covector spaces and their canonical bases. However, for now suffice it to say that a covector $\alpha$ is a linear operator $\alpha: V \rightarrow \mathds{R}$ with $\mathcal{B} = \left\{ e_i \right\}$ being a basis for $V$. At this point, we note that $\mathds{R}$ can be viewed as a vector space of dimension $1$ with the standard basis just being the number 1. Using the results from the previous section, the components of $\alpha$ should be given by
+\[
+  \alpha(e_i) = \alpha_i 1 = \alpha_i
+\]
+Thus, for $v = v^i e_i$ we have
+\[
+  \alpha(v) = \alpha(v^ie_i) = v^i\alpha(e_i) = v^i \alpha_i 1 = v^i \alpha_i
+\]
+Using the matrix notation, we have
+\[
+  [\alpha(v)]_{\mathds{R}} = \left[ \alpha \right]_{\mathds{R} \mathcal{B}} \left[  v\right]_{\mathcal{B}}.
+\]
+However, this notation is clunky and it's typically more useful to think of $\mathds{R}$ as scalars instead of 1D vectors, so we will simply write
+\[
+  \alpha(v) = \left[ \alpha \right]_{\mathcal{B}} \left[  v\right]_{\mathcal{B}}
+\]
+where
+\[
+  \left[ \alpha \right]_{\mathcal{B}} =  
+  \begin{bmatrix}
+    \alpha_1 & \dots & \alpha_n
+  \end{bmatrix}
+\]
+In this way, it's very easy to see that covectors have a natural interpretation as single row matrices (sometimes called row vectors). Representing $v$, as a single column matrix (sometimes called a column vector), we see that
+\[
+  \alpha(v) = 
+  \begin{bmatrix}
+    \alpha_1 & \dots & \alpha_n
+  \end{bmatrix}
+  \begin{bmatrix}
+    v^1 \\
+    \vdots \\
+    v^n
+  \end{bmatrix},
+\]
+which looks very similar to an inner product. At this point, it's once again important to reinforce the idea that both $\alpha$ and $v$ are geometric objects that exist independent of their representations as a column or row. For example the equation
+\[
+  \alpha(v) = 
+  \begin{bmatrix}
+    v^1 & \dots & v^n
+  \end{bmatrix}
+  \begin{bmatrix}
+    \alpha_1 \\
+    \vdots \\
+    \alpha_n
+  \end{bmatrix}
+\]
+is equally true from an algebraic point of view, but it further obfuscates any geometric interpretation that we might glean from looking at computation alone. For this reason, in the future, we will avoid this clunky matrix notation whenever we can. It only becomes unavoidable we need to invert a linear relationship.
 
+Finally, we want to see how the components $\alpha_i$ change under a change of basis. Let $\mathcal{B} = \left\{ e_i \right\}$, $\widetilde{\mathcal{B}} = \left\{ \tilde{e}_i \right\}$ be two distinct bases for $V$. We thus have that
+\[
+  \tilde{\alpha}_i = \alpha(\tilde{e}_i) = \alpha(P_i^j e_j) = P_i^j \alpha(e_j) = P_i^j \alpha_j
+\]
+we could equivalently write this in matrix form as
+\[
+  \left[ \alpha \right]_{\tilde{\mathcal{B}}} = \left[ \alpha \right]_{\mathcal{B}}\bm{P}.
+\]
+Now we can recognize a similarity in basis vectors and covector components
+\[
+  \begin{aligned}
+    \tilde{e}_i = P_i^je_j \\
+    \tilde{\alpha}_i = P_i^j\alpha_j 
+  \end{aligned}
+\]
+This shows that covector components transform in the same way as the basis vectors. A common way to say this is that the components of covectors transform \textit{covariantly}. Saying the \textit{covariant components} of a covector or calling the object a \textit{covariant vector} is also common (although this last statment is misleading because it really means the components are covariant and not the covector itself). Covectors take this idea one step further and are called covectors entirely based on this idea of covariance (we will see in a future session that covectors are actually vectors in their own right and have a suitably defined basis).
+
+\section*{Bilinear Forms}%
+A bilinear form is a mapping $B: V \times V \rightarrow \mathds{R}$, such that $B$ is linear in both arguments. Similar to our exposition with covectors, we can treat $\mathds{R}$ as both a vector space and as scalars when convenient. Thus we can easily determine the components of $B$ as
+\[
+  B(e_i, e_j) = B_{ij} 1 = B_{ij}
+\]
+Thus for any arbitrary $u,v \in V$, $u = u^ie_i$, $v = v^je_j$, we have
+\[
+  B(u,v) = B(u^ie_i, v^je_j) = u^iv^j B(e_i, e_j) =  u^iv^j B_{ij}
+\]
+which can also be interpreted in matrix form as 
+\[
+  B(u,v) = \left[ u \right]_{\mathcal{B}}^\top \left[B\right]_{\mathcal{B}} \left[ v \right]_{\mathcal{B}}
+\]
+where
+\[
+  \left[B\right]_{\mathcal{B}} =
+  \begin{bmatrix}
+    B_{11} & B_{12} & \dots & B_{1n} \\
+    B_{21} & B_{22} & \dots & B_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    B_{n1} & B_{n2} & \dots & B_{nn}
+  \end{bmatrix}
+\]
+This looks like a weighted inner product. As we shall see later, inner products have the natural interpretation as $n\times n$ matrices. We also realize that $B$ transforms similarly to a covector, but does so twice. Explicitly we have
+\[
+  \tilde{B}_{ij} = B(\tilde{e}_i, \tilde{e}_j) = B(P_i^k e_k, P_j^l e_l) = P_i^k P_j^l B_{kl}
+\]
+We could write this transformation as
+\[
+  \left[ B \right]_{\tilde{\mathcal{B}}} = \bm{P}^T \left[ B \right]_{\mathcal{B}} \bm{P}
+\]
+but this somewhat hides the relationship between bilinear forms and covectors. Since $B$ transforms this way, we can call $B$ a tensor of type $(0,2)$. This means that the tensor has 2 indices of covariant components. We will cover tensors and their types in greater detail in a later session.
+
+\section*{Tensor Preview}%
+Tensors are geometric objects that ingest both vectors and covectors and output real numbers. For example consider a tensor $R$ given by its components $R_{ijk}^l$ in a basis $\mathcal{B}$. The components of this tensor transform  according to
+\[
+  \tilde{R}_{ijk}^l = R_{mnp}^q P_i^m P_j^n P_k^p (P^{-1})_q^l
+\]
+At this point, this result shouldn't surprise you (if it does review these transformations until it makes sense). It is important to note that since $R_{ijk}^l$ is a tensor with more than 2 indices, this math can not be done with a matrix equivalent (at least without some sort of complicated flattening operation). For this reason (and many others) we prefer the summation convention over einsteins notation.
+
+\section*{Summary and Takeaways}%
+\begin{itemize}
+  \item Geometric objects exist independently of any values (components) we assign to them
+  \item In order for an object to be truly geometric, we must prescribe how its components change with a change of basis
+  \item It is important to explicitly state which basis we are coming from and which we are transforming to (i.e. $\mathcal{B} \rightarrow \widetilde{\mathcal{B}}$.
+  \item Vector components transform oppositely as the basis (contravariant)
+  \item Covector components transform in the same way as the basis (covariant)
+  \item Components with upper indices always transform contravariantly in that index.
+  \item Components with lower indices always transform covariantly in that index. 
+  \item An example tensor $R_{ijk}^l$ transforms covariantly 3 times, and contravariantly once.
+\end{itemize}
 
 \end{document}
