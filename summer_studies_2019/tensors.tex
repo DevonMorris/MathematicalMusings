@@ -1,0 +1,90 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Summer Studies 2019}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+\section*{Tensors}%
+Tensors, despite the mythology surrounding them, are very simple and useful tools, especially in the analysis of differential geometry. We gave a preview of tensors in light of their components, but we ignored the underlying question of ``components with respect to what?''. As we learned, geometry deals with objects that exist beyond a simple component based representation when we wrote equations like $v = v^je_j$, showing both components and basis vectors. The goal of this section will be to determine what are the geometric basics of tensors.
+
+\section*{Covector Review}%
+Since we already covered covectors a bit, we'll just do a quick review right now. Let $V$ be a vector space. First, recall that covectors are the set of linear maps $L(V; \mathds{R})$. We typically call $L(V; \mathds{R})$ the dual space and denote it by $V^*$. This phraseology hints at the fact that $V^*$ is a vector space in its own right, which is easily proven. In fact for any set $X$ and any vector space $U$, the set $L(X,U)$, forms a vector space (we will need this fact later).
+
+Let's also recall that given a basis $ \left\{ e_j \right\}$ for $V$, there exists a basis $ \left\{ e^i \right\}$ for $V^*$, called the dual basis and is defined as
+\[
+  e^i(e_j) = \delta_j^i
+\]
+In the last section, we wrote out a covector $\alpha \in V^*$, in terms of its components but we didn't specify what these components really meant. We basically said
+\[
+  \alpha(v) = v^i \alpha(e_i) = v^i \alpha_i
+\]
+and defined components that way. However, if we say $\alpha = \alpha_i e^i$, we see
+\[
+  \alpha(v) = v^j \alpha(e_j) = v^j \alpha_i e^i(e_j) =  v^j \alpha_i \delta_j^i = v^j\alpha_j
+\]
+and realize that when we wrote down $\alpha_i$, we were really talking about components in a basis $ \left\{ e^i \right\}$ which we had not explicitly stated. Following the same pattern as last time, we see that if we have another basis $ \left\{ \tilde{e}_i \right\}$ which induces another dual basis $ \left\{ \tilde{e}^j \right\}$that
+\[
+  \tilde{e}^j \left( \tilde{e}_i \right) =  \tilde{e}^j  \left( P_j^i e_i \right) = P_j^i \tilde{e}^j \left( e_i \right) = \delta_i^j = e^j (e_i)
+\]
+In order for this statement to be true, we must have that
+\[
+  \tilde{e}^j = (P^{-1})_j^i e^j
+\]
+Or in other words, bases of dual spaces transform like components of vectors.
+
+\section*{What is a Tensor}%
+At the highest level, a tensor is a real-valued multilinear map that ingests vectors and covectors. A function is multilinear if it is linear in each argument. For example let $B: V \times V \rightarrow \mathds{R}$. $B$ is a tensor if and only if
+\[
+  B(au + bv, w) = aB(u,w) + bB(v,w)
+\]
+and
+\[
+  B(u, av + bw) = aB(u,v) + bB(u,w)
+\]
+
+\begin{defn}
+  Let $V$ be a vector space over $\mathds{R}$. The set of tensors $T_s^r(V)$ of type (rank) $(r,s)$ is the set of multilinear maps
+  \[
+    T_s^r = L(V^* \times \dots V^* \times V \times \dots \times V; \mathds{R})
+  \]
+  where there are $r$ copies of $V^*$ and $s$ copies of $V$.
+\end{defn}
+Note that since $T_s^r$ is a set of linear mappings from any set into a vector space (in this case $\mathds{R}$), that $T_s^r$. Thus, $T_s^r$ must have a basis which we can use to extract components and perform calculations.
+
+\section*{Tensor Product}%
+In our tensor preview in the last section we wrote out the components of a tensor, similarly ignoring the underlying question ``components with respect to what?''. The motivation behind the tensor product is so we can construct a basis for $T_s^r$.
+
+\end{document}

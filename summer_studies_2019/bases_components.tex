@@ -291,6 +291,16 @@ Tensors are geometric objects that ingest both vectors and covectors and output 
 \]
 At this point, this result shouldn't surprise you (if it does review these transformations until it makes sense). It is important to note that since $R_{ijk}^l$ is a tensor with more than 2 indices, this math can not be done with a matrix equivalent (at least without some sort of complicated flattening operation). For this reason (and many others) we prefer the summation convention over einsteins notation.
 
+\section*{Examples}%
+Perhaps it might be instructive to go through one simple example of how to compute components given a basis $ \left\{ e_i \right\}$ for $V$. Suppose $V$ is two dimensional and we have two vectors $v = 1 e_1 + 2 e_2$ and $u = 2 e_1 + 1 e_2$. Suppose further that we know $\alpha$ is a covector and that $\alpha(v) = 4$ and $\alpha(u) = 3$. Using linearity and the above analysis we know that
+\[
+  \begin{aligned}
+    \alpha_1 + 2 \alpha_2 &= 4  \\
+    2\alpha_1 + \alpha_2 &= 3
+  \end{aligned}
+\]
+We can easily solve this linear system. The process is identical for other geometric objects, we will just need more vectors as sample data to be able to solve the linear system. Typically we specify objects in terms of their components and derive the geometry in that manner, but it is useful to know that we can work in the other direction too.
+
 \section*{Summary and Takeaways}%
 \begin{itemize}
   \item Geometric objects exist independently of any values (components) we assign to them
