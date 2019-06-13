@@ -78,13 +78,78 @@ and
 \begin{defn}
   Let $V$ be a vector space over $\mathds{R}$. The set of tensors $T_s^r(V)$ of type (rank) $(r,s)$ is the set of multilinear maps
   \[
-    T_s^r = L(V^* \times \dots V^* \times V \times \dots \times V; \mathds{R})
+    T_s^r(V) = L(V^* \times \dots V^* \times V \times \dots \times V; \mathds{R})
   \]
   where there are $r$ copies of $V^*$ and $s$ copies of $V$.
 \end{defn}
-Note that since $T_s^r$ is a set of linear mappings from any set into a vector space (in this case $\mathds{R}$), that $T_s^r$. Thus, $T_s^r$ must have a basis which we can use to extract components and perform calculations.
+It is also common to say that members of this set are $r+s$ rank tensors, but we will avoid this convention since it does not make explicit the contravariance and covariance of the tensor. 
+
+Since $T_s^r$ is a set of linear mappings from any set into a vector space (in this case $\mathds{R}$), that $T_s^r$ is a vector space. Thus, $T_s^r$ must have a basis which we can use to extract components and perform calculations. 
+
+We talked a little last time about how we identify the components of a tensor, and really it's quite straight forward. As with any other geometric object, to find the components, we just evaluate the tensor at the basis elements. Let $t \in T_s^r(V)$ the components of $t$ are given by
+\[
+  t(e^{j_1}, e^{j_2}, \dots, e^{j_r}, e_{i_1}, e_{i_2}, \dots, e_{i_s}) = t^{j_1 j_2 \dots j_r}_{i_1 i_2 \dots i_s},
+\]
+where $j_1, \dots, j_r, i_1, \dots, i_s \in \left\{ 1, \dots, \dim(V) \right\}$.
+Just as with the covectors, we haven't really defined what these components mean in terms of a basis for $T_s^r$, for that we are going to need the tensor product.
 
 \section*{Tensor Product}%
-In our tensor preview in the last section we wrote out the components of a tensor, similarly ignoring the underlying question ``components with respect to what?''. The motivation behind the tensor product is so we can construct a basis for $T_s^r$.
+In our tensor preview in the last section we wrote out the components of a tensor, similarly ignoring the underlying question ``components with respect to what?''. The motivation behind the tensor product is so we can construct a basis for $T_s^r$. 
+
+\begin{defn}
+  Let $t_1 \in T_{s_1}^{r_1}$ and $t_2 \in T_{s_2}^{r_2}$, the tensor product $\otimes$ is defined as 
+  \[
+    (t_1 \otimes t_2)(\alpha^1, \dots, \alpha^{s_1}, \beta^{1}, \dots, \beta^{s_2}, v_1, \dots, v_{r_1}, u_1, \dots, u_{r_2}) = t_1(\alpha^1, \dots, \alpha^{s_1}, v_1 \dots, v_{r_1}) t_2(\beta^1, \dots, \beta^{s_2}, u_1, \dots, u_{r_2})
+  \]
+\end{defn}
+\begin{rem}
+At this point, we will explicitly state that this has \textbf{nothing} to do with the quaternion product and is an unfortunate hash collision in the notation of differential geometry, lie groups and the quaternion algebra. 
+\end{rem}
+Although intimidating in its full form, the concept of the tensor product is quite simple. Given 2 tensors of rank $(r_1, s_1)$ and $(r_2, s_2)$, create a new tensor of rank $(r_1 + r_2, s_1 + s_2)$, by interleaving the arguments of the original tensors and multiplying the values of the original tensors evaluated with their original arguments. Quick inspection shows that this product is not commutative because the order of the arguments will be significantly different. The product is, however, associative, so we don't need to worry about the order of evaluation when we use the multiple tensor products.
+
+We typically won't take the tensor product of two arbitrary tensors like this but will start with our basis vectors $e^j$ and $e_i$. There are natural interpretations of the spaces $V$ and $V^*$ in light of this tensor framework. It should be plain to see that since covectors ingest 1 vector that $V^* = T_1^0(V)$. This might look backwards, but convince yourself that this is true. Vectors also have a natural interpretation as a tensor if we define how vectors ingest covectors. Given a vector $v \in V$ and a covector $\alpha \in V^*$, we can interpret $v \in L(V^*; \mathds{R})$ under the identification
+\[
+  v(\alpha) = \alpha(v)
+\]
+This might seem like a ``hack'', but the interpretation is actually well rooted in functional analysis. It comes from the fact that in finite dimensional spaces you have that $V^{**} \cong V$. Thus with this identification we can say $V = T^1_0(V)$ (convince yourself this is true). It is also common to write these identifications as $V^* = T_1(V)$ and $V = T^1(V)$ and drop the 0.
+
+This leads us to the following proposition that we will not prove
+\begin{prop}
+  Let $V$ be a finite dimensional vector space with basis $\left\{e_1, \dots, e_n \right\}$ and associated dual basis $ \left\{ e^1, \dots, e^n \right\}$. The basis for $T^r_s(V)$ is given by
+  \[
+    \left\{ e_{j_1} \otimes \dots \otimes e_{j_r} \otimes e^{i_1} \otimes \dots \otimes e^{i_s}\ |\ j_1, \dots, j_r, i_1, \dots, i_s \in \left\{ 1, \dots, \dim(V) \right\}\right\}
+  \]
+\end{prop}
+This is another equation that on first look is hopelessly complex. However, algorithmically it's quite simple. For each copy of $V$ choose a basis vector $e^{j}$ and for each copy of $V^*$ choose a basis vector $e_i$ (this might seem backwards, however, it's imperative you convince yourself that it is true). That will give you one basis vector for $T_s^r$. Now take all possible such choices you can make and you have the full basis of $T_s^r(V)$. Note that there should be $\dim(V)^{r+s}$ total basis vectors and as such $\dim(T_s^r) = \dim(V)^{r+s}$.
+
+Now, just as we did with covectors we can show that these tensor bases are exactly the geometric objects that we want. Consider the tensor $t \in T^r_s$ given by
+\[
+  t = t^{j_1 \dots j_r}_{i_1 \dots i_s} e_{j_1} \otimes \dots \otimes e_{j_r} \otimes e^{i_1} \otimes \dots \otimes e^{i_s}
+\]
+Evaluating this tensor on $\alpha^1, \dots \alpha^r$, $v_1 \dots, v_s$, and expanding the tensor product gives us
+\[
+  \begin{aligned}
+    t(\alpha^1, \dots, \alpha^r, v_1, \dots, v_s) &= t^{j_1 \dots j_r}_{i_1 \dots i_s} (e_{j_1} \otimes \dots \otimes e^{j_r} \otimes e^{i_1} \otimes \dots \otimes e_{i_s}) (\alpha^1_{k_1}e^{k_1}, \dots, \alpha^r_{k_r}e^{k_r}, v_1^{l_1} e_{l_1}, \dots, v_s^{l_s}e_{l_s})\\
+                                                  &= t^{j_1 \dots j_r}_{i_1 \dots i_s} e_{j_1}(\alpha^1_{k_1}e^{k_1}) \dots e_{j_r}(\alpha^r_{k_r}e^{k_r}) e^{i_1} ( v_1^{l_1}e_{l_1} )  \dots e^{i_s}(v_s^{l_s} e_{l_s}) \\
+                                                  &= t^{j_1 \dots j_r}_{i_1 \dots i_s} \alpha^1_{k_1} \dots \alpha^r_{k_r} e_{j_1}(e^{k_1}) \dots e_{j_r}(e^{k_r}) e^{i_1} ( v_1^{l_1}e_{l_1} )  \dots e^{i_s}(v_s^{l_s} e_{l_s}) \\
+                                                  &= t^{j_1 \dots j_r}_{i_1 \dots i_s} \alpha^1_{k_1} \dots \alpha^r_{k_r} e^{k_1}(e_{j_1}) \dots e^{k_r}(e_{j_r}) e^{i_1} ( v_1^{l_1}e_{l_1} )  \dots e^{i_s}(v_s^{l_s} e_{l_s}) \\
+                                                  &= t^{j_1 \dots j_r}_{i_1 \dots i_s} \alpha^1_{k_1} \dots \alpha^r_{k_r}v_1^{l_1} \dots v_s^{l_s} e^{k_1}(e_{j_1}) \dots e^{k_r}(e_{j_r}) e^{i_1} (e_{l_1} )  \dots e^{i_s}(e_{l_s}) \\
+                                                  &= t^{j_1 \dots j_r}_{i_1 \dots i_s} \alpha^1_{k_1} \dots \alpha^r_{k_r}v_1^{l_1} \dots v_s^{l_s}  \delta_{j_1}^{k_1} \dots \delta_{j_r}^{k_r} \delta_{l_1}^{i_1} \dots \delta_{l_s}^{i_s} \\
+                                                  &= t^{k_1 \dots k_r}_{l_1 \dots l_s} \alpha^1_{k_1} \dots \alpha^r_{k_r}v_1^{l_1} \dots v_s^{l_s}
+  \end{aligned}
+\]
+Looking at this last value, we realize that this is precisely how we want to use tensors in terms of their components. You should take a few minutes to understand each step of the above argument and be able to justify why it's true. It makes for good practice of tensors and their components.
+
+Recall a generic bilinear transform $B: V \times V \rightarrow \mathds{R}$. The basis components we identified earlier $B_{ij}$, have the geometric representation of 
+\[
+  B = B_{ij} e^i \otimes e^j
+\]
+
+Additional things to cover if time permits:
+\begin{enumerate}
+  \item How do tensor bases transform (should be straight-forward)
+  \item Linear transformations and pushforwards/pullback of tensors (both in geometric structure and components).
+  \item Musical isomorphisms (lowering/raising indices)
+\end{enumerate}
 
 \end{document}
