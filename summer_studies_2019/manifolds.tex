@@ -1,0 +1,105 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Summer Studies 2019}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+
+\section*{Manifolds}%
+The goal of this section is to define manifolds and look at some basic properties that are true for manifolds. We will briefly introduce generic manifolds and then quickly move on to smooth manifolds because all of our work will be done in the smooth manifold setting.
+
+\begin{defn}[Charts]
+  Let $S$ be a set.  A chart on $S$ is a pair $(U, \varphi)$, where $U \subset S$ and $\varphi$ is a homeomorphism onto an open subset of $\mathds{R}^n$. Explicitly, the function
+  \[
+    \varphi: U \rightarrow \varphi(U) \subset \mathds{R}^n
+  \]
+  Is continuous, has a continuous inverse and $\varphi(U)$ is open.
+\end{defn}
+
+Draw a picture from the sphere to $\mathds{R}^2$. We can devise a chart for $S^2$ as follows. (Think of $S^2$) as the embedded manifold with $(x^1)^2 + (x^2)^2 + (x^3)^2 = 1$. (This notation looks absolutely terrible but it's a necessary artifact of einsteins convention). We have the following spherical coordinates
+\[
+  \begin{aligned}
+    U &= S^2 \setminus \{(0,0,1), (0,0,-1), (-1,0,0)\} \\
+    \varphi(x) &= (\arccos(x^3), \arctan2(x^2,x^1))
+  \end{aligned}
+\]
+It is easy to note that $\arccos(x^3)$ is continuous with a continous inverse on $U$. There is a nifty identity that says
+\[
+  \begin{aligned}
+    \arctan2(x,y) = 2 \arctan \left( \frac{y}{\sqrt{x^2 + y^2} + x}\right)
+  \end{aligned}
+\]
+And looking at this we realize that it is continuous on the domain $U$. The continuous inverse is given by
+\[
+  \varphi^{-1}(y) = (\sin(y^1)\cos(y^2), \sin(y^1)\sin(y^2), \cos(y^1))
+\]
+and is defined on the domain $(0,\pi) \times (-\pi, \pi) \subset \mathds{R}^2$. We have been very verbose about domains of definition with this chart and in general that's very important. However, as we get more comfortable with the process we might be less careful. 
+
+At times it is more intuitive to prescribe the inverse map $\varphi^{-1}$ and derive the chart $\varphi$ from that. We just need to be careful about the domains on which these functions are defined (there is more to say about this using the implicit and inverse function theorems, but we may or may not touch on that another time).
+
+We call $\varphi(x)$ coordinates on $S$ and $\varphi^{-1}$ a parameterization of $S$.
+
+\begin{defn}[Atlas]
+  Let $S$ be a set. A $C^\infty$-atlas is a collection of charts $\mathcal{A} = \left\{ (U_a, \varphi_a) \right\}$ such that $S = \bigcup_a U_a$, such that when $U_a \cap U_b \neq \varnothing$, the following hold
+  \begin{enumerate}
+    \item $\varphi_a(U_a \cap U_b)$ and $\varphi_b(U_a \cap U_b)$ are open subsets of $\mathds{R}^n$
+    \item The transition map (overlap map)
+      \[
+        \begin{aligned}
+          \varphi_{ba}:& \varphi_a(U_a \cap U_b) \rightarrow \varphi_b(U_a \cap U_b) \\
+                       &y \mapsto \varphi_b \circ \varphi^{-1}_a(y) 
+        \end{aligned}
+      \]
+      is a $C^\infty$-diffeomorphism ($C^\infty$ with a $C^\infty$ inverse).
+  \end{enumerate}
+\end{defn}
+
+Draw the picture!!! Furthermore note that I have switched notation from the book because I think of $\varphi_{ba}$ meaning from $a$ to $b$. Two atlases $\mathcal{A}_1, \mathcal{A}_2$ are called compatible (equivalent) if their union $\mathcal{A}_1 \cup \mathcal{A}_2$ is also a $C^\infty$-atlas.
+
+\begin{rem}
+  Some things that might be important in the future but for now will go unproven
+  \begin{itemize}
+    \item Every smooth atlas on $S$ is contained in a unique maximally smooth atlas
+    \item You can consider $C^n$ charts and get $C^n$-atlases but that requires more care than we need on a first foray into differential geometry
+    \item Technically, $S$ needs to be a topological space to define concepts like openness, closedness and continuity but for now we will just our intuitive understanding of these concepts.
+  \end{itemize}
+\end{rem}
+
+A maximally smooth atlas is called a smooth structure and the pair $M = (S, \mathcal{A})$ is called a smooth manifold. If all $\varphi_a$ take values in $\mathds{R}^n$ for a fixed $n$ we say that $M$ has dimension $n$ and denote it by $\dim(M)$.
+
+Work out the overlap condition of different spherical coordinates on the sphere. If time, do the same thing with two sets of stereographic projection.
+
+\end{document}
