@@ -102,4 +102,46 @@ A maximally smooth atlas is called a smooth structure and the pair $M = (S, \mat
 
 Work out the overlap condition of different spherical coordinates on the sphere. If time, do the same thing with two sets of stereographic projection.
 
+At times, we will want to break $\varphi$ into it's individual components of $\mathds{R}^n$. We do so by considering the functions $\varphi^i$ where $i$ represents the ith component in $\mathds{R}^n$. We may also write
+\[
+  \varphi = (\varphi^1, \dots, \varphi^n)
+\]
+or perhaps
+\[
+  \varphi = (x^1, \dots, x^n)
+\]
+or most commonly,
+\[
+  \varphi = (x^i)
+\]
+In this fasion we will sometimes define charts as $(U, (x^i))$. This makes the interpretation of $\varphi$ in terms of coordinates more explicit. Furthermore, note in this context that $x^i \not\in \mathds{R}$ but rather $x^i \in C^\infty(M; \mathds{R})$ (this will become important in our derivation of tangent vectors).
+
+One very important thing to note is that $x^i$ are functions and not vectors! This implies that they do not transform like vectors (i.e. contravariantly). Even though these functions have upper indices, they transform according to the transition map
+\[
+  (\tilde{x}^1, \dots, \tilde{x}^n) = \tilde{\varphi} \circ \varphi^{-1} (x^1, \dots, x^n)
+\]
+They have upper indices so that they play nicely with vectors as we shall see soon. (Note, we can also interpret this equation as being a point transformation from the coordinates $(x^1, \dots, x^n)$ to $(\tilde{x}^1, \dots, \tilde{x}^n)$.
+
+\section*{Maps Between Manifolds}%
+In this section, let $f: M \rightarrow N$ be a smooth function where $M,N$ are smooth manifolds of $\dim(M) = m$, $\dim(N)= n$. Furthermore let $(U, (x^i))$ be a chart on $M$ and $(V, (y^j))$ be a chart on $N$, such that $f(U) \subset V$. 
+
+\begin{defn}[Local representative]
+  The local representative of $f$ on the charts given above is $f_{\psi \varphi}: \varphi(U) \rightarrow  \psi(V)$ where
+  \[
+      f_{\psi \varphi} = \psi \circ f \circ \varphi^{-1} \\
+  \]
+\end{defn}
+Since $f_{\psi \varphi}$ takes values in $\mathds{R}$. Draw the picture! See how this look very similar to a transition map but with one extra map. Since $f$ takes values in $\mathds{R}^n$, we can write the local representative as
+\[
+  f_{\psi \varphi}(x^1, \dots, x^m) = (y^1(f(x^1, \dots, x^m)), \dots, y^n(f(x^1, \dots, x^m))) = (f^1(x^1, \dots, x^m), \dots, f^n(x^1, \dots, x^m))
+\]
+and we call the $f^i$ the components of the local representative. Now consider if we have two overlapping charts on each manifold, given by $(U_a, \varphi_a)$, $(U_b, \varphi_b)$, $(V_a, \psi_a)$, $(V_b, \psi_b)$. We can see how these component funtions change with a change of basis
+\[
+  \begin{aligned}
+    f_{\psi_b \varphi_b}(\tilde{x}^1, \dots, \tilde{x}^m) &= (\tilde{f}^1(\tilde{x}^1, \dots, \tilde{x}^m), \dots, \tilde{f}^n(\tilde{x}^1, \dots, \tilde{x}^m)) \\
+                                                          &= \psi_b \circ \psi_a^{-1} (f^1(\varphi_a \circ \varphi_b^{-1} (\tilde{x}^1, \dots, \tilde{x}^m)), \dots, f^n(\varphi_a \circ \varphi_b^{-1} (\tilde{x}^1, \dots, \tilde{x}^m)))
+  \end{aligned}
+\]
+Note that, the transition maps appear in different places and in different orders. Convince yourself that the above equation is correct. (At a high level think about how this is similar to how linear maps transform)).
+
 \end{document}

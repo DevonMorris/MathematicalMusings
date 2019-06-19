@@ -1,0 +1,166 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{xltxtra}
+\usepackage{amsfonts}
+\usepackage{polyglossia}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\geometry{a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm}
+\pagestyle{fancy}
+\lhead{Devon Morris}
+\chead{Summer Studies 2019}
+\rhead{\today}
+\cfoot{\thepage}
+
+\setlength{\headheight}{23pt}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+\newtheorem*{prop}{Proposition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rem}{Remark}
+
+\DeclarePairedDelimiterX{\inn}[2]{\langle}{\rangle}{#1, #2}
+
+\begin{document}
+
+\section*{Tangent Vectors}%
+In my opinion, the explanation and definition of tangent vectors given in Bullo is surprisingly bad. The dearth of details in their approach makes it impossible to parse for a novice in differential geometry. Thus, we will mirror the approach given in Do Carmo, adding details as needed.
+
+Before we begin, forget about derivations and other notions of tangent vectors and tangent spaces you may have learned in other clases. Definition via derivation fits well into the algebraic definition of smooth manifolds, but sacrifices interpretability by doing so. This method also aims to be useful in algebraic geometry which is not the subject of this course.
+
+\subsection*{Intuitive Tangent Vectors}%
+Whatever you intuitively think of as a tangent vector on a manifold probably aligns with the correct definition of a tangent vector. For example if you think of the sphere $S^2$, you probably think of it as an object embedded in ambient space $\mathds{R}^3$. You probably think of tangent vectors at $(1,0,0)$ as something pointing in either the $(0,0,1)$ direction, $(0,1,0)$ direction, or some linear combination of those vectors. That intuition is correct!
+
+However, there are a few issues with this view of tangent vectors.
+\begin{enumerate}
+  \item Not every manifold can be embedded in $n + 1$ dimensional space. (See whitney's embedding theorem).
+  \item The basis elements of this tangent space are represented as vectors of a higher dimension than the manifold itself.
+  \item The derivation is not done in a coordinate independent fashion.
+\end{enumerate}
+
+For these reasons, we have to be very careful in our definition of tangent vectors. You may, however, intuitively view them as ``arrows sticking off the surface of the manifold''.
+
+\subsection*{Equivalence Classes}%
+We will not go into a full review of equivalence classes at this moment, but it is important to have a basic understanding of them. Equivalence classes denote equality in the properties of interest. The best way to explain this is by example. Suppose we have the set of all living things given by $L$. For example $\text{human} \in L$, $\text{squirrel} \in L$ and $\text{amoeba} \in L$, just to name a few elements. Suppose we endow this set with the relation $\sim$ which means ``belongs to the same kingdom''. From this we can see that
+\[
+  \begin{aligned}
+    \text{human} &\sim \text{squirrel} \\
+    \text{human} &\sim \text{gorilla} \\
+    \text{gorilla} &\sim \text{squirrel} \\
+    \text{human} &\not\sim \text{amoeba} \\
+    \text{tree} &\sim \text{bush} \\
+    \text{amoeba} &\sim \text{paramecium}
+  \end{aligned}
+\]
+Just to list a few examples. Since this relation 
+\begin{itemize}
+  \item reflexive ($\text{human} \sim \text{human}$)
+  \item symmetric ($(\text{human} \sim \text{squirrel}) \implies (\text{squirrel} \sim \text{human})$) 
+  \item transitive ($(\text{human} \sim \text{squirrel}) \text{ and } (\text{squirrel} \sim \text{gorilla}) \implies (\text{human} \sim \text{gorilla})$)
+\end{itemize}
+We can instead represent this relation by clases which we call equivalence classes. They are denoted with $ []$. For example we can say $[\text{human}] = [\text{squirrel}]$. Due to the notion of equivalence we have that each of these classes are disjoint, and as such we can treat them as objects of their their own. This may seem abstract but consider $A \subset L$ defined by
+\[
+  A = \{x \in L\ |\ [x] = [\text{human}]\}
+\]
+This subset represents the animal kingdom. Note how we have relabeled the equivalence class by specifying equivalence to one element. Thus when the relation is clear, we can represent an entire class by one single representative. 
+
+\section*{Tangent Vectors (for real)}%
+
+\begin{defn}
+  Let $I = (-\epsilon, \epsilon) \subset \mathds{R}$, for a suitable $\epsilon > 0$. A $C^\infty(I;M)$ function $\gamma: I \rightarrow M$ is a curve (space curve).
+\end{defn}
+Draw the picture! Now we will define an equivalence relation on this set of curves.
+
+\begin{defn}[Equivalence of Curves]
+  Let $\gamma_1$, $\gamma_2$ be space curves defined on suitably defined intervals, such that $\gamma_1(0) = \gamma_2(0) = x$. We say that $\gamma_1$ and $\gamma_2$ are equivalent at $x$ ($\gamma_1 \sim_x \gamma_2$), if for all $f \in C^\infty(M;\mathds{R})$ we have that
+  \[
+    (f \circ \gamma_1)'(0) = (f \circ \gamma_2)'(0)
+  \]
+\end{defn}
+Now this definition may seem hopelessly abstract at this point, but consider the component functions of a chart fom the last section $\varphi = (x^1, \dots, x^n)$. Under this definition we have that if $\gamma_1 \sim \gamma_2$, we have that
+\[
+  (x^i \circ \gamma_1)'(0) = (x^i \circ \gamma_2)'(0)
+\]
+for all $i$. In other words the derivatives along the coordinates must be the same for every coordinate direction. This is a very useful property. However since $f$ could be any function, we must have that it holds under any other coordinates as well. For, $\tilde{\varphi} = (\tilde{x}^1, \dots, \tilde{x}^n)$, we have
+\[
+  (\tilde{x}^i \circ \gamma_1)'(0) = (\tilde{x}^i \circ \gamma_2)'(0) 
+\]
+and in this way we have defined the relation in a coordinate independent fashion. In the last section, we gave functions in terms of their local representatives. In this context, we can ignore the chart on $\mathds{R}$ and just call it $t$. So the representative of $\gamma_1$ and $\gamma_2$ can be given by
+\[
+  \begin{aligned}
+    \gamma_{1\varphi} &= (x^1(\gamma_1(t)), \dots, x^n(\gamma_1(t))) = (\gamma^1_1(t), \dots, \gamma^n_1(t)) \\
+    \gamma_{2\varphi} &= (x^1(\gamma_2(t)), \dots, x^n(\gamma_2(t))) = (\gamma^1_2(t), \dots, \gamma^n_2(t)) \\
+  \end{aligned}
+\]
+Thus, using the above relations we have that
+\[
+  \eval{\dv{t}\gamma_1^{i}}_{t=0} = \eval{\dv{t}\gamma_2^{i}}_{t=0}
+\]
+for all $i$, or in other words all the component functions have the same derivative at 0.
+
+It is easy to see that this relation is an equivalence relation (reflexive, symmetric, transitive). Therefore we can partition the set of curves through a point $x$ into equivalence classes $ \left[ \gamma \right]_x$. These equivalence classes will eventually become our tangent space. In order to do this, we need to define operations of addition and scalar multiplication.
+
+\begin{defn}[Scalar Multiplication]
+  Given $\alpha \in \mathds{R}$ and curve $\gamma_1$ the operation $\alpha [\gamma_1]_x$ is given as the equivalence class $[\gamma_2]_x$, where
+  \[
+    \alpha (f \circ \gamma_1)'(0) =  (f \circ \gamma_2)'(0)
+  \]
+  for all $f \in C^\infty(M; \mathds{R})$.
+\end{defn}
+
+This operation is well-defined, but we will not prove it here.
+
+\begin{defn}[Addition]
+  Given curves $\gamma_1$ and $\gamma_2$ the operation $[\gamma_1]_x + [\gamma_2]_x$ is given as the equivalence class $[\gamma_3]_x$ where
+  \[
+    (f \circ \gamma_1)'(0) + (f \circ \gamma_2)'(0) = (f \circ \gamma_3)'(0)
+  \]
+  for all $f \in C^\infty(M; \mathds{R})$.
+\end{defn}
+
+This operation is also well-defined. Using these properties of scalar multiplication and addition, we can easily verify that the axioms of a vector space hold. Let $T_xM$ be the set of all equivalence classes under the relation $\sim_x$. We will prove that $T_xM$ is a vector space.
+
+\begin{proof}
+  Most properties are inherited from the properties of $\mathds{R}$. So we only need to prove that there is an additive identity and an additive inverse.
+  \begin{enumerate}
+    \item Identity Element of Addition: Let $\xi: I \rightarrow M$, be a constant map i.e. $\xi(t) = x$ for all $t$. Given any $f \in C^\infty(M; \mathds{R})$, we have
+      \[
+        (f \circ \xi)'(0) = 0
+      \]
+      and so $[\gamma]_x + [\xi]_x = [\gamma]_x$.
+    \item Inverse Elements of Addition: Given a curve $\gamma$, let $\gamma^-$ be defined so $\gamma(t) = \gamma(-t)$. By the chain rule we have that
+      \[
+        (f \circ \gamma^-(t))'(0) = (f \circ \gamma(-t))'(0) = -(f \circ \gamma(t))'(0)
+      \]
+      and so have that
+      \[
+        \left[ \gamma \right]_x + \left[ \gamma^- \right]_x = \left[ \xi \right]_x
+      \]
+  \end{enumerate}
+  Thus $T_xM$ is a vector space.
+\end{proof}
+
+\begin{defn}[Tangent Vectors]
+ A tangent vector to $M$ at $x$ is an equivalence class of curves under the relation $\sim_x$. We call the space of all tangent vectors to $M$ at $x$ the tangent space at $x$ and denote it by $T_xM$.
+\end{defn}
+
+Thus according to this definition, a tangent vector is completely defined at how it behaves locally near a point $x \in M$. This is what gives rise to the definition by derivations, but geometric intuition is lost in that definition.
+
+Next Time: continue with bases and components!!!
+
+\end{document}
